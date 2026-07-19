@@ -1,13 +1,24 @@
 {% extends "lab/base.html" %}
+{% load lab_extras %}
 {% block title %}Doctorants — {{ site_profile.acronym }}{% endblock %}
 {% block content %}
 
 <section class="page-header">
-  <div class="container">
-    <div class="breadcrumb"><a href="{% url 'lab:home' %}">Accueil</a><span class="sep">/</span>Membres<span class="sep">/</span>Doctorants</div>
-    <span class="eyebrow">Formation doctorale</span>
-    <h1>Doctorants</h1>
-    <p>Les thèses menées au LAMO, souvent en cotutelle avec des universités partenaires en France, en Éthiopie et ailleurs.</p>
+  <div class="container page-header-inner">
+    <div class="page-header-text">
+      <div class="breadcrumb"><a href="{% url 'lab:home' %}">Accueil</a><span class="sep">/</span>Membres<span class="sep">/</span>Doctorants</div>
+      <span class="eyebrow">Formation doctorale</span>
+      <h1>Doctorants</h1>
+      <p>Les thèses menées au LAMO, souvent en cotutelle avec des universités partenaires en France, en Éthiopie et ailleurs.</p>
+    </div>
+    <div class="page-header-icon">
+      <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M10,32 L40,20 L70,32 L40,44 Z" stroke="var(--navy)" stroke-width="2.5" stroke-linejoin="round"/>
+        <path d="M24,38 V54 C24,54 30,60 40,60 C50,60 56,54 56,54 V38" stroke="var(--teal)" stroke-width="2.5"/>
+        <line x1="70" y1="32" x2="70" y2="50" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round"/>
+        <circle cx="70" cy="53" r="2.5" fill="var(--accent)"/>
+      </svg>
+    </div>
   </div>
 </section>
 
@@ -15,29 +26,20 @@
   <div class="container">
     {% include "lab/_members_tabs.html" %}
 
-    <div class="table-wrap">
-      <table class="data-table">
-        <thead>
-          <tr><th>N°</th><th>Nom et prénom</th><th>Année</th><th>Université partenaire</th><th>Directeur de thèse</th><th>Co-encadrant</th></tr>
-        </thead>
-        <tbody>
-          {% for d in doctorants %}
-          <tr>
-            <td>{{ forloop.counter }}</td>
-            <td class="name-cell">
-              <span class="avatar-chip">{{ d.full_name|slice:":1" }}</span>
-              {{ d.full_name }}
-            </td>
-            <td>{{ d.start_year }}</td>
-            <td>{{ d.partner_university }}</td>
-            <td>{{ d.thesis_director }}</td>
-            <td>{{ d.co_supervisor|default:"—" }}</td>
-          </tr>
-          {% empty %}
-          <tr><td colspan="6">Aucun doctorant renseigné pour le moment.</td></tr>
-          {% endfor %}
-        </tbody>
-      </table>
+    <div class="member-grid stagger">
+      {% for d in doctorants %}
+      <a href="{{ d.get_absolute_url }}" class="member-card">
+        <div class="member-avatar">
+          {% if d.photo %}<img src="{{ d.photo.url }}" alt="{{ d.full_name }}">{% else %}{{ d.full_name|initials }}{% endif %}
+        </div>
+        <div class="m-name">{{ d.full_name }}</div>
+        <div class="m-role">{{ d.partner_university }}</div>
+        <span class="m-tag">{{ d.start_year }}</span>
+        <span class="m-view">Voir le profil →</span>
+      </a>
+      {% empty %}
+      <p>Aucun doctorant renseigné pour le moment.</p>
+      {% endfor %}
     </div>
   </div>
 </section>

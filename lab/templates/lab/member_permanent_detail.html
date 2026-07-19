@@ -1,0 +1,79 @@
+{% extends "lab/base.html" %}
+{% load lab_extras %}
+{% block title %}{{ member.full_name }} — {{ site_profile.acronym }}{% endblock %}
+{% block content %}
+
+<section class="page-header">
+  <div class="container page-header-inner">
+    <div class="page-header-text">
+      <div class="breadcrumb"><a href="{% url 'lab:home' %}">Accueil</a><span class="sep">/</span><a href="{% url 'lab:members_permanent' %}">Membres</a><span class="sep">/</span>{{ member.full_name }}</div>
+      <span class="eyebrow" style="margin-bottom:0;">Fiche du membre permanent</span>
+    </div>
+    <div class="page-header-icon">
+      <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="40" cy="28" r="12" stroke="var(--navy)" stroke-width="2.5"/>
+        <path d="M16,66 C16,50 28,44 40,44 C52,44 64,50 64,66" stroke="var(--navy)" stroke-width="2.5" stroke-linecap="round"/>
+        <circle cx="40" cy="28" r="3" fill="var(--accent)"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<section class="section reveal">
+  <div class="container">
+    <a href="{% url 'lab:members_permanent' %}" class="back-link">← Tous les membres permanents</a>
+
+    <div class="split">
+      <div>
+        <div class="member-hero">
+          <div class="member-avatar">
+            {% if member.photo %}<img src="{{ member.photo.url }}" alt="{{ member.full_name }}">{% else %}{{ member.full_name|initials }}{% endif %}
+          </div>
+          <div>
+            <h1>{{ member.full_name }}</h1>
+            <div class="role">{{ member.title }}</div>
+            <div class="tags">
+              {% if member.is_director %}<span class="tag tag--accent">Directeur du laboratoire</span>{% endif %}
+              {% if member.team %}<span class="tag tag--teal">{{ member.team.name }}</span>{% endif %}
+            </div>
+          </div>
+        </div>
+
+        <div class="info-grid">
+          <div class="info-tile"><strong>Grade / Spécialité</strong><span>{{ member.title }}</span></div>
+          {% if member.team %}<div class="info-tile"><strong>Équipe</strong><span>{{ member.team.name }}</span></div>{% endif %}
+          {% if member.email %}<div class="info-tile"><strong>Email</strong><a href="mailto:{{ member.email }}">{{ member.email }}</a></div>{% endif %}
+        </div>
+
+        {% if member.bio %}
+        <div class="prose"><p>{{ member.bio }}</p></div>
+        {% endif %}
+      </div>
+
+      <div class="side-panel">
+        <h4>Établissement</h4>
+        <ul>
+          <li>{{ profile.name }} ({{ profile.acronym }})</li>
+          <li>{{ profile.affiliation }}</li>
+        </ul>
+      </div>
+    </div>
+
+    {% if others %}
+    <div style="margin-top:32px;">
+      <div class="section-head"><span class="eyebrow">Voir aussi</span><h2>Autres membres permanents</h2></div>
+      <div class="related-members">
+        {% for o in others %}
+        <a href="{{ o.get_absolute_url }}" class="member-card">
+          <div class="member-avatar">{% if o.photo %}<img src="{{ o.photo.url }}" alt="{{ o.full_name }}">{% else %}{{ o.full_name|initials }}{% endif %}</div>
+          <div class="m-name">{{ o.full_name }}</div>
+          <div class="m-role">{{ o.title }}</div>
+        </a>
+        {% endfor %}
+      </div>
+    </div>
+    {% endif %}
+  </div>
+</section>
+
+{% endblock %}

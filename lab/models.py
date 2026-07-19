@@ -93,6 +93,7 @@ class PermanentMember(models.Model):
     is_director = models.BooleanField(default=False)
     email = models.EmailField(blank=True)
     photo = models.ImageField(upload_to="members/", blank=True, null=True)
+    bio = models.TextField(blank=True, help_text="Présentation courte affichée sur la fiche du membre.")
     order = models.PositiveIntegerField(default=0)
 
     class Meta:
@@ -103,6 +104,9 @@ class PermanentMember(models.Model):
     def __str__(self):
         return self.full_name
 
+    def get_absolute_url(self):
+        return reverse("lab:member_permanent_detail", args=[self.pk])
+
 
 class Doctorant(models.Model):
     full_name = models.CharField(max_length=255)
@@ -110,6 +114,8 @@ class Doctorant(models.Model):
     partner_university = models.CharField(max_length=255)
     thesis_director = models.CharField(max_length=255)
     co_supervisor = models.CharField(max_length=255, blank=True)
+    photo = models.ImageField(upload_to="members/", blank=True, null=True)
+    bio = models.TextField(blank=True, help_text="Sujet de thèse ou présentation courte.")
     order = models.PositiveIntegerField(default=0)
 
     class Meta:
@@ -120,12 +126,17 @@ class Doctorant(models.Model):
     def __str__(self):
         return self.full_name
 
+    def get_absolute_url(self):
+        return reverse("lab:member_doctorant_detail", args=[self.pk])
+
 
 class AssociateResearcher(models.Model):
     full_name = models.CharField(max_length=255)
     grade = models.CharField(max_length=255)
     institution = models.CharField(max_length=255)
     country = models.CharField(max_length=120)
+    photo = models.ImageField(upload_to="members/", blank=True, null=True)
+    bio = models.TextField(blank=True, help_text="Présentation courte affichée sur la fiche du chercheur.")
     order = models.PositiveIntegerField(default=0)
 
     class Meta:
@@ -135,6 +146,9 @@ class AssociateResearcher(models.Model):
 
     def __str__(self):
         return self.full_name
+
+    def get_absolute_url(self):
+        return reverse("lab:member_associate_detail", args=[self.pk])
 
 
 class Partner(models.Model):

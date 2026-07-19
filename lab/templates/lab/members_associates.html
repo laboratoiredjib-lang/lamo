@@ -1,13 +1,26 @@
 {% extends "lab/base.html" %}
+{% load lab_extras %}
 {% block title %}Chercheurs associés — {{ site_profile.acronym }}{% endblock %}
 {% block content %}
 
 <section class="page-header">
-  <div class="container">
-    <div class="breadcrumb"><a href="{% url 'lab:home' %}">Accueil</a><span class="sep">/</span>Membres<span class="sep">/</span>Associés</div>
-    <span class="eyebrow">Réseau international</span>
-    <h1>Chercheurs associés</h1>
-    <p>Des collègues d'universités partenaires qui contribuent aux encadrements de thèse et aux projets scientifiques du laboratoire.</p>
+  <div class="container page-header-inner">
+    <div class="page-header-text">
+      <div class="breadcrumb"><a href="{% url 'lab:home' %}">Accueil</a><span class="sep">/</span>Membres<span class="sep">/</span>Associés</div>
+      <span class="eyebrow">Réseau international</span>
+      <h1>Chercheurs associés</h1>
+      <p>Des collègues d'universités partenaires qui contribuent aux encadrements de thèse et aux projets scientifiques du laboratoire.</p>
+    </div>
+    <div class="page-header-icon">
+      <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="40" cy="40" r="24" stroke="var(--navy)" stroke-width="2.5"/>
+        <ellipse cx="40" cy="40" rx="10" ry="24" stroke="var(--line)" stroke-width="1.5"/>
+        <line x1="16" y1="40" x2="64" y2="40" stroke="var(--line)" stroke-width="1.5"/>
+        <line x1="20" y1="28" x2="60" y2="28" stroke="var(--line)" stroke-width="1.5"/>
+        <line x1="20" y1="52" x2="60" y2="52" stroke="var(--line)" stroke-width="1.5"/>
+        <circle cx="40" cy="40" r="3" fill="var(--accent)"/>
+      </svg>
+    </div>
   </div>
 </section>
 
@@ -15,28 +28,20 @@
   <div class="container">
     {% include "lab/_members_tabs.html" %}
 
-    <div class="table-wrap">
-      <table class="data-table">
-        <thead>
-          <tr><th>N°</th><th>Nom et prénom</th><th>Grade</th><th>Université / Institution</th><th>Pays</th></tr>
-        </thead>
-        <tbody>
-          {% for a in associates %}
-          <tr>
-            <td>{{ forloop.counter }}</td>
-            <td class="name-cell">
-              <span class="avatar-chip">{{ a.full_name|slice:":1" }}</span>
-              {{ a.full_name }}
-            </td>
-            <td>{{ a.grade }}</td>
-            <td>{{ a.institution }}</td>
-            <td>{{ a.country }}</td>
-          </tr>
-          {% empty %}
-          <tr><td colspan="5">Aucun chercheur associé renseigné pour le moment.</td></tr>
-          {% endfor %}
-        </tbody>
-      </table>
+    <div class="member-grid stagger">
+      {% for a in associates %}
+      <a href="{{ a.get_absolute_url }}" class="member-card">
+        <div class="member-avatar">
+          {% if a.photo %}<img src="{{ a.photo.url }}" alt="{{ a.full_name }}">{% else %}{{ a.full_name|initials }}{% endif %}
+        </div>
+        <div class="m-name">{{ a.full_name }}</div>
+        <div class="m-role">{{ a.institution }}</div>
+        <span class="m-tag">{{ a.country }}</span>
+        <span class="m-view">Voir le profil →</span>
+      </a>
+      {% empty %}
+      <p>Aucun chercheur associé renseigné pour le moment.</p>
+      {% endfor %}
     </div>
   </div>
 </section>

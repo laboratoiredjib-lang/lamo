@@ -3,11 +3,21 @@
 {% block content %}
 
 <section class="page-header">
-  <div class="container">
-    <div class="breadcrumb"><a href="{% url 'lab:home' %}">Accueil</a><span class="sep">/</span>Partenaires</div>
-    <span class="eyebrow">Réseau</span>
-    <h1>Partenaires</h1>
-    <p>Le LAMO développe des collaborations avec des centres de recherche, des organismes publics et des partenaires internationaux, favorisant la recherche collaborative, la formation et la valorisation des résultats scientifiques.</p>
+  <div class="container page-header-inner">
+    <div class="page-header-text">
+      <div class="breadcrumb"><a href="{% url 'lab:home' %}">Accueil</a><span class="sep">/</span>Partenaires</div>
+      <span class="eyebrow">Réseau</span>
+      <h1>Partenaires</h1>
+      <p>Le LAMO développe des collaborations avec des centres de recherche, des organismes publics et des partenaires internationaux, favorisant la recherche collaborative, la formation et la valorisation des résultats scientifiques.</p>
+    </div>
+    <div class="page-header-icon">
+      <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="24" cy="40" r="10" stroke="var(--teal)" stroke-width="2.5"/>
+        <circle cx="56" cy="40" r="10" stroke="var(--navy)" stroke-width="2.5"/>
+        <path d="M32,36 C38,32 42,32 48,36" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round"/>
+        <path d="M32,44 C38,48 42,48 48,44" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round"/>
+      </svg>
+    </div>
   </div>
 </section>
 

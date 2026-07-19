@@ -65,6 +65,13 @@ def members_permanent(request):
     return render(request, "lab/members_permanent.html", context)
 
 
+def member_permanent_detail(request, pk):
+    member = get_object_or_404(PermanentMember.objects.select_related("team"), pk=pk)
+    others = PermanentMember.objects.exclude(pk=pk)[:4]
+    context = {"profile": LabProfile.load(), "member": member, "others": others, "active_tab": "permanents"}
+    return render(request, "lab/member_permanent_detail.html", context)
+
+
 def members_doctorants(request):
     context = {
         "profile": LabProfile.load(),
@@ -74,6 +81,13 @@ def members_doctorants(request):
     return render(request, "lab/members_doctorants.html", context)
 
 
+def member_doctorant_detail(request, pk):
+    member = get_object_or_404(Doctorant, pk=pk)
+    others = Doctorant.objects.exclude(pk=pk)[:4]
+    context = {"profile": LabProfile.load(), "member": member, "others": others, "active_tab": "doctorants"}
+    return render(request, "lab/member_doctorant_detail.html", context)
+
+
 def members_associates(request):
     context = {
         "profile": LabProfile.load(),
@@ -81,6 +95,13 @@ def members_associates(request):
         "active_tab": "associes",
     }
     return render(request, "lab/members_associates.html", context)
+
+
+def member_associate_detail(request, pk):
+    member = get_object_or_404(AssociateResearcher, pk=pk)
+    others = AssociateResearcher.objects.exclude(pk=pk)[:4]
+    context = {"profile": LabProfile.load(), "member": member, "others": others, "active_tab": "associes"}
+    return render(request, "lab/member_associate_detail.html", context)
 
 
 def partners(request):

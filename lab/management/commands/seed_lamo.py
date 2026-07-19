@@ -34,7 +34,7 @@ class Command(BaseCommand):
         self.seed_profile()
         team_dyn, team_sto = self.seed_teams()
         self.seed_themes(team_dyn, team_sto)
-        self.seed_permanent_members()
+        self.seed_permanent_members(team_dyn, team_sto)
         self.seed_doctorants()
         self.seed_associates()
         self.seed_partners()
@@ -132,17 +132,21 @@ class Command(BaseCommand):
                 title=title, defaults={"team": team, "order": order}
             )
 
-    def seed_permanent_members(self):
+    def seed_permanent_members(self, team_dyn, team_sto):
         members = [
-            ("Dr. Liban ISMAIL", "Maître de conférences en Mathématiques appliquées", True, 1),
-            ("Dr. Yahyeh SOULEIMAN", "Maître de conférences en Mathématiques appliquées", False, 2),
-            ("Dr. Souleiman OMAR", "Maître de conférences en Mathématiques fondamentales", False, 3),
-            ("Dr. Doualeh ABDILLAHI", "Maître de conférences en Statistiques appliquées", False, 4),
+            ("Dr. Liban ISMAIL", "Maître de conférences en Mathématiques appliquées", True, team_dyn,
+             "Directeur du LAMO. Ses travaux portent sur la modélisation et le contrôle de systèmes dynamiques complexes, avec des collaborations internationales autour de l'encadrement doctoral."),
+            ("Dr. Yahyeh SOULEIMAN", "Maître de conférences en Mathématiques appliquées", False, team_sto,
+             "Recherches en méthodes probabilistes et statistiques appliquées, avec un fort investissement dans l'encadrement de doctorants en cotutelle."),
+            ("Dr. Souleiman OMAR", "Maître de conférences en Mathématiques fondamentales", False, team_dyn,
+             "Travaux en analyse mathématique et systèmes dynamiques, au service de la modélisation de phénomènes complexes."),
+            ("Dr. Doualeh ABDILLAHI", "Maître de conférences en Statistiques appliquées", False, team_sto,
+             "Spécialiste de statistique appliquée et de science des données, au service de projets interdisciplinaires du laboratoire."),
         ]
-        for full_name, title, is_director, order in members:
+        for order, (full_name, title, is_director, team, bio) in enumerate(members, start=1):
             PermanentMember.objects.update_or_create(
                 full_name=full_name,
-                defaults={"title": title, "is_director": is_director, "order": order},
+                defaults={"title": title, "is_director": is_director, "team": team, "bio": bio, "order": order},
             )
 
     def seed_doctorants(self):
@@ -163,6 +167,7 @@ class Command(BaseCommand):
                     "partner_university": partner_university,
                     "thesis_director": thesis_director,
                     "co_supervisor": co_supervisor,
+                    "bio": f"Thèse en cotutelle avec {partner_university}, sous la direction de {thesis_director}.",
                     "order": order,
                 },
             )
@@ -178,7 +183,13 @@ class Command(BaseCommand):
         for order, (full_name, grade, institution, country) in enumerate(rows, start=1):
             AssociateResearcher.objects.update_or_create(
                 full_name=full_name,
-                defaults={"grade": grade, "institution": institution, "country": country, "order": order},
+                defaults={
+                    "grade": grade,
+                    "institution": institution,
+                    "country": country,
+                    "bio": f"Chercheur associé au LAMO, {grade.lower()} à {institution}.",
+                    "order": order,
+                },
             )
 
     def seed_partners(self):

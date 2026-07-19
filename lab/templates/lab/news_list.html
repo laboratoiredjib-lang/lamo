@@ -3,11 +3,20 @@
 {% block content %}
 
 <section class="page-header">
-  <div class="container">
-    <div class="breadcrumb"><a href="{% url 'lab:home' %}">Accueil</a><span class="sep">/</span>Actualités</div>
-    <span class="eyebrow">Vie du laboratoire</span>
-    <h1>Actualités</h1>
-    <p>Séminaires, soutenances, publications et événements scientifiques du LAMO.</p>
+  <div class="container page-header-inner">
+    <div class="page-header-text">
+      <div class="breadcrumb"><a href="{% url 'lab:home' %}">Accueil</a><span class="sep">/</span>Actualités</div>
+      <span class="eyebrow">Vie du laboratoire</span>
+      <h1>Actualités</h1>
+      <p>Séminaires, soutenances, publications et événements scientifiques du LAMO.</p>
+    </div>
+    <div class="page-header-icon">
+      <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M40,16 C30,16 24,24 24,34 V46 L18,56 H62 L56,46 V34 C56,24 50,16 40,16 Z" stroke="var(--navy)" stroke-width="2.5" stroke-linejoin="round"/>
+        <path d="M33,62 C33,66 36,68 40,68 C44,68 47,66 47,62" stroke="var(--teal)" stroke-width="2.5"/>
+        <circle cx="40" cy="16" r="3" fill="var(--accent)"/>
+      </svg>
+    </div>
   </div>
 </section>
 

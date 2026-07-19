@@ -22,11 +22,11 @@
 
 <header class="site-header">
   <div class="container header-row">
-    <a href="{% url 'lab:home' %}" class="brand-univ">
-      {% if site_profile.university_logo %}<img src="{{ site_profile.university_logo.url }}" alt="Université de Djibouti">{% else %}<img src="{% static 'lab/img/logo_universite_djibouti.png' %}" alt="Université de Djibouti">{% endif %}
+    <a href="{% url 'lab:home' %}" class="brand-lamo">
+      {% if site_profile.logo %}<img src="{{ site_profile.logo.url }}" alt="Logo {{ site_profile.acronym }}">{% else %}<img src="{% static 'lab/img/logo_lamo.png' %}" alt="Logo {{ site_profile.acronym }}">{% endif %}
       <span class="brand-text">
-        <span class="name">Université de Djibouti</span>
-        <span class="sub">Établissement de rattachement</span>
+        <span class="name">{{ site_profile.acronym }}</span>
+        <span class="sub">Laboratoire de recherche</span>
       </span>
     </a>
 
@@ -61,11 +61,11 @@
       </ul>
     </nav>
 
-    <a href="{% url 'lab:home' %}" class="brand-lamo">
-      {% if site_profile.logo %}<img src="{{ site_profile.logo.url }}" alt="Logo {{ site_profile.acronym }}">{% else %}<img src="{% static 'lab/img/logo_lamo.png' %}" alt="Logo {{ site_profile.acronym }}">{% endif %}
+    <a href="{% url 'lab:home' %}" class="brand-univ">
+      {% if site_profile.university_logo %}<img src="{{ site_profile.university_logo.url }}" alt="Université de Djibouti">{% else %}<img src="{% static 'lab/img/logo_universite_djibouti.png' %}" alt="Université de Djibouti">{% endif %}
       <span class="brand-text">
-        <span class="name">{{ site_profile.acronym }}</span>
-        <span class="sub">Laboratoire de recherche</span>
+        <span class="name">Université de Djibouti</span>
+        <span class="sub">Établissement de rattachement</span>
       </span>
     </a>
 
@@ -90,9 +90,9 @@
     <div class="footer-grid">
       <div>
         <div class="footer-brand">
-          {% if site_profile.university_logo %}<img src="{{ site_profile.university_logo.url }}" alt="Université de Djibouti">{% endif %}
-          <span class="sep"></span>
           {% if site_profile.logo %}<img src="{{ site_profile.logo.url }}" alt="Logo {{ site_profile.acronym }}">{% endif %}
+          <span class="sep"></span>
+          {% if site_profile.university_logo %}<img src="{{ site_profile.university_logo.url }}" alt="Université de Djibouti">{% endif %}
         </div>
         <p class="footer-desc">{{ site_profile.name }} — unité de recherche du {{ site_profile.affiliation }}, dédiée aux mathématiques appliquées, à la statistique, à l'optimisation, à la simulation numérique et à la science des données.</p>
       </div>

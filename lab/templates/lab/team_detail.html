@@ -1,13 +1,30 @@
 {% extends "lab/base.html" %}
+{% load lab_extras %}
 {% block title %}{{ team.name }} — {{ site_profile.acronym }}{% endblock %}
 {% block content %}
 
 <section class="page-header">
-  <div class="container">
-    <div class="breadcrumb"><a href="{% url 'lab:home' %}">Accueil</a><span class="sep">/</span><a href="{% url 'lab:team_list' %}">Équipes</a><span class="sep">/</span>{{ team.name }}</div>
-    <span class="eyebrow">Équipe de recherche</span>
-    <h1>{{ team.name }}</h1>
-    <p>{{ team.short_description }}</p>
+  <div class="container page-header-inner">
+    <div class="page-header-text">
+      <div class="breadcrumb"><a href="{% url 'lab:home' %}">Accueil</a><span class="sep">/</span><a href="{% url 'lab:team_list' %}">Équipes</a><span class="sep">/</span>{{ team.name }}</div>
+      <span class="eyebrow">Équipe de recherche</span>
+      <h1>{{ team.name }}</h1>
+      <p>{{ team.short_description }}</p>
+    </div>
+    <div class="page-header-icon">
+      {% if team.slug == "stochastiques-sciences-donnees" %}
+      <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <line x1="10" y1="62" x2="70" y2="62" stroke="var(--line)" stroke-width="2"/>
+        <path d="M10,62 C24,62 28,18 40,16 C52,18 56,62 70,62" fill="var(--teal-tint)" stroke="var(--teal)" stroke-width="2.5"/>
+        <line x1="40" y1="16" x2="40" y2="62" stroke="var(--navy)" stroke-width="1.5" stroke-dasharray="3 3" opacity=".5"/>
+      </svg>
+      {% else %}
+      <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M20,20 C46,16 62,32 58,50 C55,64 38,72 26,64 C16,58 14,44 24,38 C31,34 40,38 38,46" stroke="var(--teal)" stroke-width="2.5" stroke-linecap="round"/>
+        <circle cx="38" cy="46" r="3.5" fill="var(--accent)"/>
+      </svg>
+      {% endif %}
+    </div>
   </div>
 </section>
 
@@ -20,7 +37,7 @@
         <div class="prose"><p>{{ team.description }}</p></div>
 
         {% if members %}
-        <h2 style="margin-top:48px;">Membres de l'équipe</h2>
+        <h2 style="margin-top:24px;">Membres de l'équipe</h2>
         <div class="table-wrap">
           <table class="data-table">
             <thead><tr><th>Nom</th><th>Grade / Spécialité</th></tr></thead>
@@ -28,8 +45,8 @@
               {% for m in members %}
               <tr>
                 <td class="name-cell">
-                  <span class="avatar-chip">{{ m.full_name|slice:":1" }}</span>
-                  {{ m.full_name }}{% if m.is_director %}<span class="director-tag">Directeur</span>{% endif %}
+                  <span class="avatar-chip">{{ m.full_name|initials }}</span>
+                  <a href="{{ m.get_absolute_url }}" style="color:inherit;font-weight:inherit;">{{ m.full_name }}</a>{% if m.is_director %}<span class="director-tag">Directeur</span>{% endif %}
                 </td>
                 <td>{{ m.title }}</td>
               </tr>

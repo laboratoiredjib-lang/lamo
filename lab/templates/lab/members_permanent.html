@@ -1,13 +1,23 @@
 {% extends "lab/base.html" %}
+{% load lab_extras %}
 {% block title %}Membres permanents — {{ site_profile.acronym }}{% endblock %}
 {% block content %}
 
 <section class="page-header">
-  <div class="container">
-    <div class="breadcrumb"><a href="{% url 'lab:home' %}">Accueil</a><span class="sep">/</span>Membres<span class="sep">/</span>Permanents</div>
-    <span class="eyebrow">Équipe scientifique</span>
-    <h1>Membres permanents</h1>
-    <p>Les enseignants-chercheurs qui animent les activités scientifiques et pédagogiques du laboratoire.</p>
+  <div class="container page-header-inner">
+    <div class="page-header-text">
+      <div class="breadcrumb"><a href="{% url 'lab:home' %}">Accueil</a><span class="sep">/</span>Membres<span class="sep">/</span>Permanents</div>
+      <span class="eyebrow">Équipe scientifique</span>
+      <h1>Membres permanents</h1>
+      <p>Les enseignants-chercheurs qui animent les activités scientifiques et pédagogiques du laboratoire.</p>
+    </div>
+    <div class="page-header-icon">
+      <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="40" cy="28" r="12" stroke="var(--navy)" stroke-width="2.5"/>
+        <path d="M16,66 C16,50 28,44 40,44 C52,44 64,50 64,66" stroke="var(--navy)" stroke-width="2.5" stroke-linecap="round"/>
+        <circle cx="40" cy="28" r="3" fill="var(--accent)"/>
+      </svg>
+    </div>
   </div>
 </section>
 
@@ -15,26 +25,20 @@
   <div class="container">
     {% include "lab/_members_tabs.html" %}
 
-    <div class="table-wrap">
-      <table class="data-table">
-        <thead>
-          <tr><th>N°</th><th>Nom et prénom</th><th>Grade / Spécialité</th></tr>
-        </thead>
-        <tbody>
-          {% for m in members %}
-          <tr>
-            <td>{{ forloop.counter }}</td>
-            <td class="name-cell">
-              <span class="avatar-chip">{{ m.full_name|slice:":1" }}</span>
-              {{ m.full_name }}{% if m.is_director %}<span class="director-tag">Directeur</span>{% endif %}
-            </td>
-            <td>{{ m.title }}</td>
-          </tr>
-          {% empty %}
-          <tr><td colspan="3">Aucun membre renseigné pour le moment.</td></tr>
-          {% endfor %}
-        </tbody>
-      </table>
+    <div class="member-grid stagger">
+      {% for m in members %}
+      <a href="{{ m.get_absolute_url }}" class="member-card">
+        <div class="member-avatar">
+          {% if m.photo %}<img src="{{ m.photo.url }}" alt="{{ m.full_name }}">{% else %}{{ m.full_name|initials }}{% endif %}
+        </div>
+        <div class="m-name">{{ m.full_name }}</div>
+        <div class="m-role">{{ m.title }}</div>
+        {% if m.is_director %}<span class="m-tag">Directeur</span>{% endif %}
+        <span class="m-view">Voir le profil →</span>
+      </a>
+      {% empty %}
+      <p>Aucun membre renseigné pour le moment.</p>
+      {% endfor %}
     </div>
   </div>
 </section>

@@ -1,0 +1,81 @@
+{% extends "lab/base.html" %}
+{% load lab_extras %}
+{% block title %}{{ member.full_name }} — {{ site_profile.acronym }}{% endblock %}
+{% block content %}
+
+<section class="page-header">
+  <div class="container page-header-inner">
+    <div class="page-header-text">
+      <div class="breadcrumb"><a href="{% url 'lab:home' %}">Accueil</a><span class="sep">/</span><a href="{% url 'lab:members_associates' %}">Membres</a><span class="sep">/</span>{{ member.full_name }}</div>
+      <span class="eyebrow" style="margin-bottom:0;">Fiche du chercheur associé</span>
+    </div>
+    <div class="page-header-icon">
+      <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="40" cy="40" r="24" stroke="var(--navy)" stroke-width="2.5"/>
+        <ellipse cx="40" cy="40" rx="10" ry="24" stroke="var(--line)" stroke-width="1.5"/>
+        <line x1="16" y1="40" x2="64" y2="40" stroke="var(--line)" stroke-width="1.5"/>
+        <line x1="20" y1="28" x2="60" y2="28" stroke="var(--line)" stroke-width="1.5"/>
+        <line x1="20" y1="52" x2="60" y2="52" stroke="var(--line)" stroke-width="1.5"/>
+        <circle cx="40" cy="40" r="3" fill="var(--accent)"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<section class="section reveal">
+  <div class="container">
+    <a href="{% url 'lab:members_associates' %}" class="back-link">← Tous les chercheurs associés</a>
+
+    <div class="split">
+      <div>
+        <div class="member-hero">
+          <div class="member-avatar">
+            {% if member.photo %}<img src="{{ member.photo.url }}" alt="{{ member.full_name }}">{% else %}{{ member.full_name|initials }}{% endif %}
+          </div>
+          <div>
+            <h1>{{ member.full_name }}</h1>
+            <div class="role">{{ member.grade }} — {{ member.institution }}</div>
+            <div class="tags">
+              <span class="tag tag--teal">{{ member.country }}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="info-grid">
+          <div class="info-tile"><strong>Grade</strong><span>{{ member.grade }}</span></div>
+          <div class="info-tile"><strong>Université / Institution</strong><span>{{ member.institution }}</span></div>
+          <div class="info-tile"><strong>Pays</strong><span>{{ member.country }}</span></div>
+        </div>
+
+        {% if member.bio %}
+        <div class="prose"><p>{{ member.bio }}</p></div>
+        {% endif %}
+      </div>
+
+      <div class="side-panel">
+        <h4>Collaboration</h4>
+        <ul>
+          <li>Chercheur associé au {{ profile.acronym }}</li>
+          <li>{{ member.institution }}, {{ member.country }}</li>
+        </ul>
+      </div>
+    </div>
+
+    {% if others %}
+    <div style="margin-top:32px;">
+      <div class="section-head"><span class="eyebrow">Voir aussi</span><h2>Autres chercheurs associés</h2></div>
+      <div class="related-members">
+        {% for o in others %}
+        <a href="{{ o.get_absolute_url }}" class="member-card">
+          <div class="member-avatar">{% if o.photo %}<img src="{{ o.photo.url }}" alt="{{ o.full_name }}">{% else %}{{ o.full_name|initials }}{% endif %}</div>
+          <div class="m-name">{{ o.full_name }}</div>
+          <div class="m-role">{{ o.institution }}</div>
+        </a>
+        {% endfor %}
+      </div>
+    </div>
+    {% endif %}
+  </div>
+</section>
+
+{% endblock %}
