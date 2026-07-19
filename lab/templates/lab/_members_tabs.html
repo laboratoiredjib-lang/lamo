@@ -1,0 +1,6 @@
+{% load static %}
+<div class="tab-nav">
+  <a href="{% url 'lab:members_permanent' %}" class="{% if active_tab == 'permanents' %}active{% endif %}">Membres permanents</a>
+  <a href="{% url 'lab:members_doctorants' %}" class="{% if active_tab == 'doctorants' %}active{% endif %}">Doctorants</a>
+  <a href="{% url 'lab:members_associates' %}" class="{% if active_tab == 'associes' %}active{% endif %}">Chercheurs associés</a>
+</div>

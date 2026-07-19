@@ -1,0 +1,149 @@
+{% load static %}<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{% block title %}{{ site_profile.acronym }} — {{ site_profile.name }}{% endblock %}</title>
+<meta name="description" content="{% block meta_description %}Le {{ site_profile.acronym }} est une unité de recherche du Centre de Recherche en Mathématiques et Numérique de l'Université de Djibouti, spécialisée en mathématiques appliquées, statistique et optimisation.{% endblock %}">
+<link rel="icon" type="image/png" href="{% static 'lab/img/logo_lamo.png' %}">
+<link rel="stylesheet" href="{% static 'lab/css/style.css' %}?v={% now 'U' %}">
+</head>
+<body>
+
+<div class="topbar">
+  <div class="container">
+    <span>{{ site_profile.affiliation }}</span>
+    <div class="topbar-links">
+      {% if site_profile.email_primary %}<a href="mailto:{{ site_profile.email_primary }}">{{ site_profile.email_primary }}</a>{% endif %}
+      <a href="{% url 'lab:contact' %}">Nous contacter</a>
+    </div>
+  </div>
+</div>
+
+<header class="site-header">
+  <div class="container header-row">
+    <a href="{% url 'lab:home' %}" class="brand-univ">
+      {% if site_profile.university_logo %}<img src="{{ site_profile.university_logo.url }}" alt="Université de Djibouti">{% else %}<img src="{% static 'lab/img/logo_universite_djibouti.png' %}" alt="Université de Djibouti">{% endif %}
+      <span class="brand-text">
+        <span class="name">Université de Djibouti</span>
+        <span class="sub">Établissement de rattachement</span>
+      </span>
+    </a>
+
+    <nav class="main-nav" id="main-nav">
+      <ul>
+        <li><a href="{% url 'lab:home' %}">Accueil</a></li>
+
+        <li class="has-dropdown">
+          <button type="button">Équipes <span class="caret"></span></button>
+          <div class="dropdown">
+            <a href="{% url 'lab:team_list' %}"><strong>Vue d'ensemble</strong><small>Les deux équipes du laboratoire</small></a>
+            {% for team in nav_teams %}
+            <a href="{{ team.get_absolute_url }}">{{ team.name }}<small>{{ team.short_description|truncatechars:60 }}</small></a>
+            {% endfor %}
+          </div>
+        </li>
+
+        <li><a href="{% url 'lab:themes' %}">Thématiques</a></li>
+
+        <li class="has-dropdown">
+          <button type="button">Membres <span class="caret"></span></button>
+          <div class="dropdown">
+            <a href="{% url 'lab:members_permanent' %}"><strong>Membres permanents</strong><small>Enseignants-chercheurs</small></a>
+            <a href="{% url 'lab:members_doctorants' %}"><strong>Doctorants</strong><small>Thèses en cours</small></a>
+            <a href="{% url 'lab:members_associates' %}"><strong>Chercheurs associés</strong><small>Partenaires internationaux</small></a>
+          </div>
+        </li>
+
+        <li><a href="{% url 'lab:partners' %}">Partenaires</a></li>
+        <li><a href="{% url 'lab:news_list' %}">Actualités</a></li>
+        <li><a href="{% url 'lab:contact' %}">Contact</a></li>
+      </ul>
+    </nav>
+
+    <a href="{% url 'lab:home' %}" class="brand-lamo">
+      {% if site_profile.logo %}<img src="{{ site_profile.logo.url }}" alt="Logo {{ site_profile.acronym }}">{% else %}<img src="{% static 'lab/img/logo_lamo.png' %}" alt="Logo {{ site_profile.acronym }}">{% endif %}
+      <span class="brand-text">
+        <span class="name">{{ site_profile.acronym }}</span>
+        <span class="sub">Laboratoire de recherche</span>
+      </span>
+    </a>
+
+    <button class="nav-toggle" id="nav-toggle" aria-label="Ouvrir le menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<div class="math-banner">
+  <div class="container">
+    {% include "lab/_hero_illustration.html" %}
+  </div>
+</div>
+
+<main>
+{% block content %}{% endblock %}
+</main>
+
+<footer class="site-footer">
+  <div class="container footer-top">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand">
+          {% if site_profile.university_logo %}<img src="{{ site_profile.university_logo.url }}" alt="Université de Djibouti">{% endif %}
+          <span class="sep"></span>
+          {% if site_profile.logo %}<img src="{{ site_profile.logo.url }}" alt="Logo {{ site_profile.acronym }}">{% endif %}
+        </div>
+        <p class="footer-desc">{{ site_profile.name }} — unité de recherche du {{ site_profile.affiliation }}, dédiée aux mathématiques appliquées, à la statistique, à l'optimisation, à la simulation numérique et à la science des données.</p>
+      </div>
+
+      <div>
+        <h5>Le laboratoire</h5>
+        <ul>
+          <li><a href="{% url 'lab:team_list' %}">Nos équipes</a></li>
+          <li><a href="{% url 'lab:themes' %}">Thématiques de recherche</a></li>
+          <li><a href="{% url 'lab:partners' %}">Partenaires</a></li>
+          <li><a href="{% url 'lab:news_list' %}">Actualités</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h5>Membres</h5>
+        <ul>
+          <li><a href="{% url 'lab:members_permanent' %}">Membres permanents</a></li>
+          <li><a href="{% url 'lab:members_doctorants' %}">Doctorants</a></li>
+          <li><a href="{% url 'lab:members_associates' %}">Chercheurs associés</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h5>Contact</h5>
+        <ul class="footer-contact">
+          <li>{{ site_profile.address }}</li>
+          {% if site_profile.email_primary %}<li><a href="mailto:{{ site_profile.email_primary }}">{{ site_profile.email_primary }}</a></li>{% endif %}
+          {% if site_profile.director_name %}<li>Direction : {{ site_profile.director_name }}</li>{% endif %}
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  {% if footer_partners %}
+  <div class="container footer-partners">
+    <div class="label">Nos partenaires académiques &amp; institutionnels</div>
+    <div class="partner-strip">
+      {% for p in footer_partners %}
+      <span class="chip">{% if p.logo %}<img src="{{ p.logo.url }}" alt="{{ p.name }}">{% endif %}</span>
+      {% endfor %}
+    </div>
+  </div>
+  {% endif %}
+
+  <div class="container footer-bottom">
+    <span>&copy; {% now "Y" %} {{ site_profile.acronym }} — {{ site_profile.name }}</span>
+    <span>Campus de Balbala, Université de Djibouti</span>
+  </div>
+</footer>
+
+<script src="{% static 'lab/js/main.js' %}?v={% now 'U' %}"></script>
+</body>
+</html>

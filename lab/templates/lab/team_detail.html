@@ -1,0 +1,57 @@
+{% extends "lab/base.html" %}
+{% block title %}{{ team.name }} — {{ site_profile.acronym }}{% endblock %}
+{% block content %}
+
+<section class="page-header">
+  <div class="container">
+    <div class="breadcrumb"><a href="{% url 'lab:home' %}">Accueil</a><span class="sep">/</span><a href="{% url 'lab:team_list' %}">Équipes</a><span class="sep">/</span>{{ team.name }}</div>
+    <span class="eyebrow">Équipe de recherche</span>
+    <h1>{{ team.name }}</h1>
+    <p>{{ team.short_description }}</p>
+  </div>
+</section>
+
+<section class="section reveal">
+  <div class="container">
+    <div class="split">
+      <div>
+        <span class="eyebrow">Présentation</span>
+        <h2>Objectifs scientifiques</h2>
+        <div class="prose"><p>{{ team.description }}</p></div>
+
+        {% if members %}
+        <h2 style="margin-top:48px;">Membres de l'équipe</h2>
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead><tr><th>Nom</th><th>Grade / Spécialité</th></tr></thead>
+            <tbody>
+              {% for m in members %}
+              <tr>
+                <td class="name-cell">
+                  <span class="avatar-chip">{{ m.full_name|slice:":1" }}</span>
+                  {{ m.full_name }}{% if m.is_director %}<span class="director-tag">Directeur</span>{% endif %}
+                </td>
+                <td>{{ m.title }}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        {% endif %}
+      </div>
+
+      <div class="side-panel">
+        <h4>Thématiques associées</h4>
+        <ul>
+          {% for theme in themes %}
+          <li>{{ theme.title }}</li>
+          {% empty %}
+          <li>Aucune thématique renseignée pour le moment.</li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

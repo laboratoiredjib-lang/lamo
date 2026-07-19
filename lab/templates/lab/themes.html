@@ -1,0 +1,29 @@
+{% extends "lab/base.html" %}
+{% block title %}Thématiques de recherche — {{ site_profile.acronym }}{% endblock %}
+{% block content %}
+
+<section class="page-header">
+  <div class="container">
+    <div class="breadcrumb"><a href="{% url 'lab:home' %}">Accueil</a><span class="sep">/</span>Thématiques</div>
+    <span class="eyebrow">Recherche</span>
+    <h1>Thématiques de recherche</h1>
+    <p>Les travaux du laboratoire couvrent six axes complémentaires, portés par ses deux équipes de recherche.</p>
+  </div>
+</section>
+
+<section class="section reveal">
+  <div class="container">
+    <div class="grid-3 stagger">
+      {% for theme in themes %}
+      <div class="theme-card">
+        <div class="num">{{ forloop.counter }}</div>
+        <h3>{{ theme.title }}</h3>
+        {% if theme.team %}<span class="team-tag">{{ theme.team.name }}</span>{% endif %}
+        {% if theme.description %}<p style="margin-top:10px;">{{ theme.description }}</p>{% endif %}
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% endblock %}

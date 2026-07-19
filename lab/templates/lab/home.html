@@ -1,0 +1,183 @@
+{% extends "lab/base.html" %}
+{% load static %}
+{% block content %}
+
+<section class="hero">
+  <div class="container hero-inner">
+    <div>
+      <span class="eyebrow">{{ profile.affiliation }}</span>
+      <h1>{{ profile.name }} ({{ profile.acronym }})</h1>
+      <p class="lede">Mathématiques appliquées, statistique, optimisation, simulation numérique et science des données au service de Djibouti et de la région.</p>
+      <div class="hero-actions">
+        <a href="{% url 'lab:team_list' %}" class="btn btn-primary">Découvrir nos équipes</a>
+        <a href="{% url 'lab:contact' %}" class="btn btn-line">Nous contacter</a>
+      </div>
+    </div>
+
+    <div class="hero-stats">
+      <div class="hero-stat"><div class="num">{{ stats.teams }}</div><div class="lbl">Équipes de recherche</div></div>
+      <div class="hero-stat"><div class="num">{{ stats.permanents }}</div><div class="lbl">Membres permanents</div></div>
+      <div class="hero-stat"><div class="num">{{ stats.doctorants }}</div><div class="lbl">Doctorants</div></div>
+      <div class="hero-stat"><div class="num">{{ stats.associates }}</div><div class="lbl">Chercheurs associés</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="layout">
+
+      <aside class="col-side">
+        <div class="info-box">
+          <h4>Informations</h4>
+          <div class="field">
+            <strong>Directeur</strong>
+            <span>{{ profile.director_name }}</span>
+          </div>
+          {% if profile.email_primary %}
+          <div class="field">
+            <strong>Email</strong>
+            <a href="mailto:{{ profile.email_primary }}">{{ profile.email_primary }}</a>
+          </div>
+          {% endif %}
+          <div class="field">
+            <strong>Adresse</strong>
+            <span>{{ profile.address }}</span>
+          </div>
+        </div>
+
+        <div class="info-box institution-box">
+          <h4>Établissement de rattachement</h4>
+          {% if profile.university_logo %}
+          <img src="{{ profile.university_logo.url }}" alt="Université de Djibouti">
+          {% else %}
+          <img src="{% static 'lab/img/logo_universite_djibouti.png' %}" alt="Université de Djibouti">
+          {% endif %}
+          <div class="caption">Université de Djibouti</div>
+        </div>
+
+        <div class="info-box">
+          <h4>Nos partenaires</h4>
+          <div class="partner-mini-grid">
+            {% for p in partners|slice:":6" %}
+            <div class="tile"><img src="{{ p.logo.url }}" alt="{{ p.name }}" title="{{ p.name }}"></div>
+            {% endfor %}
+          </div>
+          <p style="margin-top:14px;font-size:0.86rem;"><a href="{% url 'lab:partners' %}">Voir tous les partenaires</a></p>
+        </div>
+      </aside>
+
+      <div class="col-main">
+        <h2>Accueil</h2>
+        <div class="prose">
+          <p>{{ profile.mission }}</p>
+          {% for para in profile.presentation_extra.splitlines %}
+            {% if para %}<p>{{ para }}</p>{% endif %}
+          {% endfor %}
+        </div>
+
+        <div class="axis-block">
+          <p>{{ profile.teams_intro }}</p>
+        </div>
+
+        <p><strong>Domaines d'application :</strong></p>
+        <ul class="simple-list">
+          <li>Santé publique et épidémiologie</li>
+          <li>Transports et logistique portuaire</li>
+          <li>Environnement, énergie et gestion des risques</li>
+          <li>Économie</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="section section--alt reveal">
+  <div class="container">
+    <div class="section-head centered">
+      <span class="eyebrow">Organisation scientifique</span>
+      <h2>Nos équipes de recherche</h2>
+    </div>
+    <div class="grid-2 stagger">
+      {% for team in teams %}
+      <div class="team-card">
+        <div class="index">Équipe {{ forloop.counter }}</div>
+        <h3>{{ team.name }}</h3>
+        <p>{{ team.description }}</p>
+        <a href="{{ team.get_absolute_url }}" class="team-link">Découvrir l'équipe →</a>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="section reveal">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Recherche</span>
+      <h2>Thématiques de recherche</h2>
+      <p class="lede">Six axes structurent les travaux menés au LAMO, à l'intersection de l'analyse mathématique, de la statistique et de l'aide à la décision.</p>
+    </div>
+    <div class="grid-3 stagger">
+      {% for theme in themes %}
+      <div class="theme-card">
+        <div class="num">0{{ forloop.counter }}</div>
+        <h3>{{ theme.title }}</h3>
+        {% if theme.team %}<span class="team-tag">{{ theme.team.name }}</span>{% endif %}
+      </div>
+      {% endfor %}
+    </div>
+    <p style="margin-top:30px;"><a href="{% url 'lab:themes' %}" class="btn btn-navy">Voir toutes les thématiques</a></p>
+  </div>
+</section>
+
+{% if news %}
+<section class="section section--alt reveal">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Vie du laboratoire</span>
+      <h2>Actualités</h2>
+    </div>
+    <div class="grid-3 stagger">
+      {% for item in news %}
+      <div class="news-card">
+        <div class="news-date"><span class="d">{{ item.date|date:"d" }}</span><span class="m">{{ item.date|date:"M Y" }}</span></div>
+        <div>
+          <h3 style="font-size:1rem;">{{ item.title }}</h3>
+          <p style="margin:0;font-size:0.88rem;">{{ item.excerpt }}</p>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+<section class="section reveal">
+  <div class="container">
+    <div class="section-head centered">
+      <span class="eyebrow">Réseau</span>
+      <h2>Ils collaborent avec le LAMO</h2>
+    </div>
+    <div class="grid-4 stagger">
+      {% for p in partners %}
+      <div class="partner-tile"><img src="{{ p.logo.url }}" alt="{{ p.name }}" title="{{ p.name }}"></div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="section reveal">
+  <div class="container">
+    <div class="join-box">
+      <div>
+        <h3>Rejoindre le LAMO</h3>
+        <p>Doctorants, chercheurs associés et partenaires institutionnels sont invités à contacter le laboratoire pour construire une collaboration scientifique.</p>
+      </div>
+      <a href="{% url 'lab:contact' %}" class="btn btn-primary">Prendre contact</a>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,45 @@
+{% extends "lab/base.html" %}
+{% block title %}Doctorants — {{ site_profile.acronym }}{% endblock %}
+{% block content %}
+
+<section class="page-header">
+  <div class="container">
+    <div class="breadcrumb"><a href="{% url 'lab:home' %}">Accueil</a><span class="sep">/</span>Membres<span class="sep">/</span>Doctorants</div>
+    <span class="eyebrow">Formation doctorale</span>
+    <h1>Doctorants</h1>
+    <p>Les thèses menées au LAMO, souvent en cotutelle avec des universités partenaires en France, en Éthiopie et ailleurs.</p>
+  </div>
+</section>
+
+<section class="section reveal">
+  <div class="container">
+    {% include "lab/_members_tabs.html" %}
+
+    <div class="table-wrap">
+      <table class="data-table">
+        <thead>
+          <tr><th>N°</th><th>Nom et prénom</th><th>Année</th><th>Université partenaire</th><th>Directeur de thèse</th><th>Co-encadrant</th></tr>
+        </thead>
+        <tbody>
+          {% for d in doctorants %}
+          <tr>
+            <td>{{ forloop.counter }}</td>
+            <td class="name-cell">
+              <span class="avatar-chip">{{ d.full_name|slice:":1" }}</span>
+              {{ d.full_name }}
+            </td>
+            <td>{{ d.start_year }}</td>
+            <td>{{ d.partner_university }}</td>
+            <td>{{ d.thesis_director }}</td>
+            <td>{{ d.co_supervisor|default:"—" }}</td>
+          </tr>
+          {% empty %}
+          <tr><td colspan="6">Aucun doctorant renseigné pour le moment.</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

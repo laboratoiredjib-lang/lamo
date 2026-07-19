@@ -1,0 +1,44 @@
+{% extends "lab/base.html" %}
+{% block title %}Chercheurs associés — {{ site_profile.acronym }}{% endblock %}
+{% block content %}
+
+<section class="page-header">
+  <div class="container">
+    <div class="breadcrumb"><a href="{% url 'lab:home' %}">Accueil</a><span class="sep">/</span>Membres<span class="sep">/</span>Associés</div>
+    <span class="eyebrow">Réseau international</span>
+    <h1>Chercheurs associés</h1>
+    <p>Des collègues d'universités partenaires qui contribuent aux encadrements de thèse et aux projets scientifiques du laboratoire.</p>
+  </div>
+</section>
+
+<section class="section reveal">
+  <div class="container">
+    {% include "lab/_members_tabs.html" %}
+
+    <div class="table-wrap">
+      <table class="data-table">
+        <thead>
+          <tr><th>N°</th><th>Nom et prénom</th><th>Grade</th><th>Université / Institution</th><th>Pays</th></tr>
+        </thead>
+        <tbody>
+          {% for a in associates %}
+          <tr>
+            <td>{{ forloop.counter }}</td>
+            <td class="name-cell">
+              <span class="avatar-chip">{{ a.full_name|slice:":1" }}</span>
+              {{ a.full_name }}
+            </td>
+            <td>{{ a.grade }}</td>
+            <td>{{ a.institution }}</td>
+            <td>{{ a.country }}</td>
+          </tr>
+          {% empty %}
+          <tr><td colspan="5">Aucun chercheur associé renseigné pour le moment.</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,53 @@
+{% extends "lab/base.html" %}
+{% block title %}Contact — {{ site_profile.acronym }}{% endblock %}
+{% block content %}
+
+<section class="page-header">
+  <div class="container">
+    <div class="breadcrumb"><a href="{% url 'lab:home' %}">Accueil</a><span class="sep">/</span>Contact</div>
+    <span class="eyebrow">Nous écrire</span>
+    <h1>Contact</h1>
+    <p>Pour toute question scientifique, demande de collaboration ou candidature au doctorat, notre équipe vous répond volontiers.</p>
+  </div>
+</section>
+
+<section class="section reveal">
+  <div class="container">
+    <div class="contact-grid">
+      <div class="info-box">
+        <h4>Coordonnées</h4>
+        <div class="field">
+          <strong>Laboratoire</strong>
+          <span>{{ profile.name }} ({{ profile.acronym }})</span>
+        </div>
+        <div class="field">
+          <strong>Adresse</strong>
+          <span>{{ profile.address }}</span>
+        </div>
+        <div class="field">
+          <strong>Direction</strong>
+          <span>{{ profile.director_name }}</span>
+        </div>
+        <div class="field">
+          <strong>Emails</strong>
+          {% if profile.email_primary %}<a href="mailto:{{ profile.email_primary }}">{{ profile.email_primary }}</a><br>{% endif %}
+          {% if profile.email_secondary %}<a href="mailto:{{ profile.email_secondary }}">{{ profile.email_secondary }}</a>{% endif %}
+        </div>
+        <div style="margin-top:20px;">
+          <a href="mailto:{{ profile.email_primary }}" class="btn btn-primary">Écrire au laboratoire</a>
+        </div>
+      </div>
+
+      <div class="map-frame">
+        <iframe
+          src="https://www.openstreetmap.org/export/embed.html?bbox=43.0956%2C11.5321%2C43.1856%2C11.6121&layer=mapnik"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          title="Localisation du campus de Balbala, Université de Djibouti">
+        </iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends "lab/base.html" %}
+{% block title %}Nos équipes — {{ site_profile.acronym }}{% endblock %}
+{% block content %}
+
+<section class="page-header">
+  <div class="container">
+    <div class="breadcrumb"><a href="{% url 'lab:home' %}">Accueil</a><span class="sep">/</span>Équipes</div>
+    <span class="eyebrow">Organisation scientifique</span>
+    <h1>Nos équipes de recherche</h1>
+    <p>{{ profile.teams_intro }}</p>
+  </div>
+</section>
+
+<section class="section reveal">
+  <div class="container">
+    <div class="grid-2 stagger">
+      {% for team in teams %}
+      <div class="team-card">
+        <div class="index">Équipe {{ forloop.counter }}</div>
+        <h3>{{ team.name }}</h3>
+        <p>{{ team.description }}</p>
+        <a href="{{ team.get_absolute_url }}" class="team-link">Découvrir l'équipe →</a>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% endblock %}

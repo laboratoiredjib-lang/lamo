@@ -1,0 +1,36 @@
+{% extends "lab/base.html" %}
+{% block title %}Actualités — {{ site_profile.acronym }}{% endblock %}
+{% block content %}
+
+<section class="page-header">
+  <div class="container">
+    <div class="breadcrumb"><a href="{% url 'lab:home' %}">Accueil</a><span class="sep">/</span>Actualités</div>
+    <span class="eyebrow">Vie du laboratoire</span>
+    <h1>Actualités</h1>
+    <p>Séminaires, soutenances, publications et événements scientifiques du LAMO.</p>
+  </div>
+</section>
+
+<section class="section reveal">
+  <div class="container">
+    {% if news %}
+    <div class="grid-3">
+      {% for item in news %}
+      <div class="news-card">
+        <div class="news-date"><span class="d">{{ item.date|date:"d" }}</span><span class="m">{{ item.date|date:"M Y" }}</span></div>
+        <div>
+          <h3 style="font-size:1.05rem;">{{ item.title }}</h3>
+          <p style="margin:0;font-size:0.9rem;">{{ item.excerpt }}</p>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    {% else %}
+    <div class="side-panel" style="text-align:center;">
+      <p style="margin:0;">Aucune actualité publiée pour le moment. Revenez bientôt pour suivre la vie scientifique du laboratoire.</p>
+    </div>
+    {% endif %}
+  </div>
+</section>
+
+{% endblock %}
