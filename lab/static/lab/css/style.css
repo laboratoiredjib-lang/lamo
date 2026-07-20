@@ -57,8 +57,14 @@ body {
   line-height: 1.7;
   font-size: 16px;
   -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
 }
 img { max-width: 100%; display: block; }
+
+/* Empêche les enfants de grille (tableaux, etc.) de forcer un débordement horizontal */
+.layout > *, .split > *, .contact-grid > *,
+.grid-2 > *, .grid-3 > *, .grid-4 > *,
+.member-grid > *, .related-members > * { min-width: 0; }
 a { color: var(--accent); text-decoration: none; }
 a:hover { text-decoration: underline; }
 ul { list-style: none; margin: 0; padding: 0; }
@@ -170,21 +176,22 @@ p { margin: 0 0 1em; color: var(--ink); }
 .nav-toggle { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 8px; }
 .nav-toggle span { width: 22px; height: 2px; background: var(--navy); transition: transform .2s ease, opacity .2s ease; }
 
-/* ---------- Bandeau d'illustration mathématique ---------- */
+/* ---------- Bandeau d'illustration mathématique (grille responsive de 5 panneaux) ---------- */
 .math-banner { background: var(--banner-bg); border-bottom: 1px solid var(--line); overflow: hidden; }
 .math-banner .container { padding-top: 12px; padding-bottom: 2px; }
-.math-banner-svg { width: 100%; height: auto; display: block; }
-.math-banner-svg .axis { stroke: var(--navy); stroke-width: 1.25; opacity: .35; }
-.math-banner-svg .axis-dash { stroke: var(--navy); stroke-width: 1; stroke-dasharray: 3 4; opacity: .35; }
-.math-banner-svg .edge { stroke: var(--teal); stroke-width: 1.5; opacity: .8; }
-.math-banner-svg .curve-teal { stroke: var(--teal); stroke-width: 2.4; stroke-linecap: round; }
-.math-banner-svg .curve-accent { stroke: var(--accent); stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
-.math-banner-svg .fill-teal { fill: var(--teal); opacity: .12; }
-.math-banner-svg .node { fill: var(--navy); opacity: .75; }
-.math-banner-svg .node-accent, .math-banner-svg .dot-accent { fill: var(--accent); }
-.math-banner-svg .cap { font-family: var(--font); font-size: 12.5px; font-weight: 700; fill: var(--navy); text-anchor: middle; }
-.math-banner-svg .formula { font-family: var(--font-math); font-style: italic; font-size: 13px; fill: var(--muted); text-anchor: middle; }
-.math-banner-svg .draw { transition: stroke-dashoffset 1.5s var(--ease-out); }
+.math-banner-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; }
+.math-panel svg { width: 100%; height: auto; display: block; }
+.math-panel .axis { stroke: var(--navy); stroke-width: 1.25; opacity: .35; }
+.math-panel .axis-dash { stroke: var(--navy); stroke-width: 1; stroke-dasharray: 3 4; opacity: .35; }
+.math-panel .edge { stroke: var(--teal); stroke-width: 1.5; opacity: .8; }
+.math-panel .curve-teal { stroke: var(--teal); stroke-width: 2.4; stroke-linecap: round; }
+.math-panel .curve-accent { stroke: var(--accent); stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+.math-panel .fill-teal { fill: var(--teal); opacity: .12; }
+.math-panel .node { fill: var(--navy); opacity: .75; }
+.math-panel .node-accent, .math-panel .dot-accent { fill: var(--accent); }
+.math-panel .cap { font-family: var(--font); font-size: 12.5px; font-weight: 700; fill: var(--navy); text-anchor: middle; }
+.math-panel .formula { font-family: var(--font-math); font-style: italic; font-size: 13px; fill: var(--muted); text-anchor: middle; }
+.math-panel .draw { transition: stroke-dashoffset 1.5s var(--ease-out); }
 
 /* Icônes de bannière : mêmes principes de "dessin" que le bandeau mathématique */
 .page-header-icon svg path:not([fill]),
@@ -432,6 +439,27 @@ table.data-table { width: 100%; border-collapse: collapse; min-width: 620px; }
 .footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); padding: 12px 0; display: flex; justify-content: space-between; align-items: center; font-size: 0.76rem; color: rgba(255,255,255,0.48); flex-wrap: wrap; gap: 8px; }
 
 /* ---------- Responsive ---------- */
+
+/* Bascule vers le menu mobile : dès que la nav + les 2 logos ne tiennent plus sur une ligne */
+@media (max-width: 1220px) {
+  .nav-toggle { display: flex; }
+  .main-nav {
+    position: fixed; inset: 0 0 0 auto; width: min(300px, 84vw);
+    background: #fff; flex-direction: column; align-items: stretch;
+    padding: 84px 20px 24px; box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    transform: translateX(100%); transition: transform .3s var(--ease); overflow-y: auto;
+    z-index: 70;
+  }
+  .main-nav.is-open { transform: translateX(0); }
+  .main-nav ul { flex-direction: column; align-items: stretch; gap: 0; }
+  .main-nav > ul > li > a, .main-nav > ul > li > button { width: 100%; justify-content: space-between; padding: 13px 8px; color: var(--ink); }
+  .main-nav > ul > li > a::after, .main-nav > ul > li > button::after { display: none; }
+  .dropdown { position: static; box-shadow: none; border: none; opacity: 1; visibility: visible; transform: none; display: none; padding: 0 0 0 12px; }
+  .main-nav li.is-open .dropdown { display: block; }
+  .brand-univ .brand-text, .brand-lamo .brand-text { display: none; }
+  .brand-univ img, .brand-lamo img { height: 40px; }
+}
+
 @media (max-width: 980px) {
   .hero-inner { grid-template-columns: 1fr; }
   .hero-stats { max-width: 420px; }
@@ -441,21 +469,6 @@ table.data-table { width: 100%; border-collapse: collapse; min-width: 620px; }
   .footer-grid { grid-template-columns: 1fr 1fr; }
 }
 @media (max-width: 760px) {
-  .nav-toggle { display: flex; }
-  .main-nav {
-    position: fixed; inset: 0 0 0 auto; width: min(300px, 84vw);
-    background: #fff; flex-direction: column; align-items: stretch;
-    padding: 84px 20px 24px; box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-    transform: translateX(100%); transition: transform .3s var(--ease); overflow-y: auto;
-  }
-  .main-nav.is-open { transform: translateX(0); }
-  .main-nav ul { flex-direction: column; align-items: stretch; gap: 0; }
-  .main-nav > ul > li > a, .main-nav > ul > li > button { width: 100%; justify-content: space-between; padding: 13px 8px; }
-  .main-nav > ul > li > a::after, .main-nav > ul > li > button::after { display: none; }
-  .dropdown { position: static; box-shadow: none; border: none; opacity: 1; visibility: visible; transform: none; display: none; padding: 0 0 0 12px; }
-  .main-nav li.is-open .dropdown { display: block; }
-  .brand-lamo .brand-text { display: none; }
-  .brand-univ img, .brand-lamo img { height: 38px; }
   .grid-3, .grid-4 { grid-template-columns: 1fr 1fr; }
   .member-grid, .related-members { grid-template-columns: 1fr 1fr; }
   .page-header-icon { width: 56px; height: 56px; }
@@ -465,21 +478,21 @@ table.data-table { width: 100%; border-collapse: collapse; min-width: 620px; }
   .join-box { flex-direction: column; text-align: center; padding: 24px 20px; }
   .section { padding: 32px 0; }
   .hero-inner { padding: 24px 0 28px; }
-  .math-banner-svg .cap { font-size: 15px; }
-  .math-banner-svg .formula { font-size: 15px; }
+  .math-banner-grid { grid-template-columns: repeat(3, 1fr); gap: 4px 10px; }
 }
 @media (max-width: 520px) {
   .grid-3, .grid-4 { grid-template-columns: 1fr 1fr; }
   .hero-stats { grid-template-columns: 1fr 1fr; }
   .brand-univ { display: none; }
   .header-row { justify-content: space-between; }
+  .math-banner-grid { grid-template-columns: 1fr 1fr; gap: 6px 8px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .reveal, .stagger > * { opacity: 1 !important; transform: none !important; transition: none !important; }
   ::view-transition-old(root), ::view-transition-new(root) { animation: none; }
   .page-header-text, .page-header-icon { animation: none; }
-  .math-banner-svg .draw,
+  .math-panel .draw,
   .page-header-icon svg path, .page-header-icon svg line,
   .page-header-icon svg circle, .page-header-icon svg ellipse, .page-header-icon svg polyline {
     stroke-dashoffset: 0 !important; transition: none !important;
