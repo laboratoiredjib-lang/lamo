@@ -31,14 +31,20 @@
   --shadow: 0 1px 2px rgba(15,42,68,.05), 0 8px 24px rgba(15,42,68,.07);
   --shadow-lg: 0 24px 56px rgba(8,23,41,.16);
   --ease: cubic-bezier(.4,0,.2,1);
+  --ease-out: cubic-bezier(.16,1,.3,1);
 }
 
 /* ---------- View transitions between pages ---------- */
 @view-transition { navigation: auto; }
-::view-transition-old(root) { animation: lamo-fade-out .3s var(--ease) both; }
-::view-transition-new(root) { animation: lamo-fade-in .45s var(--ease) both; }
-@keyframes lamo-fade-out { from { opacity: 1; transform: scale(1); } to { opacity: 0; transform: scale(.985); } }
-@keyframes lamo-fade-in { from { opacity: 0; transform: translateY(12px) scale(1.006); } to { opacity: 1; transform: translateY(0) scale(1); } }
+::view-transition-old(root) { animation: lamo-fade-out .28s var(--ease) both; }
+::view-transition-new(root) { animation: lamo-fade-in .6s var(--ease-out) both; }
+@keyframes lamo-fade-out { from { opacity: 1; transform: scale(1); filter: blur(0); } to { opacity: 0; transform: scale(.98); filter: blur(2px); } }
+@keyframes lamo-fade-in { from { opacity: 0; transform: translateY(16px) scale(1.01); filter: blur(3px); } to { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); } }
+
+/* ---------- Entrée de page (bannière) ---------- */
+@keyframes lamo-enter { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+.page-header-text { animation: lamo-enter .65s var(--ease-out) both; }
+.page-header-icon { animation: lamo-enter .65s var(--ease-out) .1s both; }
 
 /* ---------- Reset ---------- */
 *, *::before, *::after { box-sizing: border-box; }
@@ -77,10 +83,10 @@ p { margin: 0 0 1em; color: var(--ink); }
 .u-link:hover::after { right: 0; }
 
 /* ---------- Scroll reveal (progressive enhancement) ---------- */
-.reveal.reveal-js { opacity: 0; transform: translateY(20px); transition: opacity .7s var(--ease), transform .7s var(--ease); }
-.reveal.reveal-js.is-visible { opacity: 1; transform: translateY(0); }
-.stagger.reveal-js > * { opacity: 0; transform: translateY(16px); transition: opacity .55s var(--ease), transform .55s var(--ease); transition-delay: calc(var(--i, 0) * 90ms); }
-.stagger.reveal-js.is-visible > * { opacity: 1; transform: translateY(0); }
+.reveal.reveal-js { opacity: 0; transform: translateY(28px) scale(.985); transition: opacity .8s var(--ease-out), transform .8s var(--ease-out); }
+.reveal.reveal-js.is-visible { opacity: 1; transform: translateY(0) scale(1); }
+.stagger.reveal-js > * { opacity: 0; transform: translateY(22px) scale(.96); transition: opacity .6s var(--ease-out), transform .6s var(--ease-out); transition-delay: calc(var(--i, 0) * 80ms); }
+.stagger.reveal-js.is-visible > * { opacity: 1; transform: translateY(0) scale(1); }
 
 /* ---------- Utility ---------- */
 .eyebrow {
@@ -118,16 +124,15 @@ p { margin: 0 0 1em; color: var(--ink); }
 .topbar a:hover { color: #fff; }
 .topbar-links { display: flex; gap: 20px; }
 
-/* ---------- Header / Nav : université à gauche, LAMO à droite ---------- */
+/* ---------- Header / Nav : LAMO à gauche, Université à droite ---------- */
 .site-header { background: #fff; border-bottom: 1px solid var(--line); position: sticky; top: 0; z-index: 60; }
 .header-row { display: flex; align-items: center; justify-content: space-between; padding: 10px 0; gap: 20px; }
 
 .brand-univ, .brand-lamo { display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
-.brand-univ img { height: 54px; width: auto; }
+.brand-univ img { height: 68px; width: auto; }
 .brand-lamo img { height: 56px; width: auto; }
-.brand-univ { flex-direction: row-reverse; text-align: right; }
-.brand-univ .brand-text .name, .brand-lamo .brand-text .name { font-weight: 800; font-size: 0.98rem; color: var(--navy); display: block; }
-.brand-univ .brand-text .sub, .brand-lamo .brand-text .sub { font-size: 0.7rem; color: var(--muted); display: block; margin-top: 1px; }
+.brand-lamo .brand-text .name { font-weight: 800; font-size: 0.98rem; color: var(--navy); display: block; }
+.brand-lamo .brand-text .sub { font-size: 0.7rem; color: var(--muted); display: block; margin-top: 1px; }
 
 .main-nav { display: flex; align-items: center; }
 .main-nav ul { display: flex; align-items: stretch; gap: 4px; }
@@ -179,7 +184,16 @@ p { margin: 0 0 1em; color: var(--ink); }
 .math-banner-svg .node-accent, .math-banner-svg .dot-accent { fill: var(--accent); }
 .math-banner-svg .cap { font-family: var(--font); font-size: 12.5px; font-weight: 700; fill: var(--navy); text-anchor: middle; }
 .math-banner-svg .formula { font-family: var(--font-math); font-style: italic; font-size: 13px; fill: var(--muted); text-anchor: middle; }
-.math-banner-svg .draw { transition: stroke-dashoffset 1.5s var(--ease); }
+.math-banner-svg .draw { transition: stroke-dashoffset 1.5s var(--ease-out); }
+
+/* Icônes de bannière : mêmes principes de "dessin" que le bandeau mathématique */
+.page-header-icon svg path:not([fill]),
+.page-header-icon svg line:not([fill]),
+.page-header-icon svg circle:not([fill]),
+.page-header-icon svg ellipse:not([fill]),
+.page-header-icon svg polyline:not([fill]) {
+  transition: stroke-dashoffset 1.1s var(--ease-out);
+}
 
 /* ---------- Hero (accueil) : éditorial clair ---------- */
 .hero { background: var(--bg); }
@@ -440,7 +454,7 @@ table.data-table { width: 100%; border-collapse: collapse; min-width: 620px; }
   .main-nav > ul > li > a::after, .main-nav > ul > li > button::after { display: none; }
   .dropdown { position: static; box-shadow: none; border: none; opacity: 1; visibility: visible; transform: none; display: none; padding: 0 0 0 12px; }
   .main-nav li.is-open .dropdown { display: block; }
-  .brand-univ .brand-text, .brand-lamo .brand-text { display: none; }
+  .brand-lamo .brand-text { display: none; }
   .brand-univ img, .brand-lamo img { height: 38px; }
   .grid-3, .grid-4 { grid-template-columns: 1fr 1fr; }
   .member-grid, .related-members { grid-template-columns: 1fr 1fr; }
@@ -464,4 +478,10 @@ table.data-table { width: 100%; border-collapse: collapse; min-width: 620px; }
 @media (prefers-reduced-motion: reduce) {
   .reveal, .stagger > * { opacity: 1 !important; transform: none !important; transition: none !important; }
   ::view-transition-old(root), ::view-transition-new(root) { animation: none; }
+  .page-header-text, .page-header-icon { animation: none; }
+  .math-banner-svg .draw,
+  .page-header-icon svg path, .page-header-icon svg line,
+  .page-header-icon svg circle, .page-header-icon svg ellipse, .page-header-icon svg polyline {
+    stroke-dashoffset: 0 !important; transition: none !important;
+  }
 }

@@ -61,12 +61,8 @@
       </ul>
     </nav>
 
-    <a href="{% url 'lab:home' %}" class="brand-univ">
+    <a href="{% url 'lab:home' %}" class="brand-univ" title="Université de Djibouti">
       {% if site_profile.university_logo %}<img src="{{ site_profile.university_logo.url }}" alt="Université de Djibouti">{% else %}<img src="{% static 'lab/img/logo_universite_djibouti.png' %}" alt="Université de Djibouti">{% endif %}
-      <span class="brand-text">
-        <span class="name">Université de Djibouti</span>
-        <span class="sub">Établissement de rattachement</span>
-      </span>
     </a>
 
     <button class="nav-toggle" id="nav-toggle" aria-label="Ouvrir le menu" aria-expanded="false">
@@ -74,12 +70,6 @@
     </button>
   </div>
 </header>
-
-<div class="math-banner">
-  <div class="container">
-    {% include "lab/_hero_illustration.html" %}
-  </div>
-</div>
 
 <main>
 {% block content %}{% endblock %}

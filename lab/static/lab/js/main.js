@@ -62,27 +62,41 @@
     revealTargets.forEach(function (el) { el.classList.add("is-visible"); });
   }
 
-  /* Illustration mathématique : effet de "dessin" au scroll (progressive enhancement) */
-  var banner = document.querySelector(".math-banner");
-  if (banner && "IntersectionObserver" in window) {
-    var drawEls = banner.querySelectorAll(".draw");
-    drawEls.forEach(function (el) {
-      var len = 0;
-      try { len = el.getTotalLength(); } catch (e) { return; }
-      el.style.strokeDasharray = len;
-      el.style.strokeDashoffset = len;
+  /* Illustrations SVG : effet de "dessin" au scroll/chargement (progressive enhancement).
+     S'applique au bandeau mathématique et à chaque icône de bannière de page :
+     tout élément à contour (sans attribut fill propre, donc hérité de fill="none")
+     est traité comme un trait à dessiner ; les points pleins (accent) restent statiques. */
+  var drawContainers = document.querySelectorAll(".math-banner, .page-header-icon");
+  if (drawContainers.length && "IntersectionObserver" in window) {
+    drawContainers.forEach(function (container) {
+      var drawEls = container.querySelectorAll(
+        "svg path:not([fill]), svg line:not([fill]), svg polyline:not([fill]), svg circle:not([fill]), svg ellipse:not([fill]), svg .draw"
+      );
+      if (!drawEls.length) return;
+      drawEls.forEach(function (el) {
+        var len = 0;
+        try { len = el.getTotalLength(); } catch (e) { return; }
+        el.style.strokeDasharray = len;
+        el.style.strokeDashoffset = len;
+      });
+      var rect = container.getBoundingClientRect();
+      var alreadyInView = rect.top < window.innerHeight * 0.95 && rect.bottom > 0;
+      var reveal = function () {
+        drawEls.forEach(function (el) { el.style.strokeDashoffset = 0; });
+      };
+      if (alreadyInView) {
+        reveal();
+      } else {
+        var obs = new IntersectionObserver(
+          function (entries) {
+            entries.forEach(function (entry) {
+              if (entry.isIntersecting) { reveal(); obs.unobserve(entry.target); }
+            });
+          },
+          { threshold: 0.25 }
+        );
+        obs.observe(container);
+      }
     });
-    var bannerObserver = new IntersectionObserver(
-      function (entries) {
-        entries.forEach(function (entry) {
-          if (entry.isIntersecting) {
-            drawEls.forEach(function (el) { el.style.strokeDashoffset = 0; });
-            bannerObserver.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.25 }
-    );
-    bannerObserver.observe(banner);
   }
 })();
