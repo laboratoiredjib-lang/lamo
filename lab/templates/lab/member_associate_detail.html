@@ -26,38 +26,45 @@
   <div class="container">
     <a href="{% url 'lab:members_associates' %}" class="back-link">← Tous les chercheurs associés</a>
 
-    <div class="split">
+    <div class="member-hero-card">
+      <div class="member-hero">
+        <div class="member-portrait">
+          {% if member.photo %}<img src="{{ member.photo.url }}" alt="{{ member.full_name }}">{% else %}{{ member.full_name|initials }}{% endif %}
+        </div>
+        <div>
+          <h1>{{ member.full_name }}</h1>
+          <div class="role">{{ member.grade }} — {{ member.institution }}</div>
+          <div class="tags">
+            <span class="tag tag--teal">{{ member.country }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="split split--profile">
       <div>
-        <div class="member-hero">
-          <div class="member-avatar">
-            {% if member.photo %}<img src="{{ member.photo.url }}" alt="{{ member.full_name }}">{% else %}{{ member.full_name|initials }}{% endif %}
-          </div>
-          <div>
-            <h1>{{ member.full_name }}</h1>
-            <div class="role">{{ member.grade }} — {{ member.institution }}</div>
-            <div class="tags">
-              <span class="tag tag--teal">{{ member.country }}</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="info-grid">
-          <div class="info-tile"><strong>Grade</strong><span>{{ member.grade }}</span></div>
-          <div class="info-tile"><strong>Université / Institution</strong><span>{{ member.institution }}</span></div>
-          <div class="info-tile"><strong>Pays</strong><span>{{ member.country }}</span></div>
-        </div>
-
+        <span class="eyebrow">Présentation</span>
+        <h2>À propos</h2>
         {% if member.bio %}
         <div class="prose"><p>{{ member.bio }}</p></div>
+        {% else %}
+        <p class="lede">Aucune présentation renseignée pour le moment.</p>
         {% endif %}
       </div>
 
-      <div class="side-panel">
-        <h4>Collaboration</h4>
-        <ul>
-          <li>Chercheur associé au {{ profile.acronym }}</li>
-          <li>{{ member.institution }}, {{ member.country }}</li>
-        </ul>
+      <div class="info-stack">
+        <div class="info-box">
+          <h4>Informations</h4>
+          <div class="field"><strong>Grade</strong><span>{{ member.grade }}</span></div>
+          <div class="field"><strong>Université / Institution</strong><span>{{ member.institution }}</span></div>
+          <div class="field"><strong>Pays</strong><span>{{ member.country }}</span></div>
+        </div>
+
+        <div class="info-box">
+          <h4>Collaboration</h4>
+          <div class="field"><span>Chercheur associé au {{ profile.acronym }}</span></div>
+          <div class="field"><span>{{ member.institution }}, {{ member.country }}</span></div>
+        </div>
       </div>
     </div>
 

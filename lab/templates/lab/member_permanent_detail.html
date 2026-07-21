@@ -25,7 +25,7 @@
 
     <div class="member-hero-card">
       <div class="member-hero">
-        <div class="member-avatar">
+        <div class="member-portrait">
           {% if member.photo %}<img src="{{ member.photo.url }}" alt="{{ member.full_name }}">{% else %}{{ member.full_name|initials }}{% endif %}
         </div>
         <div>
@@ -40,27 +40,33 @@
       </div>
     </div>
 
-    <div class="split">
+    <div class="split split--profile">
       <div>
-        <div class="info-grid">
-          <div class="info-tile"><strong>Grade / Spécialité</strong><span>{{ member.title }}</span></div>
-          {% if member.team %}<div class="info-tile"><strong>Équipe</strong><span>{{ member.team.name }}</span></div>{% endif %}
-          {% if member.email %}<div class="info-tile"><strong>Email</strong><a href="mailto:{{ member.email }}">{{ member.email }}</a></div>{% endif %}
-          {% if member.email_secondary %}<div class="info-tile"><strong>Email (2)</strong><a href="mailto:{{ member.email_secondary }}">{{ member.email_secondary }}</a></div>{% endif %}
-          {% if member.phone %}<div class="info-tile"><strong>Téléphone</strong><span>{{ member.phone }}</span></div>{% endif %}
-        </div>
-
+        <span class="eyebrow">Présentation</span>
+        <h2>À propos</h2>
         {% if member.bio %}
         <div class="prose"><p>{{ member.bio }}</p></div>
+        {% else %}
+        <p class="lede">Aucune présentation renseignée pour le moment.</p>
         {% endif %}
       </div>
 
-      <div class="side-panel">
-        <h4>Établissement</h4>
-        <ul>
-          <li>{{ profile.name }} ({{ profile.acronym }})</li>
-          <li>{{ profile.affiliation }}</li>
-        </ul>
+      <div class="info-stack">
+        <div class="info-box">
+          <h4>Informations</h4>
+          <div class="field"><strong>Grade / Spécialité</strong><span>{{ member.title }}</span></div>
+          {% if member.role_tag %}<div class="field"><strong>Fonction</strong><span>{{ member.role_tag }}</span></div>{% endif %}
+          {% if member.team %}<div class="field"><strong>Équipe</strong><span>{{ member.team.name }}</span></div>{% endif %}
+          {% if member.email %}<div class="field"><strong>Email</strong><a href="mailto:{{ member.email }}">{{ member.email }}</a></div>{% endif %}
+          {% if member.email_secondary %}<div class="field"><strong>Email (2)</strong><a href="mailto:{{ member.email_secondary }}">{{ member.email_secondary }}</a></div>{% endif %}
+          {% if member.phone %}<div class="field"><strong>Téléphone</strong><span>{{ member.phone }}</span></div>{% endif %}
+        </div>
+
+        <div class="info-box">
+          <h4>Établissement</h4>
+          <div class="field"><span>{{ profile.name }} ({{ profile.acronym }})</span></div>
+          <div class="field"><span>{{ profile.affiliation }}</span></div>
+        </div>
       </div>
     </div>
 
