@@ -15,9 +15,10 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import include, path
+from django.urls import include, path, re_path
 from django.conf import settings
 from django.conf.urls.static import static
+from django.views.static import serve as serve_static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -28,7 +29,12 @@ urlpatterns = [
 # Le plan gratuit ne fournit pas de stockage objet séparé : les fichiers médias
 # (logos, photos) sont donc servis par l'application elle-même, y compris en
 # production. Volume modeste, trafic faible : largement suffisant ici.
-urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+# NB : le raccourci static() de Django refuse de générer la route quand
+# DEBUG=False (même hors de tout `if`), on appelle donc la vue `serve`
+# directement pour que ça fonctionne aussi en production.
+urlpatterns += [
+    re_path(r'^media/(?P<path>.*)$', serve_static, {'document_root': settings.MEDIA_ROOT}),
+]
 
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATICFILES_DIRS[0])
