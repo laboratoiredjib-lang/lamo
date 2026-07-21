@@ -27,32 +27,28 @@
     <a href="{% url 'lab:members_associates' %}" class="back-link">← Tous les chercheurs associés</a>
 
     <div class="member-hero-card">
-      <div class="member-hero-content">
-        <h1>{{ member.full_name }}</h1>
-        <div class="role">{{ member.grade }} — {{ member.institution }}</div>
-        <div class="tags">
-          <span class="tag tag--teal">{{ member.country }}</span>
+      <div class="member-hero-top">
+        <div class="member-hero-text">
+          <h1>{{ member.full_name }}</h1>
+          <div class="role">{{ member.grade }} — {{ member.institution }}</div>
+          <div class="tags">
+            <span class="tag tag--teal">{{ member.country }}</span>
+          </div>
+          {% if member.bio %}
+          <p class="bio-lede">{{ member.bio }}</p>
+          {% endif %}
         </div>
-        <div class="member-info-inline">
-          <div class="row"><strong>Grade</strong><span>{{ member.grade }}</span></div>
-          <div class="row"><strong>Université / Institution</strong><span>{{ member.institution }}</span></div>
-          <div class="row"><strong>Pays</strong><span>{{ member.country }}</span></div>
-          <div class="row"><strong>Collaboration</strong><span>Chercheur associé au {{ profile.acronym }}</span></div>
+        <div class="member-hero-photo-compact">
+          {% if member.photo %}<img src="{{ member.photo.url }}" alt="{{ member.full_name }}">{% else %}<div class="portrait-initials">{{ member.full_name|initials }}</div>{% endif %}
         </div>
       </div>
-      <div class="member-hero-photo">
-        {% if member.photo %}<img src="{{ member.photo.url }}" alt="{{ member.full_name }}">{% else %}<div class="portrait-initials">{{ member.full_name|initials }}</div>{% endif %}
-      </div>
-    </div>
 
-    <div class="reveal" style="margin-top:48px;">
-      <span class="eyebrow">Présentation</span>
-      <h2>À propos</h2>
-      {% if member.bio %}
-      <div class="prose"><p>{{ member.bio }}</p></div>
-      {% else %}
-      <p class="lede">Aucune présentation renseignée pour le moment.</p>
-      {% endif %}
+      <div class="member-info-band">
+        <div class="row"><strong>Grade</strong><span>{{ member.grade }}</span></div>
+        <div class="row"><strong>Université / Institution</strong><span>{{ member.institution }}</span></div>
+        <div class="row"><strong>Pays</strong><span>{{ member.country }}</span></div>
+        <div class="row"><strong>Collaboration</strong><span>Chercheur associé au {{ profile.acronym }}</span></div>
+      </div>
     </div>
 
     {% if others %}

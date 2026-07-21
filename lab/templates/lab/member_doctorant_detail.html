@@ -25,33 +25,29 @@
     <a href="{% url 'lab:members_doctorants' %}" class="back-link">← Tous les doctorants</a>
 
     <div class="member-hero-card">
-      <div class="member-hero-content">
-        <h1>{{ member.full_name }}</h1>
-        <div class="role">Doctorant depuis {{ member.start_year }} — {{ member.partner_university }}</div>
-        <div class="tags">
-          <span class="tag tag--teal">{{ member.start_year }}</span>
+      <div class="member-hero-top">
+        <div class="member-hero-text">
+          <h1>{{ member.full_name }}</h1>
+          <div class="role">Doctorant depuis {{ member.start_year }} — {{ member.partner_university }}</div>
+          <div class="tags">
+            <span class="tag tag--teal">{{ member.start_year }}</span>
+          </div>
+          {% if member.bio %}
+          <p class="bio-lede">{{ member.bio }}</p>
+          {% endif %}
         </div>
-        <div class="member-info-inline">
-          <div class="row"><strong>Année de début</strong><span>{{ member.start_year }}</span></div>
-          <div class="row"><strong>Université partenaire</strong><span>{{ member.partner_university }}</span></div>
-          <div class="row"><strong>Directeur de thèse</strong><span>{{ member.thesis_director }}</span></div>
-          {% if member.co_supervisor %}<div class="row"><strong>Co-encadrant</strong><span>{{ member.co_supervisor }}</span></div>{% endif %}
-          <div class="row"><strong>Laboratoire</strong><span>{{ profile.acronym }}, en cotutelle avec {{ member.partner_university }}</span></div>
+        <div class="member-hero-photo-compact">
+          {% if member.photo %}<img src="{{ member.photo.url }}" alt="{{ member.full_name }}">{% else %}<div class="portrait-initials">{{ member.full_name|initials }}</div>{% endif %}
         </div>
       </div>
-      <div class="member-hero-photo">
-        {% if member.photo %}<img src="{{ member.photo.url }}" alt="{{ member.full_name }}">{% else %}<div class="portrait-initials">{{ member.full_name|initials }}</div>{% endif %}
-      </div>
-    </div>
 
-    <div class="reveal" style="margin-top:48px;">
-      <span class="eyebrow">Présentation</span>
-      <h2>À propos</h2>
-      {% if member.bio %}
-      <div class="prose"><p>{{ member.bio }}</p></div>
-      {% else %}
-      <p class="lede">Aucune présentation renseignée pour le moment.</p>
-      {% endif %}
+      <div class="member-info-band">
+        <div class="row"><strong>Année de début</strong><span>{{ member.start_year }}</span></div>
+        <div class="row"><strong>Université partenaire</strong><span>{{ member.partner_university }}</span></div>
+        <div class="row"><strong>Directeur de thèse</strong><span>{{ member.thesis_director }}</span></div>
+        {% if member.co_supervisor %}<div class="row"><strong>Co-encadrant</strong><span>{{ member.co_supervisor }}</span></div>{% endif %}
+        <div class="row"><strong>Laboratoire</strong><span>{{ profile.acronym }}, en cotutelle avec {{ member.partner_university }}</span></div>
+      </div>
     </div>
 
     {% if others %}
