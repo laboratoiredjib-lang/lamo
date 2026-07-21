@@ -22,56 +22,43 @@
   </div>
 </section>
 
-<section class="section reveal">
+<section class="section">
   <div class="container">
     <a href="{% url 'lab:members_associates' %}" class="back-link">← Tous les chercheurs associés</a>
 
     <div class="member-hero-card">
-      <div class="member-hero">
-        <div class="member-portrait">
-          {% if member.photo %}<img src="{{ member.photo.url }}" alt="{{ member.full_name }}">{% else %}{{ member.full_name|initials }}{% endif %}
+      <div class="member-hero-content">
+        <h1>{{ member.full_name }}</h1>
+        <div class="role">{{ member.grade }} — {{ member.institution }}</div>
+        <div class="tags">
+          <span class="tag tag--teal">{{ member.country }}</span>
         </div>
-        <div>
-          <h1>{{ member.full_name }}</h1>
-          <div class="role">{{ member.grade }} — {{ member.institution }}</div>
-          <div class="tags">
-            <span class="tag tag--teal">{{ member.country }}</span>
-          </div>
+        <div class="member-info-inline">
+          <div class="row"><strong>Grade</strong><span>{{ member.grade }}</span></div>
+          <div class="row"><strong>Université / Institution</strong><span>{{ member.institution }}</span></div>
+          <div class="row"><strong>Pays</strong><span>{{ member.country }}</span></div>
+          <div class="row"><strong>Collaboration</strong><span>Chercheur associé au {{ profile.acronym }}</span></div>
         </div>
+      </div>
+      <div class="member-hero-photo">
+        {% if member.photo %}<img src="{{ member.photo.url }}" alt="{{ member.full_name }}">{% else %}<div class="portrait-initials">{{ member.full_name|initials }}</div>{% endif %}
       </div>
     </div>
 
-    <div class="split split--profile">
-      <div>
-        <span class="eyebrow">Présentation</span>
-        <h2>À propos</h2>
-        {% if member.bio %}
-        <div class="prose"><p>{{ member.bio }}</p></div>
-        {% else %}
-        <p class="lede">Aucune présentation renseignée pour le moment.</p>
-        {% endif %}
-      </div>
-
-      <div class="info-stack">
-        <div class="info-box">
-          <h4>Informations</h4>
-          <div class="field"><strong>Grade</strong><span>{{ member.grade }}</span></div>
-          <div class="field"><strong>Université / Institution</strong><span>{{ member.institution }}</span></div>
-          <div class="field"><strong>Pays</strong><span>{{ member.country }}</span></div>
-        </div>
-
-        <div class="info-box">
-          <h4>Collaboration</h4>
-          <div class="field"><span>Chercheur associé au {{ profile.acronym }}</span></div>
-          <div class="field"><span>{{ member.institution }}, {{ member.country }}</span></div>
-        </div>
-      </div>
+    <div class="reveal" style="margin-top:48px;">
+      <span class="eyebrow">Présentation</span>
+      <h2>À propos</h2>
+      {% if member.bio %}
+      <div class="prose"><p>{{ member.bio }}</p></div>
+      {% else %}
+      <p class="lede">Aucune présentation renseignée pour le moment.</p>
+      {% endif %}
     </div>
 
     {% if others %}
-    <div style="margin-top:32px;">
+    <div class="reveal" style="margin-top:40px;">
       <div class="section-head"><span class="eyebrow">Voir aussi</span><h2>Autres chercheurs associés</h2></div>
-      <div class="related-members">
+      <div class="related-members stagger">
         {% for o in others %}
         <a href="{{ o.get_absolute_url }}" class="member-card">
           <div class="member-avatar">{% if o.photo %}<img src="{{ o.photo.url }}" alt="{{ o.full_name }}">{% else %}{{ o.full_name|initials }}{% endif %}</div>

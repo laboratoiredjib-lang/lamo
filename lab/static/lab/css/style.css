@@ -355,31 +355,45 @@ table.data-table { width: 100%; border-collapse: collapse; min-width: 620px; }
 .member-card .m-view { display: block; margin-top: 12px; font-size: 0.78rem; font-weight: 700; color: var(--teal-dark); opacity: 0; transform: translateY(4px); transition: opacity .2s var(--ease), transform .2s var(--ease); }
 .member-card:hover .m-view { opacity: 1; transform: translateY(0); }
 
-/* ---------- Member detail (fiche profil) ---------- */
-.member-hero-card {
-  background: linear-gradient(160deg, var(--bg-alt), #fff 55%);
-  border: 1px solid var(--line); border-radius: var(--radius-lg);
-  padding: 40px; margin-bottom: 32px;
-}
-.member-hero { display: flex; gap: 40px; align-items: center; flex-wrap: wrap; }
-.member-portrait {
-  width: 240px; height: 280px; border-radius: 20px; overflow: hidden; flex-shrink: 0;
-  background: linear-gradient(135deg, var(--teal), var(--navy)); color: #fff;
-  display: flex; align-items: center; justify-content: center;
-  font-family: var(--font-math); font-style: italic; font-weight: 600; font-size: 4rem;
-  box-shadow: 0 0 0 7px #fff, 0 0 0 9px var(--teal-tint), 0 28px 56px rgba(15,42,68,.24);
-}
-.member-portrait img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.member-hero h1 { font-size: 1.9rem; margin-bottom: 6px; }
-.member-hero .role { color: var(--muted); font-size: 1.08rem; margin-bottom: 12px; }
-.member-hero .tags { display: flex; gap: 8px; flex-wrap: wrap; }
-.member-hero .tag { font-size: 0.74rem; font-weight: 800; padding: 5px 13px; border-radius: 100px; text-transform: uppercase; letter-spacing: 0.03em; }
-.member-hero .tag--accent { background: var(--accent-tint); color: var(--accent-dark); }
-.member-hero .tag--teal { background: var(--teal-tint); color: var(--teal-dark); }
-.member-hero .tag--navy { background: var(--navy-100, var(--bg-alt)); color: var(--navy); border: 1px solid var(--line); }
+/* ---------- Member detail (fiche profil) : photo pleine hauteur à droite, façon portfolio ---------- */
+@keyframes member-enter-left { from { opacity: 0; transform: translateX(-28px); } to { opacity: 1; transform: translateX(0); } }
+@keyframes member-enter-right { from { opacity: 0; transform: translateX(28px); } to { opacity: 1; transform: translateX(0); } }
+@keyframes member-enter-up { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
 
-/* Colonne "Informations" (fiche profil) : champs empilés façon info-box */
-.info-stack { display: flex; flex-direction: column; gap: 18px; }
+.member-hero-card {
+  display: grid; grid-template-columns: 1.05fr 0.95fr; align-items: stretch;
+  background: #fff; border: 1px solid var(--line); border-radius: var(--radius-lg);
+  overflow: hidden; margin-bottom: 8px; box-shadow: var(--shadow-lg);
+}
+.member-hero-content {
+  padding: 48px 44px; display: flex; flex-direction: column; justify-content: center;
+  animation: member-enter-left .7s var(--ease-out) both;
+}
+.member-hero-content h1 { font-size: 2.1rem; margin-bottom: 6px; }
+.member-hero-content .role { color: var(--muted); font-size: 1.1rem; margin-bottom: 18px; }
+.member-hero-content .tags { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 26px; }
+.member-hero-content .tag { font-size: 0.74rem; font-weight: 800; padding: 5px 13px; border-radius: 100px; text-transform: uppercase; letter-spacing: 0.03em; }
+.member-hero-content .tag--accent { background: var(--accent-tint); color: var(--accent-dark); }
+.member-hero-content .tag--teal { background: var(--teal-tint); color: var(--teal-dark); }
+.member-hero-content .tag--navy { background: var(--bg-alt); color: var(--navy); border: 1px solid var(--line); }
+
+.member-info-inline { display: flex; flex-direction: column; gap: 13px; padding-top: 22px; border-top: 1px solid var(--line); }
+.member-info-inline .row { display: flex; gap: 14px; font-size: 0.92rem; align-items: baseline; }
+.member-info-inline .row strong { color: var(--teal-dark); font-weight: 700; min-width: 150px; flex-shrink: 0; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.04em; }
+.member-info-inline .row span, .member-info-inline .row a { color: var(--ink); font-weight: 600; }
+.member-info-inline .row a:hover { color: var(--accent); }
+
+.member-hero-photo {
+  position: relative; min-height: 380px;
+  background: linear-gradient(160deg, var(--teal-tint), var(--bg-alt));
+  animation: member-enter-right .7s var(--ease-out) both;
+}
+.member-hero-photo img { width: 100%; height: 100%; object-fit: contain; object-position: center bottom; display: block; }
+.member-hero-photo .portrait-initials {
+  width: 100%; height: 100%; min-height: 380px; display: flex; align-items: center; justify-content: center;
+  background: linear-gradient(135deg, var(--teal), var(--navy)); color: #fff;
+  font-family: var(--font-math); font-style: italic; font-weight: 600; font-size: 5.5rem;
+}
 
 .info-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin: 20px 0; }
 .info-tile { background: var(--bg-alt); border: 1px solid var(--line); border-radius: var(--radius); padding: 12px 14px; }
@@ -563,10 +577,12 @@ table.data-table { width: 100%; border-collapse: collapse; min-width: 620px; }
   .grid-3, .grid-4 { grid-template-columns: 1fr 1fr; }
   .member-grid, .related-members { grid-template-columns: 1fr 1fr; }
   .page-header-icon { width: 56px; height: 56px; }
-  .member-hero-card { padding: 24px 20px; }
-  .member-hero { text-align: center; justify-content: center; }
-  .member-portrait { width: 180px; height: 210px; font-size: 3rem; margin: 0 auto; }
-  .member-hero .tags { justify-content: center; }
+  .member-hero-card { grid-template-columns: 1fr; }
+  .member-hero-content { padding: 32px 24px; text-align: center; }
+  .member-hero-content .tags { justify-content: center; }
+  .member-info-inline .row { flex-direction: column; gap: 2px; text-align: center; }
+  .member-info-inline .row strong { min-width: 0; }
+  .member-hero-photo, .member-hero-photo .portrait-initials { min-height: 260px; }
   .info-grid { grid-template-columns: 1fr; }
   .footer-grid { grid-template-columns: 1fr; }
   .join-box { flex-direction: column; text-align: center; padding: 24px 20px; }
