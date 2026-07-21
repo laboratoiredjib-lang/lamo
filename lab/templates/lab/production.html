@@ -1,0 +1,67 @@
+{% extends "lab/base.html" %}
+{% block title %}Production scientifique — {{ site_profile.acronym }}{% endblock %}
+{% block content %}
+
+<section class="page-header">
+  <div class="container page-header-inner">
+    <div class="page-header-text">
+      <div class="breadcrumb"><a href="{% url 'lab:home' %}">Accueil</a><span class="sep">/</span>Production scientifique</div>
+      <span class="eyebrow">Recherche</span>
+      <h1>Production scientifique</h1>
+      <p>Les publications, thèses et projets de recherche portés par les membres du LAMO.</p>
+    </div>
+    <div class="page-header-icon">
+      <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="20" y="14" width="34" height="44" rx="2" stroke="var(--navy)" stroke-width="2.5"/>
+        <line x1="27" y1="26" x2="47" y2="26" stroke="var(--teal)" stroke-width="2"/>
+        <line x1="27" y1="34" x2="47" y2="34" stroke="var(--teal)" stroke-width="2"/>
+        <line x1="27" y1="42" x2="41" y2="42" stroke="var(--teal)" stroke-width="2"/>
+        <circle cx="52" cy="58" r="10" stroke="var(--accent)" stroke-width="2.5"/>
+        <line x1="59" y1="65" x2="66" y2="72" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<section class="section reveal">
+  <div class="container">
+    <div class="info-card-grid">
+
+      <div class="info-card">
+        <span class="ic-icon">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M6 3h9l5 5v13a1 1 0 01-1 1H6a1 1 0 01-1-1V4a1 1 0 011-1z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M15 3v5h5" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><line x1="8" y1="13" x2="16" y2="13" stroke="currentColor" stroke-width="1.6"/><line x1="8" y1="17" x2="13" y2="17" stroke="currentColor" stroke-width="1.6"/></svg>
+        </span>
+        <h3>Articles</h3>
+        <p>Publications des membres du laboratoire dans des revues et conférences scientifiques nationales et internationales.</p>
+      </div>
+
+      <div class="info-card">
+        <span class="ic-icon">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M12 4L3 8l9 4 9-4-9-4z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M7 10.5V16c0 1.5 2.2 3 5 3s5-1.5 5-3v-5.5" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+        </span>
+        <h3>Thèses</h3>
+        <p>{{ doctorants_count }} thèse{{ doctorants_count|pluralize }} en cours au sein du laboratoire, en cotutelle avec des universités partenaires internationales.</p>
+        <a href="{% url 'lab:members_doctorants' %}" class="ic-link">Voir les doctorants →</a>
+      </div>
+
+      <div class="info-card">
+        <span class="ic-icon">
+          <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="5" stroke="currentColor" stroke-width="1.8"/><path d="M8.5 12.5L7 21l5-2.5 5 2.5-1.5-8.5" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+        </span>
+        <h3>HDR <span style="font-weight:400;color:var(--muted);">(en cours)</span></h3>
+        <p>Habilitations à Diriger des Recherches en préparation par les enseignants-chercheurs du laboratoire.</p>
+      </div>
+
+      <div class="info-card">
+        <span class="ic-icon">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M9 3h6l1 4h3l-5 5 2 8-6-4-6 4 2-8-5-5h3l1-4z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+        </span>
+        <h3>Projets de recherche</h3>
+        <p>Projets structurés menés par les deux équipes du laboratoire, en lien avec leurs axes scientifiques respectifs.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+{% endblock %}

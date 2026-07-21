@@ -1,6 +1,7 @@
 from django.shortcuts import get_object_or_404, render
 
 from .models import (
+    Activity,
     AssociateResearcher,
     Doctorant,
     LabProfile,
@@ -32,7 +33,7 @@ def home(request):
 def team_list(request):
     context = {
         "profile": LabProfile.load(),
-        "teams": ResearchTeam.objects.all(),
+        "teams": ResearchTeam.objects.prefetch_related("themes"),
     }
     return render(request, "lab/team_list.html", context)
 
@@ -46,14 +47,6 @@ def team_detail(request, slug):
         "members": team.members.all(),
     }
     return render(request, "lab/team_detail.html", context)
-
-
-def themes(request):
-    context = {
-        "profile": LabProfile.load(),
-        "themes": ResearchTheme.objects.select_related("team").all(),
-    }
-    return render(request, "lab/themes.html", context)
 
 
 def members_permanent(request):
@@ -126,3 +119,31 @@ def contact(request):
         "profile": LabProfile.load(),
     }
     return render(request, "lab/contact.html", context)
+
+
+def activities(request):
+    activities_qs = Activity.objects.all()
+    context = {
+        "profile": LabProfile.load(),
+        "conferences": activities_qs.filter(category=Activity.Category.CONFERENCE),
+        "seminaires": activities_qs.filter(category=Activity.Category.SEMINAIRE),
+        "olympiades": activities_qs.filter(category=Activity.Category.OLYMPIADES),
+        "offres": activities_qs.filter(category=Activity.Category.OFFRE),
+    }
+    return render(request, "lab/activities.html", context)
+
+
+def production(request):
+    context = {
+        "profile": LabProfile.load(),
+        "doctorants_count": Doctorant.objects.count(),
+    }
+    return render(request, "lab/production.html", context)
+
+
+def formations(request):
+    context = {
+        "profile": LabProfile.load(),
+        "doctorants_count": Doctorant.objects.count(),
+    }
+    return render(request, "lab/formations.html", context)

@@ -38,10 +38,24 @@
         <div class="index">Équipe {{ forloop.counter }}</div>
         <h3>{{ team.name }}</h3>
         <p>{{ team.description }}</p>
+        {% if team.themes.all %}
+        <ul class="simple-list">
+          {% for theme in team.themes.all %}
+          <li>{{ theme.title }}</li>
+          {% endfor %}
+        </ul>
+        {% endif %}
         <a href="{{ team.get_absolute_url }}" class="team-link">Découvrir l'équipe →</a>
       </div>
       {% endfor %}
     </div>
+
+    {% if profile.teams_conclusion %}
+    <div class="side-panel" style="margin-top:32px;">
+      <h4>Complémentarité des équipes</h4>
+      <div class="prose"><p style="margin:0;">{{ profile.teams_conclusion }}</p></div>
+    </div>
+    {% endif %}
   </div>
 </section>
 

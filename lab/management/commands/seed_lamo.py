@@ -4,6 +4,7 @@ from django.core.files import File
 from django.core.management.base import BaseCommand
 
 from lab.models import (
+    Activity,
     AssociateResearcher,
     Doctorant,
     LabProfile,
@@ -28,7 +29,7 @@ def attach_image(instance, field_name, filename):
 
 
 class Command(BaseCommand):
-    help = "Charge les données réelles du LAMO (profil, équipes, membres, partenaires)."
+    help = "Charge les données réelles du LAMO (profil, équipes, membres, activités, partenaires)."
 
     def handle(self, *args, **options):
         self.seed_profile()
@@ -37,6 +38,7 @@ class Command(BaseCommand):
         self.seed_permanent_members(team_dyn, team_sto)
         self.seed_doctorants()
         self.seed_associates()
+        self.seed_activities()
         self.seed_partners()
         self.stdout.write(self.style.SUCCESS("Données du LAMO chargées avec succès."))
 
@@ -74,6 +76,19 @@ class Command(BaseCommand):
             "interdisciplinaires ainsi que le développement de projets à fort impact scientifique et "
             "socio-économique."
         )
+        profile.teams_conclusion = (
+            "Les recherches menées au sein des deux équipes du LAMO sont complémentaires et couvrent "
+            "un large spectre des mathématiques fondamentales et appliquées. Elles associent le "
+            "développement de modèles mathématiques, l’analyse des systèmes dynamiques, le contrôle "
+            "optimal, les probabilités, les statistiques, la science des données et les méthodes "
+            "computationnelles afin d’apporter des réponses à des problématiques complexes. Cette "
+            "complémentarité favorise une approche interdisciplinaire conciliant avancées théoriques, "
+            "innovations méthodologiques et applications dans des domaines variés tels que les "
+            "sciences du vivant, la santé publique, l’environnement, l’ingénierie, les systèmes "
+            "industriels, l’économie et l’aide à la décision. À travers cette organisation, le LAMO "
+            "ambitionne de renforcer son excellence scientifique tout en contribuant au développement "
+            "socio-économique de Djibouti et de la région."
+        )
         profile.address = "Université de Djibouti, Campus de Balbala, Croisement RN2-RN5"
         profile.director_name = "Dr Liban ISMAIL ABDILLAHI"
         profile.email_primary = "lamo@univ.edu.dj"
@@ -86,15 +101,18 @@ class Command(BaseCommand):
         team_dyn, _ = ResearchTeam.objects.update_or_create(
             slug="systemes-dynamiques-controle",
             defaults={
-                "name": "Systèmes Dynamiques & Contrôle",
+                "name": "Systèmes Dynamiques et Contrôle (SDC)",
                 "short_description": (
-                    "Modélisation, analyse, simulation numérique et contrôle de systèmes "
-                    "dynamiques complexes."
+                    "Modèles mathématiques, méthodes d’analyse et stratégies de contrôle pour les "
+                    "systèmes complexes."
                 ),
                 "description": (
-                    "Cette équipe développe des approches mathématiques pour la modélisation, "
-                    "l’analyse, la simulation numérique et le contrôle de systèmes dynamiques "
-                    "complexes issus de divers domaines d’application."
+                    "Cette équipe développe des recherches en mathématiques fondamentales et "
+                    "appliquées, avec pour objectif de concevoir des modèles mathématiques, des "
+                    "méthodes d’analyse et des stratégies de contrôle pour les systèmes complexes. Ses "
+                    "travaux reposent sur des approches théoriques, analytiques et numériques, avec "
+                    "des applications dans les sciences du vivant, l’environnement, l’ingénierie et "
+                    "les systèmes industriels."
                 ),
                 "order": 1,
             },
@@ -102,16 +120,17 @@ class Command(BaseCommand):
         team_sto, _ = ResearchTeam.objects.update_or_create(
             slug="stochastiques-sciences-donnees",
             defaults={
-                "name": "Stochastiques et Sciences de Données",
+                "name": "Stochastique et Sciences des Données (SSD)",
                 "short_description": (
-                    "Méthodes probabilistes, statistiques et intelligence artificielle au "
-                    "service de la décision."
+                    "Modélisation des phénomènes aléatoires, analyse statistique et exploitation des "
+                    "données massives."
                 ),
                 "description": (
-                    "Cette équipe s’intéresse au développement de méthodes probabilistes, "
-                    "statistiques, de simulation numérique et d’intelligence artificielle pour "
-                    "l’analyse, la modélisation, la prévision et l’aide à la décision dans des "
-                    "contextes complexes."
+                    "Cette équipe mène des recherches consacrées à la modélisation des phénomènes "
+                    "aléatoires, à l’analyse statistique et à l’exploitation des données massives. "
+                    "Elle développe des approches probabilistes, statistiques et computationnelles "
+                    "pour l’analyse des systèmes complexes et l’aide à la décision dans des domaines "
+                    "variés."
                 ),
                 "order": 2,
             },
@@ -119,17 +138,77 @@ class Command(BaseCommand):
         return team_dyn, team_sto
 
     def seed_themes(self, team_dyn, team_sto):
+        # Les axes ont été redéfinis (3 par équipe) : on repart d'une base propre.
+        ResearchTheme.objects.all().delete()
         themes = [
-            ("Équations différentielles, systèmes dynamiques et analyse des systèmes", team_dyn, 1),
-            ("Contrôle optimal et modélisation des phénomènes complexes", team_dyn, 2),
-            ("Biomathématiques et bio-statistique (modélisation épidémiologique)", team_dyn, 3),
-            ("Processus stochastiques, probabilités et incertitude", team_sto, 4),
-            ("Statistique, science des données et intelligence artificielle", team_sto, 5),
-            ("Recherche opérationnelle, optimisation, simulation et aide à la décision", team_sto, 6),
+            (
+                "Modélisation et analyse des systèmes dynamiques",
+                (
+                    "Cet axe couvre la modélisation mathématique de phénomènes issus des sciences du "
+                    "vivant, de la physique, de l’environnement et de l’ingénierie. Il inclut l’étude "
+                    "qualitative et quantitative des équations différentielles et des modèles "
+                    "évolutifs, ainsi que l’analyse de la stabilité, des bifurcations et des "
+                    "comportements asymptotiques des systèmes dynamiques."
+                ),
+                team_dyn, 1,
+            ),
+            (
+                "Contrôle optimal et méthodes numériques",
+                (
+                    "Cet axe porte sur le développement de stratégies de contrôle pour les systèmes "
+                    "dynamiques, notamment sous contraintes, ainsi que sur la conception d’algorithmes "
+                    "numériques pour la simulation, l’optimisation et la résolution de problèmes "
+                    "complexes."
+                ),
+                team_dyn, 2,
+            ),
+            (
+                "Structures algébriques et fondements théoriques",
+                (
+                    "Cet axe est consacré à l’étude des structures algébriques avancées, telles que la "
+                    "théorie des groupes, les algèbres et les groupes quantiques. Il inclut également "
+                    "l’analyse des extensions et des interactions entre structures algébriques "
+                    "classiques et généralisées, contribuant ainsi à renforcer les fondements "
+                    "théoriques de la modélisation mathématique."
+                ),
+                team_dyn, 3,
+            ),
+            (
+                "Modélisation stochastique et quantification des incertitudes",
+                (
+                    "Cet axe couvre la théorie des probabilités, les processus stochastiques et la "
+                    "modélisation des phénomènes aléatoires. Il s’intéresse également à la "
+                    "quantification des incertitudes, à l’analyse de sensibilité, à la fiabilité des "
+                    "modèles et à la prise en compte des aléas dans les systèmes complexes."
+                ),
+                team_sto, 4,
+            ),
+            (
+                "Statistiques, inférence et analyse des données",
+                (
+                    "Cet axe est consacré au développement de méthodes statistiques pour l’inférence, "
+                    "l’estimation, la calibration et la validation des modèles. Il couvre également "
+                    "l’analyse exploratoire des données, les méthodes de classification, la prévision, "
+                    "l’analyse multivariée et les approches quantitatives destinées à l’extraction "
+                    "d’information à partir des données."
+                ),
+                team_sto, 5,
+            ),
+            (
+                "Science des données et méthodes computationnelles",
+                (
+                    "Cet axe porte sur la collecte, la gestion, l’analyse et la valorisation de "
+                    "données complexes ou de grande dimension. Il intègre le développement de méthodes "
+                    "numériques, statistiques et algorithmiques, ainsi que la conception d’outils "
+                    "d’aide à la décision fondés sur l’exploitation des données et le calcul "
+                    "scientifique."
+                ),
+                team_sto, 6,
+            ),
         ]
-        for title, team, order in themes:
+        for title, description, team, order in themes:
             ResearchTheme.objects.update_or_create(
-                title=title, defaults={"team": team, "order": order}
+                title=title, defaults={"description": description, "team": team, "order": order}
             )
 
     def seed_permanent_members(self, team_dyn, team_sto):
@@ -148,16 +227,20 @@ class Command(BaseCommand):
                 full_name=full_name,
                 defaults={"title": title, "is_director": is_director, "team": team, "bio": bio, "order": order},
             )
+        yahyeh = PermanentMember.objects.filter(full_name="Dr. Yahyeh SOULEIMAN").first()
+        if yahyeh:
+            attach_image(yahyeh, "photo", "member_yahyeh_souleiman.jpg")
 
     def seed_doctorants(self):
         rows = [
-            ("M. Said ISMAIL", "2023", "Université Le Havre (LMAH)", "B. Ambrosio ; M.A. Aziz Alaoui", "Yahyeh Souleiman"),
-            ("M. Getachew FETENE", "2025", "Adama Science and Technology University", "Lemecha Legesse", "Yahyeh Souleiman"),
+            ("M. Said ISMAIL", "2023", "Université Le Havre (LMAH)", "B. Ambrosio & M.A. Aziz Alaoui", "Yahyeh Souleiman"),
             ("M. Ali MOHAMED", "2024", "Université La Rochelle (LMIA)", "S. Kadri-Harouna & Kaïs Ammari", "Liban Ismail"),
             ("M. Gouled SOULEIMAN", "2024", "Université Le Havre (LMAH)", "N. Verdière & A. Berred", "Yahyeh Souleiman"),
             ("Mme. Saida BALLAH", "2024", "Université de Nantes (ONIRIS)", "Mohamed Hanafi", "Souleiman Omar"),
-            ("M. Hakim AMER", "2026", "Université de Toulon", "Mehmet Ersoy", "Liban Ismail"),
-            ("M. Kadir ALI", "2026", "Université Marie et Louis Pasteur (LmB)", "Raluca Eftimie", "Yahyeh Souleiman"),
+            ("M. Getachew FETENE", "2025", "Adama Science and Technology University", "Lemecha Legesse", "Yahyeh Souleiman"),
+            ("M. Hakim AMER", "2026", "Université de Toulon", "Mehmet Ersoy", "Liban Ismail & Mohamed Yacin"),
+            ("M. Kadir ALI", "2027", "Université Marie et Louis Pasteur (LmB)", "Raluca Eftimie", "Yahyeh Souleiman"),
+            ("M. Ismail ABDILLAHI", "2027", "Université Clermont Auvergne", "Andrezj Stos", "Liban Ismail"),
         ]
         for order, (full_name, start_year, partner_university, thesis_director, co_supervisor) in enumerate(rows, start=1):
             Doctorant.objects.update_or_create(
@@ -175,7 +258,7 @@ class Command(BaseCommand):
     def seed_associates(self):
         rows = [
             ("M. Hacène DJELLOUT", "Professeur", "Université Clermont Auvergne (UCA)", "France"),
-            ("Mme. Raluca EFTIMIE", "Professeure", "Université Marie et Louis Pasteur (Besançon)", "France"),
+            ("Mme. Raluca EFTIMIE", "Professeure", "Université Marie et Louis Pasteur", "France"),
             ("Mme. Nathalie VERDIÈRE", "Professeure", "Université Le Havre Normandie", "France"),
             ("M. Abdisalam HASSAN", "Professeur", "Université AMOUD", "Somalie"),
             ("M. Lemecha LEGESSE", "Professeur", "Adama Science and Technology University", "Éthiopie"),
@@ -190,6 +273,40 @@ class Command(BaseCommand):
                     "bio": f"Chercheur associé au LAMO, {grade.lower()} à {institution}.",
                     "order": order,
                 },
+            )
+
+    def seed_activities(self):
+        conference, _ = Activity.objects.update_or_create(
+            category=Activity.Category.CONFERENCE,
+            title="M2ISDA — Mathematical Modeling and Innovations in Advanced Data Science",
+            defaults={
+                "edition_label": "2e édition",
+                "year": "19–21 janvier 2027",
+                "description": (
+                    "Conférence internationale organisée par le LAMO et l'Université de Djibouti, "
+                    "réunissant chercheurs, doctorants et professionnels autour des avancées récentes "
+                    "en modélisation mathématique, statistique et science des données. Thèmes abordés : "
+                    "épidémiologie mathématique, optimisation, modélisation environnementale et "
+                    "logistique portuaire, aide à la décision."
+                ),
+                "link": "https://urls.fr/SHONvz",
+                "order": 2,
+            },
+        )
+        attach_image(conference, "image", "activity_m2isda_2027_poster.jpg")
+
+        Activity.objects.update_or_create(
+            category=Activity.Category.CONFERENCE,
+            title="Conférence LAMO",
+            defaults={"edition_label": "1ère édition", "year": "2024", "order": 1},
+        )
+
+        for order, year in enumerate(["2025", "2026"], start=1):
+            Activity.objects.update_or_create(
+                category=Activity.Category.OLYMPIADES,
+                title="Olympiades de mathématiques",
+                edition_label=f"Édition {year}",
+                defaults={"year": "", "order": order},
             )
 
     def seed_partners(self):

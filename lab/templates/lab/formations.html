@@ -1,0 +1,48 @@
+{% extends "lab/base.html" %}
+{% block title %}Formations — {{ site_profile.acronym }}{% endblock %}
+{% block content %}
+
+<section class="page-header">
+  <div class="container page-header-inner">
+    <div class="page-header-text">
+      <div class="breadcrumb"><a href="{% url 'lab:home' %}">Accueil</a><span class="sep">/</span>Formations</div>
+      <span class="eyebrow">Enseignement</span>
+      <h1>Formations</h1>
+      <p>Les formations adossées au laboratoire, du Master à la formation doctorale.</p>
+    </div>
+    <div class="page-header-icon">
+      <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M40,24 C34,18 22,16 14,18 V52 C22,50 34,52 40,58 C46,52 58,50 66,52 V18 C58,16 46,18 40,24 Z" stroke="var(--navy)" stroke-width="2.5" stroke-linejoin="round"/>
+        <line x1="40" y1="24" x2="40" y2="58" stroke="var(--line)" stroke-width="1.5"/>
+        <circle cx="40" cy="24" r="3" fill="var(--accent)"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<section class="section reveal">
+  <div class="container">
+    <div class="info-card-grid">
+
+      <div class="info-card">
+        <span class="ic-icon">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M12 4L3 8l9 4 9-4-9-4z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M3 8v7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M7 10.5V16c0 1.5 2.2 3 5 3s5-1.5 5-3v-5.5" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+        </span>
+        <h3>Masters</h3>
+        <p>Les étudiants de Master participent aux projets de recherche appliquée et aux stages de fin d'études du laboratoire, en lien direct avec ses axes scientifiques. Cette immersion progressive dans la recherche les prépare à une poursuite d'études en doctorat.</p>
+      </div>
+
+      <div class="info-card">
+        <span class="ic-icon">
+          <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="5" stroke="currentColor" stroke-width="1.8"/><path d="M8.5 12.5L7 21l5-2.5 5 2.5-1.5-8.5" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+        </span>
+        <h3>Formation doctorale</h3>
+        <p>Pilier stratégique du LAMO, la formation doctorale s'appuie sur un encadrement conjoint entre le laboratoire et des équipes de recherche internationales reconnues, favorisant la mobilité scientifique et l'ouverture disciplinaire.</p>
+        <a href="{% url 'lab:members_doctorants' %}" class="ic-link">Voir les doctorants →</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+{% endblock %}

@@ -36,8 +36,23 @@
         <h2>Objectifs scientifiques</h2>
         <div class="prose"><p>{{ team.description }}</p></div>
 
+        {% if themes %}
+        <h2 style="margin-top:32px;">Axes de recherche</h2>
+        <div class="axis-list">
+          {% for theme in themes %}
+          <div class="axis-item">
+            <div class="axis-num">{{ forloop.counter }}</div>
+            <div>
+              <h3>{{ theme.title }}</h3>
+              {% if theme.description %}<p>{{ theme.description }}</p>{% endif %}
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+        {% endif %}
+
         {% if members %}
-        <h2 style="margin-top:24px;">Membres de l'équipe</h2>
+        <h2 style="margin-top:32px;">Membres de l'équipe</h2>
         <div class="table-wrap">
           <table class="data-table">
             <thead><tr><th>Nom</th><th>Grade / Spécialité</th></tr></thead>
@@ -58,14 +73,12 @@
       </div>
 
       <div class="side-panel">
-        <h4>Thématiques associées</h4>
-        <ul>
-          {% for theme in themes %}
-          <li>{{ theme.title }}</li>
-          {% empty %}
-          <li>Aucune thématique renseignée pour le moment.</li>
-          {% endfor %}
-        </ul>
+        <h4>En bref</h4>
+        <div class="team-stats">
+          <div class="team-stat"><span class="lbl">Axes de recherche</span><span class="val">{{ themes|length }}</span></div>
+          <div class="team-stat"><span class="lbl">Membres permanents</span><span class="val">{{ members|length }}</span></div>
+        </div>
+        <p style="margin-top:18px;margin-bottom:0;"><a href="{% url 'lab:team_list' %}" class="u-link">← Retour aux équipes</a></p>
       </div>
     </div>
   </div>

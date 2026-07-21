@@ -21,6 +21,10 @@ class LabProfile(models.Model):
     teams_intro = models.TextField(
         blank=True, help_text="Texte d'introduction affiché au-dessus des équipes de recherche."
     )
+    teams_conclusion = models.TextField(
+        blank=True,
+        help_text="Paragraphe sur la complémentarité des équipes, affiché en bas de la page Équipes.",
+    )
 
     address = models.CharField(max_length=500, blank=True)
     director_name = models.CharField(max_length=255, blank=True)
@@ -170,6 +174,31 @@ class Partner(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Activity(models.Model):
+    class Category(models.TextChoices):
+        CONFERENCE = "conference", "Conférence"
+        SEMINAIRE = "seminaire", "Séminaire"
+        OLYMPIADES = "olympiades", "Olympiades"
+        OFFRE = "offre", "Offre de thèse et de stage"
+
+    category = models.CharField(max_length=20, choices=Category.choices)
+    title = models.CharField(max_length=255, help_text="Ex : 2e édition — M2ISDA 2027")
+    edition_label = models.CharField(max_length=100, blank=True, help_text="Ex : 1ère édition, Édition 2025")
+    year = models.CharField(max_length=20, blank=True)
+    description = models.TextField(blank=True)
+    image = models.ImageField(upload_to="activities/", blank=True, null=True)
+    link = models.URLField(blank=True, help_text="Lien externe (inscription, appel à candidature...)")
+    order = models.PositiveIntegerField(default=0)
+
+    class Meta:
+        ordering = ["category", "order", "year"]
+        verbose_name = "Activité"
+        verbose_name_plural = "Activités"
+
+    def __str__(self):
+        return f"{self.get_category_display()} — {self.title}"
 
 
 class News(models.Model):

@@ -372,6 +372,73 @@ table.data-table { width: 100%; border-collapse: collapse; min-width: 620px; }
 .back-link { display: inline-flex; align-items: center; gap: 6px; font-size: 0.86rem; font-weight: 700; color: var(--navy); margin-bottom: 16px; }
 .back-link:hover { color: var(--accent); }
 
+/* ---------- Axes de recherche (page équipe) ---------- */
+.axis-list { display: flex; flex-direction: column; gap: 14px; margin: 18px 0; }
+.axis-item { display: flex; gap: 16px; padding: 18px 20px; background: #fff; border: 1px solid var(--line); border-radius: var(--radius-lg); transition: box-shadow .2s var(--ease); }
+.axis-item:hover { box-shadow: var(--shadow); }
+.axis-item .axis-num {
+  width: 36px; height: 36px; border-radius: 9px; background: var(--teal-tint); color: var(--teal-dark);
+  display: flex; align-items: center; justify-content: center; font-family: var(--font-math); font-style: italic;
+  font-weight: 600; flex-shrink: 0;
+}
+.axis-item h3 { font-size: 0.98rem; margin-bottom: 6px; }
+.axis-item p { font-size: 0.88rem; margin-bottom: 0; color: var(--muted); }
+
+.team-stats { display: flex; flex-direction: column; gap: 12px; }
+.team-stat { display: flex; align-items: center; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid var(--line); }
+.team-stat:last-child { border-bottom: none; }
+.team-stat .lbl { font-size: 0.84rem; color: var(--muted); }
+.team-stat .val { font-family: var(--font-math); font-style: italic; font-weight: 600; font-size: 1.3rem; color: var(--teal-dark); }
+
+/* ---------- Activités (conférences, séminaires, olympiades, offres) ---------- */
+.activity-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; align-items: start; }
+.activity-card {
+  background: #fff; border: 1px solid var(--line); border-radius: var(--radius-lg);
+  overflow: hidden; transition: box-shadow .2s var(--ease), transform .2s var(--ease);
+}
+.activity-card:hover { box-shadow: var(--shadow-lg); transform: translateY(-3px); }
+.activity-card .activity-image { width: 100%; aspect-ratio: 16/10; object-fit: cover; object-position: top; background: var(--bg-alt); }
+.activity-card .activity-body { padding: 18px 20px; }
+.activity-card .activity-edition { display: inline-block; font-size: 0.68rem; font-weight: 800; padding: 3px 10px; border-radius: 100px; background: var(--teal-tint); color: var(--teal-dark); text-transform: uppercase; letter-spacing: 0.03em; margin-bottom: 8px; }
+.activity-card h3 { font-size: 1.02rem; margin-bottom: 6px; }
+.activity-card p { font-size: 0.88rem; margin-bottom: 0; }
+.activity-card .activity-link { display: inline-flex; align-items: center; gap: 6px; margin-top: 10px; font-weight: 700; font-size: 0.86rem; color: var(--navy); }
+.activity-card .activity-link:hover { color: var(--accent); }
+
+.empty-state {
+  background: var(--bg-alt); border: 1px dashed var(--line); border-radius: var(--radius-lg);
+  padding: 28px; text-align: center; color: var(--muted); font-size: 0.9rem;
+}
+
+.category-block { margin-bottom: 44px; }
+.category-block:last-child { margin-bottom: 0; }
+.category-head { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+.category-head .cat-icon {
+  width: 40px; height: 40px; border-radius: 10px; background: var(--navy-100, var(--bg-alt));
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  background: var(--teal-tint); color: var(--teal-dark);
+}
+.category-head .cat-icon svg { width: 22px; height: 22px; }
+.category-head h2 { font-size: 1.15rem; margin: 0; }
+.category-head .cat-count { font-size: 0.78rem; color: var(--muted); }
+
+/* ---------- Pages Production scientifique / Formations ---------- */
+.info-card-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+.info-card {
+  background: #fff; border: 1px solid var(--line); border-radius: var(--radius-lg);
+  padding: 22px; transition: box-shadow .2s var(--ease), transform .2s var(--ease);
+}
+.info-card:hover { box-shadow: var(--shadow); transform: translateY(-2px); }
+.info-card .ic-icon {
+  width: 42px; height: 42px; border-radius: 10px; background: var(--teal-tint); color: var(--teal-dark);
+  display: flex; align-items: center; justify-content: center; margin-bottom: 14px;
+}
+.info-card .ic-icon svg { width: 24px; height: 24px; }
+.info-card h3 { font-size: 1rem; margin-bottom: 6px; }
+.info-card p { font-size: 0.88rem; margin-bottom: 0; }
+.info-card .ic-link { display: inline-flex; align-items: center; gap: 6px; margin-top: 10px; font-weight: 700; font-size: 0.86rem; color: var(--navy); }
+.info-card .ic-link:hover { color: var(--accent); }
+
 /* ---------- Member tabs ---------- */
 .tab-nav { display: flex; gap: 4px; border-bottom: 1px solid var(--line); margin-bottom: 18px; flex-wrap: wrap; }
 .tab-nav a { padding: 9px 16px; font-weight: 700; font-size: 0.86rem; color: var(--muted); border-bottom: 2.5px solid transparent; margin-bottom: -1px; transition: color .15s ease, border-color .15s ease; }
@@ -466,6 +533,7 @@ table.data-table { width: 100%; border-collapse: collapse; min-width: 620px; }
   .layout, .grid-2, .contact-grid, .split { grid-template-columns: 1fr; gap: 28px; }
   .grid-3 { grid-template-columns: 1fr 1fr; }
   .member-grid, .related-members { grid-template-columns: repeat(3, 1fr); }
+  .activity-grid, .info-card-grid { grid-template-columns: 1fr; }
   .footer-grid { grid-template-columns: 1fr 1fr; }
 }
 @media (max-width: 760px) {

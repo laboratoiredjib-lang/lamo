@@ -1,6 +1,7 @@
 from django.contrib import admin
 
 from .models import (
+    Activity,
     AssociateResearcher,
     Doctorant,
     LabProfile,
@@ -16,7 +17,7 @@ from .models import (
 class LabProfileAdmin(admin.ModelAdmin):
     fieldsets = (
         ("Identité", {"fields": ("name", "acronym", "affiliation", "logo", "university_logo")}),
-        ("Présentation", {"fields": ("mission", "presentation_extra", "teams_intro")}),
+        ("Présentation", {"fields": ("mission", "presentation_extra", "teams_intro", "teams_conclusion")}),
         ("Contact", {"fields": ("address", "director_name", "email_primary", "email_secondary", "phone")}),
     )
 
@@ -74,3 +75,10 @@ class NewsAdmin(admin.ModelAdmin):
     list_display = ("title", "date", "is_published")
     list_filter = ("is_published",)
     ordering = ("-date",)
+
+
+@admin.register(Activity)
+class ActivityAdmin(admin.ModelAdmin):
+    list_display = ("title", "category", "edition_label", "year", "order")
+    list_filter = ("category",)
+    ordering = ("category", "order")

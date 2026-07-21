@@ -44,8 +44,6 @@
           </div>
         </li>
 
-        <li><a href="{% url 'lab:themes' %}">Thématiques</a></li>
-
         <li class="has-dropdown">
           <button type="button">Membres <span class="caret"></span></button>
           <div class="dropdown">
@@ -55,9 +53,11 @@
           </div>
         </li>
 
+        <li><a href="{% url 'lab:activities' %}">Activités</a></li>
+        <li><a href="{% url 'lab:production' %}">Production scientifique</a></li>
+        <li><a href="{% url 'lab:formations' %}">Formations</a></li>
         <li><a href="{% url 'lab:partners' %}">Partenaires</a></li>
         <li><a href="{% url 'lab:news_list' %}">Actualités</a></li>
-        <li><a href="{% url 'lab:contact' %}">Contact</a></li>
       </ul>
     </nav>
 
@@ -91,18 +91,20 @@
         <h5>Le laboratoire</h5>
         <ul>
           <li><a href="{% url 'lab:team_list' %}">Nos équipes</a></li>
-          <li><a href="{% url 'lab:themes' %}">Thématiques de recherche</a></li>
+          <li><a href="{% url 'lab:activities' %}">Activités</a></li>
           <li><a href="{% url 'lab:partners' %}">Partenaires</a></li>
           <li><a href="{% url 'lab:news_list' %}">Actualités</a></li>
         </ul>
       </div>
 
       <div>
-        <h5>Membres</h5>
+        <h5>Membres &amp; formation</h5>
         <ul>
           <li><a href="{% url 'lab:members_permanent' %}">Membres permanents</a></li>
           <li><a href="{% url 'lab:members_doctorants' %}">Doctorants</a></li>
           <li><a href="{% url 'lab:members_associates' %}">Chercheurs associés</a></li>
+          <li><a href="{% url 'lab:production' %}">Production scientifique</a></li>
+          <li><a href="{% url 'lab:formations' %}">Formations</a></li>
         </ul>
       </div>
 
