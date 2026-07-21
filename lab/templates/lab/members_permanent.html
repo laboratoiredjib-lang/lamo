@@ -34,6 +34,7 @@
         <div class="m-name">{{ m.full_name }}</div>
         <div class="m-role">{{ m.title }}</div>
         {% if m.is_director %}<span class="m-tag">Directeur</span>{% endif %}
+        {% if m.role_tag %}<span class="m-tag">{{ m.role_tag }}</span>{% endif %}
         <span class="m-view">Voir le profil →</span>
       </a>
       {% empty %}

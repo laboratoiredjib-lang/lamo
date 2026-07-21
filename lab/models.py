@@ -91,11 +91,17 @@ class ResearchTheme(models.Model):
 class PermanentMember(models.Model):
     full_name = models.CharField(max_length=255)
     title = models.CharField(max_length=255, help_text="Grade / spécialité")
+    role_tag = models.CharField(
+        max_length=120, blank=True,
+        help_text="Fonction complémentaire affichée en badge, ex : Doyen de l'IUT-T",
+    )
     team = models.ForeignKey(
         ResearchTeam, on_delete=models.SET_NULL, null=True, blank=True, related_name="members"
     )
     is_director = models.BooleanField(default=False)
     email = models.EmailField(blank=True)
+    email_secondary = models.EmailField(blank=True)
+    phone = models.CharField(max_length=120, blank=True, help_text="Un ou plusieurs numéros, séparés par « | ».")
     photo = models.ImageField(upload_to="members/", blank=True, null=True)
     bio = models.TextField(blank=True, help_text="Présentation courte affichée sur la fiche du membre.")
     order = models.PositiveIntegerField(default=0)

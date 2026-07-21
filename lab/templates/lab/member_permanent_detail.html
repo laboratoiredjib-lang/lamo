@@ -23,26 +23,31 @@
   <div class="container">
     <a href="{% url 'lab:members_permanent' %}" class="back-link">← Tous les membres permanents</a>
 
-    <div class="split">
-      <div>
-        <div class="member-hero">
-          <div class="member-avatar">
-            {% if member.photo %}<img src="{{ member.photo.url }}" alt="{{ member.full_name }}">{% else %}{{ member.full_name|initials }}{% endif %}
-          </div>
-          <div>
-            <h1>{{ member.full_name }}</h1>
-            <div class="role">{{ member.title }}</div>
-            <div class="tags">
-              {% if member.is_director %}<span class="tag tag--accent">Directeur du laboratoire</span>{% endif %}
-              {% if member.team %}<span class="tag tag--teal">{{ member.team.name }}</span>{% endif %}
-            </div>
+    <div class="member-hero-card">
+      <div class="member-hero">
+        <div class="member-avatar">
+          {% if member.photo %}<img src="{{ member.photo.url }}" alt="{{ member.full_name }}">{% else %}{{ member.full_name|initials }}{% endif %}
+        </div>
+        <div>
+          <h1>{{ member.full_name }}</h1>
+          <div class="role">{{ member.title }}</div>
+          <div class="tags">
+            {% if member.is_director %}<span class="tag tag--accent">Directeur du laboratoire</span>{% endif %}
+            {% if member.role_tag %}<span class="tag tag--navy">{{ member.role_tag }}</span>{% endif %}
+            {% if member.team %}<span class="tag tag--teal">{{ member.team.name }}</span>{% endif %}
           </div>
         </div>
+      </div>
+    </div>
 
+    <div class="split">
+      <div>
         <div class="info-grid">
           <div class="info-tile"><strong>Grade / Spécialité</strong><span>{{ member.title }}</span></div>
           {% if member.team %}<div class="info-tile"><strong>Équipe</strong><span>{{ member.team.name }}</span></div>{% endif %}
           {% if member.email %}<div class="info-tile"><strong>Email</strong><a href="mailto:{{ member.email }}">{{ member.email }}</a></div>{% endif %}
+          {% if member.email_secondary %}<div class="info-tile"><strong>Email (2)</strong><a href="mailto:{{ member.email_secondary }}">{{ member.email_secondary }}</a></div>{% endif %}
+          {% if member.phone %}<div class="info-tile"><strong>Téléphone</strong><span>{{ member.phone }}</span></div>{% endif %}
         </div>
 
         {% if member.bio %}

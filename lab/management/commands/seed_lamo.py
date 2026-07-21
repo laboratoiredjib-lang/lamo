@@ -213,19 +213,38 @@ class Command(BaseCommand):
 
     def seed_permanent_members(self, team_dyn, team_sto):
         members = [
-            ("Dr. Liban ISMAIL", "Maître de conférences en Mathématiques appliquées", True, team_dyn,
+            ("Dr. Liban ISMAIL", "Maître de conférences en Mathématiques appliquées", "", True, team_dyn,
+             "", "", "",
              "Directeur du LAMO. Ses travaux portent sur la modélisation et le contrôle de systèmes dynamiques complexes, avec des collaborations internationales autour de l'encadrement doctoral."),
-            ("Dr. Yahyeh SOULEIMAN", "Maître de conférences en Mathématiques appliquées", False, team_sto,
-             "Recherches en méthodes probabilistes et statistiques appliquées, avec un fort investissement dans l'encadrement de doctorants en cotutelle."),
-            ("Dr. Souleiman OMAR", "Maître de conférences en Mathématiques fondamentales", False, team_dyn,
+            ("Dr. Yahyeh SOULEIMAN", "Maître de conférences en Mathématiques appliquées",
+             "Doyen de l'IUT-T", False, team_sto,
+             "yahyeh_souleiman@univ.edu.dj", "souleimanyahyeh@gmail.com", "+253 77 86 80 46 | +253 21 32 36 03",
+             "Dr. Yahyeh SOULEIMAN est Maître de Conférences en Mathématiques Appliquées et Doyen de "
+             "l'Institut Universitaire de Technologie Tertiaire (IUT-T) au Laboratoire d'Analyse, "
+             "Modélisation et Optimisation (LAMO), Université de Djibouti. Mathématicien appliqué avec "
+             "14 ans d'expérience dans l'enseignement supérieur et la recherche, son expertise porte sur "
+             "la modélisation mathématique, l'analyse de données et l'optimisation dans les secteurs de "
+             "la santé publique et de l'environnement. Il fait également preuve de leadership en tant "
+             "que responsable de groupes de recherche, membre du comité éditorial de Applied Mathematics "
+             "and Statistics (PJAMS), réviseur de plusieurs articles pour différentes revues "
+             "internationales et directeur de thèses doctorales. Auteur de plusieurs publications "
+             "évaluées par les pairs, il est également intervenant régulier lors de conférences "
+             "scientifiques internationales."),
+            ("Dr. Souleiman OMAR", "Maître de conférences en Mathématiques fondamentales", "", False, team_dyn,
+             "", "", "",
              "Travaux en analyse mathématique et systèmes dynamiques, au service de la modélisation de phénomènes complexes."),
-            ("Dr. Doualeh ABDILLAHI", "Maître de conférences en Statistiques appliquées", False, team_sto,
+            ("Dr. Doualeh ABDILLAHI", "Maître de conférences en Statistiques appliquées", "", False, team_sto,
+             "", "", "",
              "Spécialiste de statistique appliquée et de science des données, au service de projets interdisciplinaires du laboratoire."),
         ]
-        for order, (full_name, title, is_director, team, bio) in enumerate(members, start=1):
+        for order, (full_name, title, role_tag, is_director, team, email, email_secondary, phone, bio) in enumerate(members, start=1):
             PermanentMember.objects.update_or_create(
                 full_name=full_name,
-                defaults={"title": title, "is_director": is_director, "team": team, "bio": bio, "order": order},
+                defaults={
+                    "title": title, "role_tag": role_tag, "is_director": is_director, "team": team,
+                    "email": email, "email_secondary": email_secondary, "phone": phone,
+                    "bio": bio, "order": order,
+                },
             )
         yahyeh = PermanentMember.objects.filter(full_name="Dr. Yahyeh SOULEIMAN").first()
         if yahyeh:

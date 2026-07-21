@@ -44,7 +44,7 @@ class ResearchThemeAdmin(admin.ModelAdmin):
 
 @admin.register(PermanentMember)
 class PermanentMemberAdmin(admin.ModelAdmin):
-    list_display = ("full_name", "title", "team", "is_director", "order")
+    list_display = ("full_name", "title", "role_tag", "team", "is_director", "order")
     list_filter = ("team", "is_director")
     ordering = ("order",)
 
