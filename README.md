@@ -71,10 +71,24 @@ optimisation, statistique) et de la palette du logo. Aucune image externe n'est 
 
 ## Déploiement en production
 
-Avant mise en ligne, penser à :
+Le projet est prêt pour un hébergement type Render/Railway/Heroku :
 
-- définir `DEBUG = False` et une vraie valeur secrète pour `SECRET_KEY` (variable d'environnement) ;
-- renseigner `ALLOWED_HOSTS` avec le nom de domaine réel ;
-- passer sur une base PostgreSQL ;
-- exécuter `python manage.py collectstatic` et servir `staticfiles/` via le serveur web ;
-- servir le dossier `media/` (logos, photos) via le serveur web ou un stockage objet.
+- `DEBUG`, `SECRET_KEY`, `ALLOWED_HOSTS` sont lus depuis des variables d'environnement
+  (`lamo_site/settings.py`) — par défaut `DEBUG=True` en local, sans rien à configurer ;
+- `DATABASE_URL` est supporté (`dj-database-url`) pour brancher une base PostgreSQL ;
+  sans cette variable, l'application utilise SQLite ;
+- les fichiers statiques sont servis directement par l'application via **WhiteNoise**
+  (pas besoin de serveur web séparé) ;
+- `gunicorn` est utilisé comme serveur d'application (`gunicorn lamo_site.wsgi:application`) ;
+- `build.sh` installe les dépendances, exécute `collectstatic`, `migrate`, `seed_lamo`
+  et `ensure_admin` (crée/actualise le compte admin à partir de `DJANGO_SUPERUSER_USERNAME`
+  / `_EMAIL` / `_PASSWORD` si ces variables sont définies).
+
+### Déployé sur Render (plan gratuit)
+
+Le site est hébergé sur Render. **Sur le plan gratuit, le disque n'est pas persistant** :
+la base SQLite et les identifiants admin sont régénérés à chaque build à partir de
+`seed_lamo` (données du flyer) — toute modification faite depuis `/admin/` entre deux
+déploiements peut donc être perdue au redémarrage du service. Pour un usage en production
+avec du contenu éditorial durable, brancher une base PostgreSQL (variable `DATABASE_URL`,
+disponible aussi en plan gratuit sur Render) est recommandé.
