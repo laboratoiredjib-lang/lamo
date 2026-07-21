@@ -31,13 +31,15 @@
     <div class="member-grid stagger">
       {% for a in associates %}
       <a href="{{ a.get_absolute_url }}" class="member-card">
-        <div class="member-avatar">
-          {% if a.photo %}<img src="{{ a.photo.url }}" alt="{{ a.full_name }}">{% else %}{{ a.full_name|initials }}{% endif %}
+        <div class="member-photo">
+          {% if a.photo %}<img src="{{ a.photo.url }}" alt="{{ a.full_name }}">{% else %}<div class="initials-fallback">{{ a.full_name|initials }}</div>{% endif %}
         </div>
-        <div class="m-name">{{ a.full_name }}</div>
-        <div class="m-role">{{ a.institution }}</div>
-        <span class="m-tag">{{ a.country }}</span>
-        <span class="m-view">Voir le profil →</span>
+        <div class="member-card-body">
+          <div class="m-name">{{ a.full_name }}</div>
+          <div class="m-role">{{ a.institution }}</div>
+          <span class="m-tag">{{ a.country }}</span>
+          <span class="m-view">Voir le profil →</span>
+        </div>
       </a>
       {% empty %}
       <p>Aucun chercheur associé renseigné pour le moment.</p>

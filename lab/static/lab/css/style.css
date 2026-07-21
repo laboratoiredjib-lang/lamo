@@ -327,17 +327,45 @@ table.data-table { width: 100%; border-collapse: collapse; min-width: 620px; }
 }
 .director-tag { margin-left: 6px; font-size: 0.66rem; font-weight: 800; padding: 3px 8px; border-radius: 100px; background: var(--accent-tint); color: var(--accent-dark); text-transform: uppercase; letter-spacing: 0.03em; }
 
-/* ---------- Member cards (grille) ---------- */
-.member-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
+/* ---------- Member cards (grille) : portrait large en cadre professionnel ---------- */
+.member-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 22px; }
 .member-card {
   display: block; background: #fff; border: 1px solid var(--line); border-radius: var(--radius-lg);
-  padding: 30px 20px 22px; text-align: center; text-decoration: none !important; color: var(--ink);
+  text-align: center; text-decoration: none !important; color: var(--ink);
   transition: border-color .25s var(--ease), box-shadow .25s var(--ease), transform .25s var(--ease);
   position: relative; overflow: hidden;
 }
-.member-card::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, var(--teal), var(--accent)); transform: scaleX(0); transform-origin: left; transition: transform .3s var(--ease); }
+.member-card::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, var(--teal), var(--accent)); transform: scaleX(0); transform-origin: left; transition: transform .3s var(--ease); z-index: 3; }
 .member-card:hover { border-color: transparent; box-shadow: var(--shadow-lg); transform: translateY(-6px); }
 .member-card:hover::before { transform: scaleX(1); }
+
+.member-photo {
+  position: relative; width: 100%; aspect-ratio: 4 / 5; overflow: hidden;
+  background: linear-gradient(150deg, var(--teal), var(--navy));
+  border-bottom: 1px solid var(--line);
+}
+.member-photo img { width: 100%; height: 100%; object-fit: cover; object-position: center top; display: block; transition: transform .6s var(--ease); }
+.member-card:hover .member-photo img { transform: scale(1.07); }
+.member-photo .initials-fallback {
+  position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+  color: #fff; font-family: var(--font-math); font-style: italic; font-weight: 600; font-size: 3.4rem;
+}
+.member-photo::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 45%;
+  background: linear-gradient(to top, rgba(10,26,44,.5), rgba(10,26,44,0));
+  opacity: 0; transition: opacity .3s var(--ease); pointer-events: none;
+}
+.member-card:hover .member-photo::after { opacity: 1; }
+
+.member-card-body { padding: 22px 20px 24px; }
+.member-card .m-name { font-weight: 800; font-size: 1.04rem; color: var(--navy); margin-bottom: 3px; }
+.member-card .m-role { font-size: 0.8rem; color: var(--muted); line-height: 1.4; }
+.member-card .m-tag { display: inline-block; margin-top: 10px; font-size: 0.64rem; font-weight: 800; padding: 3px 10px; border-radius: 100px; background: var(--accent-tint); color: var(--accent-dark); text-transform: uppercase; letter-spacing: 0.03em; }
+.member-card .m-tag + .m-tag { margin-left: 6px; }
+.member-card .m-view { display: block; margin-top: 12px; font-size: 0.78rem; font-weight: 700; color: var(--teal-dark); opacity: 0; transform: translateY(4px); transition: opacity .2s var(--ease), transform .2s var(--ease); }
+.member-card:hover .m-view { opacity: 1; transform: translateY(0); }
+
+/* Mini-avatars ronds (section "Autres membres" en bas des fiches) */
 .member-avatar {
   width: 108px; height: 108px; border-radius: 50%; margin: 0 auto 16px; overflow: hidden;
   background: linear-gradient(135deg, var(--teal), var(--navy)); color: #fff;
@@ -348,12 +376,6 @@ table.data-table { width: 100%; border-collapse: collapse; min-width: 620px; }
 }
 .member-card:hover .member-avatar { box-shadow: 0 0 0 5px #fff, 0 0 0 6px var(--teal), 0 16px 32px rgba(15,42,68,.22); }
 .member-avatar img { width: 100%; height: 100%; object-fit: cover; }
-.member-card .m-name { font-weight: 800; font-size: 1rem; color: var(--navy); margin-bottom: 3px; }
-.member-card .m-role { font-size: 0.8rem; color: var(--muted); line-height: 1.4; }
-.member-card .m-tag { display: inline-block; margin-top: 10px; font-size: 0.64rem; font-weight: 800; padding: 3px 10px; border-radius: 100px; background: var(--accent-tint); color: var(--accent-dark); text-transform: uppercase; letter-spacing: 0.03em; }
-.member-card .m-tag + .m-tag { margin-left: 6px; }
-.member-card .m-view { display: block; margin-top: 12px; font-size: 0.78rem; font-weight: 700; color: var(--teal-dark); opacity: 0; transform: translateY(4px); transition: opacity .2s var(--ease), transform .2s var(--ease); }
-.member-card:hover .m-view { opacity: 1; transform: translateY(0); }
 
 /* ---------- Member detail (fiche profil) : titre + description à gauche, photo compacte à
    droite, bande d'informations pleine largeur en bas de la carte ---------- */

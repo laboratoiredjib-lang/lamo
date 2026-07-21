@@ -29,13 +29,15 @@
     <div class="member-grid stagger">
       {% for d in doctorants %}
       <a href="{{ d.get_absolute_url }}" class="member-card">
-        <div class="member-avatar">
-          {% if d.photo %}<img src="{{ d.photo.url }}" alt="{{ d.full_name }}">{% else %}{{ d.full_name|initials }}{% endif %}
+        <div class="member-photo">
+          {% if d.photo %}<img src="{{ d.photo.url }}" alt="{{ d.full_name }}">{% else %}<div class="initials-fallback">{{ d.full_name|initials }}</div>{% endif %}
         </div>
-        <div class="m-name">{{ d.full_name }}</div>
-        <div class="m-role">{{ d.partner_university }}</div>
-        <span class="m-tag">{{ d.start_year }}</span>
-        <span class="m-view">Voir le profil →</span>
+        <div class="member-card-body">
+          <div class="m-name">{{ d.full_name }}</div>
+          <div class="m-role">{{ d.partner_university }}</div>
+          <span class="m-tag">{{ d.start_year }}</span>
+          <span class="m-view">Voir le profil →</span>
+        </div>
       </a>
       {% empty %}
       <p>Aucun doctorant renseigné pour le moment.</p>

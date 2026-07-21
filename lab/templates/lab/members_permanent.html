@@ -28,14 +28,16 @@
     <div class="member-grid stagger">
       {% for m in members %}
       <a href="{{ m.get_absolute_url }}" class="member-card">
-        <div class="member-avatar">
-          {% if m.photo %}<img src="{{ m.photo.url }}" alt="{{ m.full_name }}">{% else %}{{ m.full_name|initials }}{% endif %}
+        <div class="member-photo">
+          {% if m.photo %}<img src="{{ m.photo.url }}" alt="{{ m.full_name }}">{% else %}<div class="initials-fallback">{{ m.full_name|initials }}</div>{% endif %}
         </div>
-        <div class="m-name">{{ m.full_name }}</div>
-        <div class="m-role">{{ m.title }}</div>
-        {% if m.is_director %}<span class="m-tag">Directeur</span>{% endif %}
-        {% if m.role_tag %}<span class="m-tag">{{ m.role_tag }}</span>{% endif %}
-        <span class="m-view">Voir le profil →</span>
+        <div class="member-card-body">
+          <div class="m-name">{{ m.full_name }}</div>
+          <div class="m-role">{{ m.title }}</div>
+          {% if m.is_director %}<span class="m-tag">Directeur</span>{% endif %}
+          {% if m.role_tag %}<span class="m-tag">{{ m.role_tag }}</span>{% endif %}
+          <span class="m-view">Voir le profil →</span>
+        </div>
       </a>
       {% empty %}
       <p>Aucun membre renseigné pour le moment.</p>
