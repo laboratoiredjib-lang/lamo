@@ -24,6 +24,11 @@ urlpatterns = [
     path('', include('lab.urls')),
 ]
 
+
+# Le plan gratuit ne fournit pas de stockage objet séparé : les fichiers médias
+# (logos, photos) sont donc servis par l'application elle-même, y compris en
+# production. Volume modeste, trafic faible : largement suffisant ici.
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
 if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATICFILES_DIRS[0])
