@@ -1,3 +1,4 @@
+from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, render
 
 from .models import (
@@ -11,6 +12,10 @@ from .models import (
     ResearchTeam,
     ResearchTheme,
 )
+
+
+def health_check(request):
+    return HttpResponse("OK")
 
 
 def home(request):
