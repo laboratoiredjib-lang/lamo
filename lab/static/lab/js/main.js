@@ -1,13 +1,33 @@
 (function () {
   var toggle = document.getElementById("nav-toggle");
   var nav = document.getElementById("main-nav");
+  var backdrop = document.getElementById("nav-backdrop");
+
+  function setNavOpen(isOpen) {
+    nav.classList.toggle("is-open", isOpen);
+    toggle.classList.toggle("is-open", isOpen);
+    toggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
+    toggle.setAttribute("aria-label", isOpen ? "Fermer le menu" : "Ouvrir le menu");
+    if (backdrop) backdrop.classList.toggle("is-open", isOpen);
+    document.body.classList.toggle("nav-locked", isOpen);
+    if (!isOpen) {
+      document.querySelectorAll(".main-nav li.is-open").forEach(function (li) {
+        li.classList.remove("is-open");
+      });
+    }
+  }
 
   if (toggle && nav) {
     toggle.addEventListener("click", function () {
-      var isOpen = nav.classList.toggle("is-open");
-      toggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
+      setNavOpen(!nav.classList.contains("is-open"));
     });
   }
+  if (backdrop) {
+    backdrop.addEventListener("click", function () { setNavOpen(false); });
+  }
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape") setNavOpen(false);
+  });
 
   document.querySelectorAll(".has-dropdown > button").forEach(function (btn) {
     btn.addEventListener("click", function (e) {
