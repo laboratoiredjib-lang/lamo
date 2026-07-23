@@ -5,10 +5,13 @@ from .models import (
     Activity,
     AssociateResearcher,
     Doctorant,
+    Habilitation,
     LabProfile,
     News,
     Partner,
     PermanentMember,
+    Publication,
+    ResearchProject,
     ResearchTeam,
     ResearchTheme,
 )
@@ -141,7 +144,11 @@ def activities(request):
 def production(request):
     context = {
         "profile": LabProfile.load(),
+        "doctorants": Doctorant.objects.all(),
         "doctorants_count": Doctorant.objects.count(),
+        "publications": Publication.objects.all(),
+        "projects": ResearchProject.objects.prefetch_related("related_publications"),
+        "habilitations": Habilitation.objects.all(),
     }
     return render(request, "lab/production.html", context)
 

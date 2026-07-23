@@ -1,4 +1,5 @@
 {% extends "lab/base.html" %}
+{% load lab_extras %}
 {% block title %}Production scientifique — {{ site_profile.acronym }}{% endblock %}
 {% block content %}
 
@@ -8,7 +9,7 @@
       <div class="breadcrumb"><a href="{% url 'lab:home' %}">Accueil</a><span class="sep">/</span>Production scientifique</div>
       <span class="eyebrow">Recherche</span>
       <h1>Production scientifique</h1>
-      <p>Les publications, thèses et projets de recherche portés par les membres du LAMO.</p>
+      <p>Les publications, thèses, habilitations et projets de recherche portés par les membres du LAMO.</p>
     </div>
     <div class="page-header-icon">
       <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -25,41 +26,138 @@
 
 <section class="section reveal">
   <div class="container">
-    <div class="info-card-grid">
+    <div class="prod-nav">
+      <a href="#articles">Articles<span class="count">{{ publications|length }}</span></a>
+      <a href="#theses">Thèses<span class="count">{{ doctorants|length }}</span></a>
+      <a href="#hdr">HDR<span class="count">{{ habilitations|length }}</span></a>
+      <a href="#projets">Projets<span class="count">{{ projects|length }}</span></a>
+    </div>
+  </div>
+</section>
 
-      <div class="info-card">
-        <span class="ic-icon">
-          <svg viewBox="0 0 24 24" fill="none"><path d="M6 3h9l5 5v13a1 1 0 01-1 1H6a1 1 0 01-1-1V4a1 1 0 011-1z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M15 3v5h5" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><line x1="8" y1="13" x2="16" y2="13" stroke="currentColor" stroke-width="1.6"/><line x1="8" y1="17" x2="13" y2="17" stroke="currentColor" stroke-width="1.6"/></svg>
-        </span>
-        <h3>Articles</h3>
-        <p>Publications des membres du laboratoire dans des revues et conférences scientifiques nationales et internationales.</p>
+<section class="section reveal" id="articles" style="padding-top:0;">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Publications</span>
+      <h2>Articles scientifiques</h2>
+      <p class="lede">Publications des membres du laboratoire dans des revues et supports scientifiques internationaux.</p>
+    </div>
+
+    <ol class="pub-list stagger">
+      {% for pub in publications %}
+      <li class="pub-item">
+        <span class="pub-num">{{ forloop.counter }}</span>
+        <div class="pub-body">
+          <div class="pub-authors">{{ pub.authors }}</div>
+          <div class="pub-title">{{ pub.title }}</div>
+          {% if pub.reference %}<div class="pub-ref">{{ pub.reference }}</div>{% endif %}
+        </div>
+        {% if pub.link %}
+        <a href="{{ pub.link }}" target="_blank" rel="noopener noreferrer" class="pub-link">{{ pub.link_label|default:"Voir" }} ↗</a>
+        {% elif pub.is_forthcoming %}
+        <span class="pub-badge">À paraître</span>
+        {% endif %}
+      </li>
+      {% empty %}
+      <p>Aucune publication renseignée pour le moment.</p>
+      {% endfor %}
+    </ol>
+  </div>
+</section>
+
+<section class="section reveal" id="theses">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Formation doctorale</span>
+      <h2>Thèses en cours</h2>
+      <p class="lede">{{ doctorants|length }} thèse{{ doctorants|length|pluralize }} menée{{ doctorants|length|pluralize }} au LAMO, en cotutelle avec des universités partenaires internationales.</p>
+    </div>
+
+    <div class="thesis-grid stagger">
+      {% for d in doctorants %}
+      <a href="{{ d.get_absolute_url }}" class="thesis-card">
+        <div class="thesis-card-top">
+          <span class="thesis-year">{{ d.start_year }}</span>
+          <span class="thesis-arrow">→</span>
+        </div>
+        <div class="thesis-name">{{ d.full_name }}</div>
+        <div class="thesis-meta">{{ d.partner_university }}</div>
+        <div class="thesis-meta"><strong>Direction :</strong> {{ d.thesis_director }}</div>
+        {% if d.co_supervisor %}<div class="thesis-meta"><strong>Co-encadrement :</strong> {{ d.co_supervisor }}</div>{% endif %}
+      </a>
+      {% empty %}
+      <p>Aucune thèse renseignée pour le moment.</p>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% if habilitations %}
+<section class="section reveal" id="hdr">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Habilitation à Diriger des Recherches</span>
+      <h2>HDR en préparation</h2>
+    </div>
+
+    {% for hdr in habilitations %}
+    <div class="hdr-card">
+      <div class="hdr-head">
+        <div>
+          <div class="hdr-name">{{ hdr.full_name }}</div>
+          <div class="hdr-spec">{{ hdr.specialization }}</div>
+        </div>
+        {% if hdr.period_label %}<span class="tag tag--accent">{{ hdr.period_label }}</span>{% endif %}
       </div>
-
-      <div class="info-card">
-        <span class="ic-icon">
-          <svg viewBox="0 0 24 24" fill="none"><path d="M12 4L3 8l9 4 9-4-9-4z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M7 10.5V16c0 1.5 2.2 3 5 3s5-1.5 5-3v-5.5" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
-        </span>
-        <h3>Thèses</h3>
-        <p>{{ doctorants_count }} thèse{{ doctorants_count|pluralize }} en cours au sein du laboratoire, en cotutelle avec des universités partenaires internationales.</p>
-        <a href="{% url 'lab:members_doctorants' %}" class="ic-link">Voir les doctorants →</a>
+      <div class="hdr-meta">
+        {% if hdr.garant %}<div class="row"><strong>Garant de l'HDR</strong><span>{{ hdr.garant }}</span></div>{% endif %}
+        {% if hdr.institutions %}<div class="row"><strong>Établissements</strong><span>{{ hdr.institutions }}</span></div>{% endif %}
       </div>
+      {% if hdr.description %}<div class="prose">{{ hdr.description|linebreaks }}</div>{% endif %}
+    </div>
+    {% endfor %}
+  </div>
+</section>
+{% endif %}
 
-      <div class="info-card">
-        <span class="ic-icon">
-          <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="5" stroke="currentColor" stroke-width="1.8"/><path d="M8.5 12.5L7 21l5-2.5 5 2.5-1.5-8.5" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
-        </span>
-        <h3>HDR <span style="font-weight:400;color:var(--muted);">(en cours)</span></h3>
-        <p>Habilitations à Diriger des Recherches en préparation par les enseignants-chercheurs du laboratoire.</p>
+<section class="section reveal" id="projets">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Recherche appliquée</span>
+      <h2>Projets de recherche</h2>
+      <p class="lede">Des projets structurés, financés en partenariat avec des institutions nationales et internationales.</p>
+    </div>
+
+    <div class="project-list">
+      {% for proj in projects %}
+      <div class="project-card">
+        <div class="project-head">
+          <span class="status-badge status-badge--{{ proj.status }}">{{ proj.get_status_display }}</span>
+          <h3>{{ proj.title }}</h3>
+        </div>
+        <div class="project-meta">
+          {% if proj.funder %}<div class="row"><strong>Financeur</strong><span>{{ proj.funder }}</span></div>{% endif %}
+          {% if proj.period %}<div class="row"><strong>Période</strong><span>{{ proj.period }}</span></div>{% endif %}
+          {% if proj.amount %}<div class="row"><strong>Montant</strong><span>{{ proj.amount }}</span></div>{% endif %}
+        </div>
+        {% if proj.description %}<div class="prose">{{ proj.description|linebreaks }}</div>{% endif %}
+        {% if proj.related_publications.all %}
+        <div class="project-pubs">
+          <strong>Publications issues de ce projet :</strong>
+          <ul>
+            {% for pub in proj.related_publications.all %}
+            <li>
+              {{ pub.title }}{% if pub.reference %} — {{ pub.reference }}{% endif %}
+              {% if pub.link %}<a href="{{ pub.link }}" target="_blank" rel="noopener noreferrer" class="pub-link pub-link--inline">{{ pub.link_label|default:"Voir" }} ↗</a>{% endif %}
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
+        {% endif %}
       </div>
-
-      <div class="info-card">
-        <span class="ic-icon">
-          <svg viewBox="0 0 24 24" fill="none"><path d="M9 3h6l1 4h3l-5 5 2 8-6-4-6 4 2-8-5-5h3l1-4z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
-        </span>
-        <h3>Projets de recherche</h3>
-        <p>Projets structurés menés par les deux équipes du laboratoire, en lien avec leurs axes scientifiques respectifs.</p>
-      </div>
-
+      {% empty %}
+      <p>Aucun projet renseigné pour le moment.</p>
+      {% endfor %}
     </div>
   </div>
 </section>

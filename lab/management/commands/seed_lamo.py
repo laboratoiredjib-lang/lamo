@@ -7,9 +7,12 @@ from lab.models import (
     Activity,
     AssociateResearcher,
     Doctorant,
+    Habilitation,
     LabProfile,
     Partner,
     PermanentMember,
+    Publication,
+    ResearchProject,
     ResearchTeam,
     ResearchTheme,
 )
@@ -40,6 +43,9 @@ class Command(BaseCommand):
         self.seed_associates()
         self.seed_activities()
         self.seed_partners()
+        self.seed_publications()
+        self.seed_research_projects()
+        self.seed_habilitations()
         self.stdout.write(self.style.SUCCESS("Données du LAMO chargées avec succès."))
 
     def seed_profile(self):
@@ -252,16 +258,167 @@ class Command(BaseCommand):
 
     def seed_doctorants(self):
         rows = [
-            ("M. Said ISMAIL", "2023", "Université Le Havre (LMAH)", "B. Ambrosio & M.A. Aziz Alaoui", "Yahyeh Souleiman"),
-            ("M. Ali MOHAMED", "2024", "Université La Rochelle (LMIA)", "S. Kadri-Harouna & Kaïs Ammari", "Liban Ismail"),
-            ("M. Gouled SOULEIMAN", "2024", "Université Le Havre (LMAH)", "N. Verdière & A. Berred", "Yahyeh Souleiman"),
-            ("Mme. Saida BALLAH", "2024", "Université de Nantes (ONIRIS)", "Mohamed Hanafi", "Souleiman Omar"),
-            ("M. Getachew FETENE", "2025", "Adama Science and Technology University", "Lemecha Legesse", "Yahyeh Souleiman"),
-            ("M. Hakim AMER", "2026", "Université de Toulon", "Mehmet Ersoy", "Liban Ismail & Mohamed Yacin"),
-            ("M. Kadir ALI", "2027", "Université Marie et Louis Pasteur (LmB)", "Raluca Eftimie", "Yahyeh Souleiman"),
-            ("M. Ismail ABDILLAHI", "2027", "Université Clermont Auvergne", "Andrezj Stos", "Liban Ismail"),
+            ("M. Said ISMAIL", "2023", "Université Le Havre (LMAH)", "B. Ambrosio & M.A. Aziz Alaoui", "Yahyeh Souleiman",
+             "Cette thèse de doctorat s'inscrit dans le domaine des mathématiques appliquées, avec une "
+             "orientation vers l'analyse des systèmes dynamiques et des réseaux complexes.\n\n"
+             "Le sujet porte sur l'analyse théorique et numérique des systèmes dynamiques et des réseaux "
+             "complexes, avec des applications en neurosciences. L'objectif principal est de développer "
+             "des modèles mathématiques capables de décrire et d'analyser les comportements collectifs "
+             "émergents dans les réseaux complexes, en particulier ceux inspirés des réseaux neuronaux, "
+             "tout en proposant des méthodes numériques adaptées à leur étude.\n\n"
+             "Ce travail est réalisé dans le cadre d'une collaboration scientifique entre le Laboratoire "
+             "d'Analyse, de Modélisation et d'Optimisation (LAMO) de l'Université de Djibouti et le "
+             "Laboratoire de Mathématiques Appliquées du Havre (LMAH). Cette collaboration favorise les "
+             "échanges scientifiques et le développement d'approches interdisciplinaires.\n\n"
+             "Les recherches mobilisent des outils d'analyse des systèmes dynamiques, de modélisation "
+             "mathématique et de simulation numérique afin de mieux comprendre les mécanismes collectifs "
+             "à l'origine des comportements émergents dans les réseaux neuronaux."),
+            ("M. Ali MOHAMED", "2024", "Université La Rochelle (LMIA)", "S. Kadri-Harouna & Kaïs Ammari", "Liban Ismail",
+             "Cette thèse de doctorat porte sur le développement de méthodes multi-échelles pour le "
+             "contrôle et l'approximation numérique des équations aux dérivées partielles, avec une "
+             "application particulière à l'équation des ondes.\n\n"
+             "L'objectif est de concevoir des schémas numériques capables de préserver les propriétés "
+             "fondamentales du système continu, notamment l'observabilité et la contrôlabilité, tout en "
+             "limitant les effets des hautes fréquences responsables de la perte d'observabilité dans les "
+             "méthodes classiques.\n\n"
+             "Les recherches combinent des approches théoriques et numériques fondées sur les bases "
+             "d'ondelettes et les méthodes de Galerkin multi-échelles afin de développer des méthodes de "
+             "discrétisation performantes pour les systèmes distribués.\n\n"
+             "Les premiers résultats ont conduit à une publication dans les actes de la conférence IFAC "
+             "ainsi qu'à plusieurs communications scientifiques internationales. Les travaux se "
+             "poursuivent vers l'extension des méthodes proposées à des modèles multidimensionnels et à "
+             "d'autres classes d'équations d'évolution aux équations aux dérivées partielles."),
+            ("M. Gouled SOULEIMAN", "2024", "Université Le Havre (LMAH)", "N. Verdière & A. Berred", "Yahyeh Souleiman",
+             "Cette thèse de doctorat s'inscrit dans le domaine des mathématiques appliquées et des "
+             "sciences de l'environnement. Elle porte sur la modélisation des écosystèmes forestiers et "
+             "l'analyse de l'impact des espèces invasives dans un contexte de changements climatiques.\n\n"
+             "L'objectif principal est de développer des modèles mathématiques permettant de mieux "
+             "comprendre les interactions entre les espèces natives et les espèces invasives, ainsi que "
+             "leur influence sur la stabilité, la résilience et la régénération des écosystèmes "
+             "forestiers.\n\n"
+             "Ce travail est réalisé dans le cadre d'une collaboration scientifique entre le Laboratoire "
+             "d'Analyse, de Modélisation et d'Optimisation (LAMO) et le Laboratoire de Mathématiques "
+             "Appliquées du Havre (LMAH), favorisant le développement d'approches interdisciplinaires en "
+             "modélisation écologique.\n\n"
+             "Les recherches mobilisent des outils de modélisation mathématique, de systèmes dynamiques "
+             "et de simulation numérique afin d'analyser les mécanismes d'invasion biologique et "
+             "d'évaluer l'impact des changements climatiques sur la biodiversité et la durabilité des "
+             "écosystèmes forestiers."),
+            ("Mme. Saida BALLAH", "2024", "Université de Nantes (ONIRIS)", "Mohamed Hanafi", "Souleiman Omar",
+             "Cette thèse de doctorat s'inscrit dans le domaine de la statistique, de la modélisation et "
+             "de l'intelligence artificielle appliquées aux sciences du vivant et aux géosciences.\n\n"
+             "Le sujet porte sur le développement d'approches tensorielles pour l'analyse de données "
+             "multi-blocs. L'objectif est de concevoir des méthodes statistiques innovantes capables "
+             "d'exploiter efficacement des ensembles de données complexes et de grande dimension à "
+             "l'aide des représentations tensorielles.\n\n"
+             "Réalisé en collaboration avec l'École nationale vétérinaire, agroalimentaire et de "
+             "l'alimentation de Nantes-Atlantique (Oniris), ce travail contribue au développement de "
+             "nouvelles méthodes d'analyse de données adaptées aux problématiques interdisciplinaires "
+             "des sciences du vivant.\n\n"
+             "Les recherches visent à développer des outils méthodologiques robustes en statistique "
+             "multivariée, intelligence artificielle et apprentissage automatique, avec des applications "
+             "à des données réelles issues des sciences appliquées."),
+            ("M. Getachew FETENE", "2025", "Adama Science and Technology University", "Lemecha Legesse", "Yahyeh Souleiman", ""),
+            ("M. Hakim AMER", "2026", "Université de Toulon", "Mehmet Ersoy", "Liban Ismail & Mohamed Yacin",
+             "Cette thèse porte sur la modélisation hydrodynamique et sédimentaire des processus "
+             "d'érosion côtière, avec une application au littoral djiboutien.\n\n"
+             "L'objectif est de développer un modèle mathématique capable de représenter les "
+             "interactions entre l'hydrodynamique (houle, courants et marées) et la dynamique "
+             "sédimentaire afin de mieux comprendre et prévoir l'évolution du trait de côte dans un "
+             "contexte de changement climatique.\n\n"
+             "Le projet adopte une approche interdisciplinaire intégrant les effets des forçages "
+             "climatiques et anthropiques sur les systèmes côtiers. Une attention particulière est "
+             "portée à la collecte, au traitement et à l'analyse des données bathymétriques, "
+             "météorologiques, océanographiques et satellitaires nécessaires à la calibration et à la "
+             "validation des modèles.\n\n"
+             "Les simulations numériques sont réalisées à l'aide du modèle CROCO (Coastal and Regional "
+             "Ocean Community Model). Les résultats attendus permettront d'améliorer la compréhension "
+             "des mécanismes d'érosion côtière et de proposer des outils d'aide à la décision pour une "
+             "gestion durable du littoral djiboutien."),
+            ("M. Kadir ALI", "2027", "Université Marie et Louis Pasteur (LmB)", "Raluca Eftimie", "Yahyeh Souleiman",
+             "Cet encadrement doctoral concerne la thèse de doctorat de Kadir Ali Moussa, réalisée dans "
+             "le cadre d'une cotutelle internationale entre l'Université de Djibouti et l'Université "
+             "Marie et Louis Pasteur (France).\n\n"
+             "Le projet de recherche porte sur la modélisation mathématique multi-échelle des "
+             "infections à papillomavirus humain (HPV), avec pour objectif d'étudier les mécanismes "
+             "biologiques impliqués dans la persistance de l'infection et son évolution vers les "
+             "lésions précancéreuses et les cancers associés. Les travaux visent à développer un "
+             "modèle intégrant différents niveaux d'organisation biologique, allant des interactions "
+             "cellulaires jusqu'à la dynamique de transmission au sein des populations. Cette approche "
+             "permettra d'analyser les facteurs influençant la progression de l'infection ainsi que "
+             "l'impact des stratégies de prévention et de dépistage.\n\n"
+             "La direction scientifique est assurée par le Pr Raluca Eftimie, avec un co-encadrement "
+             "assuré par le Dr Yahyeh Souleiman. Les recherches s'appuient sur des outils avancés de "
+             "modélisation mathématique, de systèmes dynamiques, d'analyse qualitative et de simulation "
+             "numérique. Cette thèse contribue au développement des activités du LAMO dans le domaine "
+             "de la biomathématique et renforce les collaborations scientifiques internationales du "
+             "laboratoire."),
+            ("M. Ismail ABDILLAHI", "2027", "Université Clermont Auvergne", "Pr Andrzej Stos & Pr Thierry Chateau", "Liban Ismail",
+             "Cet encadrement doctoral concerne la thèse de M. Ismail ABDILLAHI, qui débutera au cours "
+             "de l'année universitaire 2026–2027 dans le cadre d'une collaboration scientifique entre "
+             "l'Université de Djibouti et l'Université Clermont Auvergne.\n\n"
+             "Le projet de recherche porte sur la fiabilité des réseaux neuronaux face aux "
+             "perturbations affectant les processus d'apprentissage, avec pour objectif de développer "
+             "des méthodes permettant d'évaluer, d'analyser et d'améliorer la robustesse des modèles "
+             "d'intelligence artificielle. Les travaux s'intéresseront notamment aux perturbations "
+             "naturelles des données d'apprentissage, telles que les erreurs d'annotation, les biais de "
+             "labellisation et les divergences entre annotateurs, ainsi qu'aux perturbations "
+             "malveillantes liées aux attaques par empoisonnement des données et aux mécanismes de "
+             "type backdoor. Les recherches mobiliseront des approches combinant apprentissage "
+             "automatique, statistiques, méthodes d'explicabilité et expérimentation numérique afin de "
+             "caractériser la fiabilité des modèles et de proposer des critères d'évaluation adaptés "
+             "aux situations où les données de référence sont incomplètes ou incertaines.\n\n"
+             "L'encadrement scientifique est assuré par les Professeurs Thierry Chateau et Andrzej "
+             "Stos, avec un co-encadrement assuré par le Dr Liban Ismail au sein du LAMO. Cette thèse "
+             "contribuera au développement de nouvelles approches pour la conception de systèmes "
+             "d'intelligence artificielle plus robustes, fiables et interprétables."),
+            ("M. Mohamed Ismael DINI", "2027", "Adama Science and Technology University (ASTU)", "Legesse Lemecha", "Yahyeh Souleiman & Liban Ismail",
+             "Cet encadrement doctoral concerne la thèse de M. Mohamed Ismael Dini, qui débutera au "
+             "cours de l'année universitaire 2026–2027 dans le cadre d'une collaboration scientifique "
+             "entre l'Université de Djibouti et Adama Science and Technology University (ASTU).\n\n"
+             "Le projet de recherche porte sur les aspects épidémiologiques, les facteurs "
+             "sociodémographiques influents et l'analyse spatio-temporelle du paludisme à "
+             "Djibouti-ville. L'objectif principal est de développer une meilleure compréhension de la "
+             "dynamique de transmission du paludisme à travers l'analyse intégrée des données "
+             "épidémiologiques, spatiales et temporelles, afin d'identifier les zones à risque et les "
+             "facteurs déterminants de la propagation de la maladie.\n\n"
+             "Les travaux s'intéresseront notamment à l'étude de la distribution spatiale et saisonnière "
+             "des cas de paludisme, à l'identification des facteurs sociodémographiques et "
+             "environnementaux associés à la transmission, ainsi qu'à l'évaluation de l'influence de "
+             "l'accès aux services de santé sur l'évolution de la maladie. Les recherches mobiliseront "
+             "des approches combinant épidémiologie, statistiques, analyse spatiale, modélisation "
+             "mathématique et méthodes quantitatives d'aide à la décision afin de développer des outils "
+             "permettant d'améliorer les stratégies de surveillance, de prévention et de contrôle du "
+             "paludisme à Djibouti.\n\n"
+             "L'encadrement scientifique sera assuré par le Pr Legesse Lemecha, avec un co-encadrement "
+             "assuré par le Dr Yahyeh Souleiman et le Dr Liban Ismail au sein du LAMO. Cette thèse "
+             "contribuera au développement des recherches en biomathématique, en modélisation "
+             "épidémiologique et en santé publique, tout en renforçant les collaborations scientifiques "
+             "internationales du laboratoire."),
+            ("M. Abdourahman Djama GUEDI", "2027", "Adama Science and Technology University (ASTU)", "Legesse Lemecha", "Yahyeh Souleiman & Liban Ismail",
+             "Cet encadrement doctoral concerne la thèse de M. Abdourahman Djama Guedi, qui débutera au "
+             "cours de l'année universitaire 2026–2027 dans le cadre d'une collaboration scientifique "
+             "entre l'Université de Djibouti et Adama Science and Technology University (ASTU).\n\n"
+             "Le projet de recherche porte sur l'épidémiologie de la brucellose humaine chez les "
+             "populations à risque à Djibouti : séroprévalence et identification des facteurs de "
+             "risque. L'objectif est d'évaluer la charge réelle de cette zoonose émergente dans les "
+             "populations exposées et d'identifier les principaux facteurs professionnels, "
+             "comportementaux et alimentaires associés à l'infection.\n\n"
+             "Les travaux s'intéresseront notamment à la mesure de la séroprévalence des anticorps "
+             "anti-Brucella chez les groupes à haut risque, tels que les éleveurs, vétérinaires, "
+             "bouchers et consommateurs de produits laitiers non pasteurisés, ainsi qu'à l'analyse des "
+             "pratiques favorisant la transmission de la maladie. Les recherches mobiliseront des "
+             "approches combinant épidémiologie, biostatistiques, analyse des facteurs de risque, "
+             "modélisation mathématique et approche intégrée « Une seule santé (One Health) » afin de "
+             "mieux comprendre l'interaction entre les facteurs humains, animaux et environnementaux.\n\n"
+             "L'encadrement scientifique sera assuré par le Pr Legesse Lemecha, avec un co-encadrement "
+             "assuré par le Dr Yahyeh Souleiman et le Dr Liban Ismail au sein du LAMO. Cette thèse "
+             "contribuera au développement des recherches en biomathématique, en modélisation des "
+             "maladies infectieuses et en santé publique, tout en apportant des connaissances "
+             "essentielles pour l'amélioration des stratégies de surveillance et de prévention de la "
+             "brucellose à Djibouti."),
         ]
-        for order, (full_name, start_year, partner_university, thesis_director, co_supervisor) in enumerate(rows, start=1):
+        for order, (full_name, start_year, partner_university, thesis_director, co_supervisor, bio) in enumerate(rows, start=1):
             Doctorant.objects.update_or_create(
                 full_name=full_name,
                 defaults={
@@ -269,7 +426,7 @@ class Command(BaseCommand):
                     "partner_university": partner_university,
                     "thesis_director": thesis_director,
                     "co_supervisor": co_supervisor,
-                    "bio": f"Thèse en cotutelle avec {partner_university}, sous la direction de {thesis_director}.",
+                    "bio": bio or f"Thèse en cotutelle avec {partner_university}, sous la direction de {thesis_director}.",
                     "order": order,
                 },
             )
@@ -361,3 +518,183 @@ class Command(BaseCommand):
                 defaults={"category": Partner.Category.INSTITUTIONAL, "country": country, "order": order},
             )
             attach_image(partner, "logo", filename)
+
+    def seed_publications(self):
+        rows = [
+            ("Haile Getachew Fetene, Yahyeh Souleiman, and Legesse Lemecha Obsu",
+             "A Fractional Mathematical Model of Malaria Transmission Dynamics with Liver Stage Relapse",
+             "Discover Applied Sciences, 2026", False, "https://doi.org/10.1007/s42452-026-09116-9", "DOI"),
+            ("Yahyeh Souleiman, Liban Ismail, and Legesse Lemecha Obsu",
+             "Optimal Control Strategies and Cost-Effectiveness Analysis of Malaria for Plasmodium falciparum and Plasmodium vivax in Djibouti",
+             "Scientific African, 31 (2026): e03262", False, "https://doi.org/10.1016/j.sciaf.2026.e03262", "DOI"),
+            ("Yahyeh Souleiman, Liban Ismail, and Raluca Eftimie",
+             "Modeling and Investigating Plasmodium falciparum and Plasmodium vivax Infections: Application to Djibouti Data",
+             "Infectious Disease Modelling, 9(4) (2024): 1095–1116", False, "https://doi.org/10.1016/j.idm.2024.05.005", "DOI"),
+            ("Liban Ismail, Hacène Djellout, and Cédric Chauvière",
+             "Global Sensitivity Analysis in the SIHR Epidemiological Model with Application to COVID-19",
+             "Journal of Statistics & Management Systems, 27(7) (2024): 1277–1299", False, "https://doi.org/10.47974/JSMS-1019", "DOI"),
+            ("Liban Ismail, Hacène Djellout, and Cédric Chauvière",
+             "Climate System: A Global Sensitivity Approach",
+             "Iranian Journal of Science, 47(1) (2023): 211–227", False, "https://doi.org/10.1007/s40995-022-01456-4", "DOI"),
+            ("Yahyeh Souleiman, Abdoulrazack Mohamed, and Liban Ismail",
+             "Analysis of the Dynamics of the SIHR Model: COVID-19 Case in Djibouti",
+             "Applied Mathematics, 12(10) (2021): 867–881", False, "https://doi.org/10.4236/am.2021.1210058", "DOI"),
+            ("Liban Ismail, Yahyeh Souleiman, Saralees Nadarajah, and Abdisalam Hassan",
+             "Time-Dependent Intervention Modeling and Global Sensitivity Analysis of Epidemic Dynamics under Uncertainty in Resource-Limited African Settings",
+             "À paraître", True, "", ""),
+            ("Gouled Souleiman, Nathalie Verdière, Alexandre Berred, Yahyeh Souleiman, Simon Badji, et al.",
+             "Optimal Control and Calibration Modeling of Forest Regeneration Under Anthropogenic Pressures: the Day Forest Ecosystem (Djibouti)",
+             "Modeling Earth Systems and Environment, 2026 — à paraître", True, "https://hal.science/", "HAL"),
+            ("Said Ismail, Benjamin Ambrosio, Moulay Ahmed Aziz-Alaoui, and Yahyeh Souleiman",
+             "A Dynamical System Approach to Modeling Neural Network Activity in Drosophila Orientation",
+             "À paraître", True, "", ""),
+            ("Gouled Souleiman, Nathalie Verdière, Alexandre Berred, and Yahyeh Souleiman",
+             "A Mathematical Model to Investigate the Impact of Climate Change on Forest Ecosystems and a Strategy for Its Regeneration",
+             "À paraître", True, "", ""),
+            ("Yahyeh Souleiman",
+             "Convergences and Numerical Analysis of a Contact Problem with Normal Compliance and Unilateral Constraint",
+             "African Journal of Mathematics and Computer Science Research, 14(1) (2021): 13–23", False, "https://doi.org/10.5897/AJMCSR2020.0865", "DOI"),
+            ("Yahyeh Souleiman and Mikael Barboteu",
+             "Numerical Analysis of a Sliding Frictional Contact Problem with Normal Compliance and Unilateral Contact",
+             "Open Journal of Modelling and Simulation, 9(4) (2021): 385–402", False, "https://doi.org/10.4236/ojmsi.2021.94025", "DOI"),
+            ("Mircea Sofonea and Yahyeh Souleiman",
+             "Analysis of a Sliding Frictional Contact Problem with Unilateral Constraint",
+             "Mathematics and Mechanics of Solids, 22(3) (2017): 324–342", False, "https://doi.org/10.1177/1081286515591304", "DOI"),
+            ("Mircea Sofonea, Flavius Pétrulescu, and Yahyeh Souleiman",
+             "Analysis of a Contact Problem with Wear and Unilateral Constraint",
+             "Applicable Analysis, 95(11) (2016): 2590–2607", False, "https://doi.org/10.1080/00036811.2015.1102892", "DOI"),
+            ("Mircea Sofonea and Yahyeh Souleiman",
+             "A Viscoelastic Sliding Contact Problem with Normal Compliance, Unilateral Constraint and Memory Term",
+             "Mediterranean Journal of Mathematics, 13(5) (2016): 2863–2886", False, "https://doi.org/10.1007/s00009-015-0661-9", "DOI"),
+            ("Alexandru Chirvasitu and Souleiman Omar Hoch",
+             "Ergodic Actions of the Compact Quantum Group O₋₁(2)",
+             "arXiv Preprint, 2017", False, "https://arxiv.org/", "arXiv"),
+            ("Alexandru Chirvasitu, Souleiman Omar Hoch, and Paweł Kasprzak",
+             "Fundamental Isomorphism Theorems for Quantum Groups",
+             "Expositiones Mathematicae", False, "https://doi.org/10.1016/j.exmath.2019.02.002", "DOI"),
+        ]
+        for order, (authors, title, reference, forthcoming, link, link_label) in enumerate(rows, start=1):
+            Publication.objects.update_or_create(
+                title=title,
+                defaults={
+                    "authors": authors, "reference": reference, "is_forthcoming": forthcoming,
+                    "link": link, "link_label": link_label, "order": order,
+                },
+            )
+
+    def seed_research_projects(self):
+        completed, _ = ResearchProject.objects.update_or_create(
+            title=(
+                "Modélisation mathématique des maladies chroniques et du paludisme à Djibouti : analyse "
+                "dynamique et aide à la décision en santé publique"
+            ),
+            defaults={
+                "funder": "Centre d'Excellence Africain en Logistique et Transport (CEALT)",
+                "period": "2022–2024",
+                "amount": "30 000 USD",
+                "status": ResearchProject.Status.COMPLETED,
+                "description": (
+                    "Ce projet constitue l'un des principaux projets achevés du LAMO. Il s'inscrit dans "
+                    "une démarche de recherche appliquée dédiée à la modélisation des maladies chroniques "
+                    "et du paludisme à Djibouti. Il visait principalement à analyser la dynamique de "
+                    "propagation de ces pathologies, à comprendre les mécanismes de transmission "
+                    "sous-jacents et à évaluer l'impact de différentes stratégies d'intervention en santé "
+                    "publique afin de fournir des outils d'aide à la décision aux autorités sanitaires.\n\n"
+                    "Les travaux réalisés ont permis de développer des modèles mathématiques adaptés au "
+                    "contexte épidémiologique local, d'analyser les propriétés qualitatives et "
+                    "quantitatives des systèmes dynamiques associés, ainsi que d'étudier les conditions "
+                    "de stabilité et les comportements asymptotiques. Des simulations numériques ont "
+                    "également été effectuées afin d'évaluer différents scénarios d'évolution et "
+                    "d'intervention.\n\n"
+                    "Ce projet a abouti à deux résultats scientifiques majeurs, matérialisés par des "
+                    "publications internationales dans des revues indexées de haut niveau. Cette "
+                    "contribution confirme la pertinence des approches de modélisation mathématique "
+                    "comme outil d'aide à la décision en santé publique et a renforcé la visibilité "
+                    "scientifique du LAMO ainsi que son expertise en modélisation épidémiologique."
+                ),
+                "order": 1,
+            },
+        )
+        related_titles = [
+            "Optimal Control Strategies and Cost-Effectiveness Analysis of Malaria for Plasmodium falciparum and Plasmodium vivax in Djibouti",
+            "Modeling and Investigating Plasmodium falciparum and Plasmodium vivax Infections: Application to Djibouti Data",
+        ]
+        completed.related_publications.set(Publication.objects.filter(title__in=related_titles))
+
+        ResearchProject.objects.update_or_create(
+            title=(
+                "Modélisation mathématique de la co-infection tuberculose–VIH/SIDA à Djibouti : dynamique "
+                "de transmission et stratégies optimales de contrôle"
+            ),
+            defaults={
+                "funder": "Agence Universitaire de la Francophonie (AUF)",
+                "period": "2026 – en cours",
+                "amount": "29 500 USD",
+                "status": ResearchProject.Status.ONGOING,
+                "description": (
+                    "Ce projet constitue l'un des projets phares actuellement en cours de développement "
+                    "au sein du LAMO. Il s'inscrit dans le domaine de la biomathématique appliquée et "
+                    "vise à analyser de manière approfondie la dynamique de la co-infection "
+                    "tuberculose–VIH/SIDA à Djibouti.\n\n"
+                    "L'objectif scientifique est de mieux comprendre les interactions entre ces deux "
+                    "pathologies et de proposer des stratégies optimales de contrôle permettant de "
+                    "réduire leur propagation et d'améliorer l'efficacité des politiques de santé "
+                    "publique. La problématique étudiée est particulièrement importante en raison de la "
+                    "complexité des interactions entre la tuberculose et le VIH/SIDA, ainsi que de leur "
+                    "impact combiné sur le système immunitaire et sur la dynamique de transmission au "
+                    "sein des populations.\n\n"
+                    "Le projet repose sur la formulation de modèles compartimentaux couplés décrivant la "
+                    "dynamique de la co-infection, suivie de l'étude des propriétés mathématiques "
+                    "fondamentales telles que l'existence, l'unicité et la positivité des solutions. Une "
+                    "attention particulière est accordée à l'analyse des points d'équilibre et à leur "
+                    "stabilité, ainsi qu'à l'intégration de stratégies de contrôle optimal dans les "
+                    "systèmes dynamiques.\n\n"
+                    "Des simulations numériques sont également mises en œuvre afin d'évaluer différents "
+                    "scénarios épidémiologiques et de comparer l'efficacité des stratégies de prévention "
+                    "et de traitement. Ce projet devrait contribuer au renforcement de la production "
+                    "scientifique du laboratoire, au développement de nouvelles collaborations "
+                    "internationales et à la formation de jeunes chercheurs dans le domaine de la "
+                    "modélisation mathématique appliquée à la santé publique."
+                ),
+                "order": 2,
+            },
+        )
+
+    def seed_habilitations(self):
+        Habilitation.objects.update_or_create(
+            full_name="Yahyeh SOULEIMAN",
+            defaults={
+                "period_label": "2027–2028",
+                "garant": "Pr Raluca Eftimie",
+                "institutions": "Université de Djibouti – Université Marie et Louis Pasteur (France)",
+                "specialization": (
+                    "Modélisation mathématique, biomathématique, systèmes dynamiques, calcul "
+                    "fractionnaire, contrôle optimal et analyse numérique."
+                ),
+                "description": (
+                    "Les travaux de l'HDR visent à synthétiser les contributions scientifiques "
+                    "développées au cours des dernières années dans les domaines de la modélisation des "
+                    "maladies infectieuses, de la modélisation environnementale, de l'analyse des "
+                    "systèmes dynamiques et de l'aide à la décision. Ils mettent en évidence les avancées "
+                    "méthodologiques relatives à l'analyse qualitative des modèles, à l'identification "
+                    "des paramètres, à l'analyse de sensibilité, aux méthodes numériques et aux "
+                    "stratégies de contrôle optimal.\n\n"
+                    "Réalisée sous la responsabilité scientifique du Pr Raluca Eftimie, cette HDR "
+                    "s'inscrit dans le cadre d'une collaboration entre l'Université de Djibouti et "
+                    "l'Université Marie et Louis Pasteur (France). Elle contribue au renforcement des "
+                    "coopérations scientifiques internationales et au développement des activités de "
+                    "recherche du Laboratoire d'Analyse, de Modélisation et d'Optimisation (LAMO).\n\n"
+                    "Cette habilitation a pour objectif de démontrer la capacité du candidat à conduire "
+                    "des recherches de manière autonome, à définir de nouveaux axes scientifiques et à "
+                    "encadrer des travaux doctoraux. Elle permettra de consolider les activités de "
+                    "recherche du LAMO, de renforcer l'encadrement des doctorants et de développer de "
+                    "nouvelles collaborations académiques internationales.\n\n"
+                    "Les perspectives de cette HDR concernent notamment le développement de nouvelles "
+                    "approches de modélisation mathématique appliquées à la santé publique, à "
+                    "l'environnement, à l'intelligence artificielle et aux systèmes complexes, ainsi que "
+                    "le renforcement du rayonnement scientifique de l'Université de Djibouti à l'échelle "
+                    "internationale."
+                ),
+                "order": 1,
+            },
+        )

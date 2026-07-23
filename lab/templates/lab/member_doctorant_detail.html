@@ -32,9 +32,6 @@
           <div class="tags">
             <span class="tag tag--teal">{{ member.start_year }}</span>
           </div>
-          {% if member.bio %}
-          <p class="bio-lede">{{ member.bio }}</p>
-          {% endif %}
         </div>
         <div class="member-hero-photo-compact">
           {% if member.photo %}<img src="{{ member.photo.url }}" alt="{{ member.full_name }}">{% else %}<div class="portrait-initials">{{ member.full_name|initials }}</div>{% endif %}
@@ -49,6 +46,14 @@
         <div class="row"><strong>Laboratoire</strong><span>{{ profile.acronym }}, en cotutelle avec {{ member.partner_university }}</span></div>
       </div>
     </div>
+
+    {% if member.bio %}
+    <div class="reveal thesis-subject" style="margin-top:32px;">
+      <span class="eyebrow">Sujet de thèse</span>
+      <h2>Présentation des travaux</h2>
+      <div class="prose">{{ member.bio|linebreaks }}</div>
+    </div>
+    {% endif %}
 
     {% if others %}
     <div class="reveal" style="margin-top:40px;">

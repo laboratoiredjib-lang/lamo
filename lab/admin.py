@@ -4,10 +4,13 @@ from .models import (
     Activity,
     AssociateResearcher,
     Doctorant,
+    Habilitation,
     LabProfile,
     News,
     Partner,
     PermanentMember,
+    Publication,
+    ResearchProject,
     ResearchTeam,
     ResearchTheme,
 )
@@ -82,3 +85,23 @@ class ActivityAdmin(admin.ModelAdmin):
     list_display = ("title", "category", "edition_label", "year", "order")
     list_filter = ("category",)
     ordering = ("category", "order")
+
+
+@admin.register(Publication)
+class PublicationAdmin(admin.ModelAdmin):
+    list_display = ("title", "authors", "reference", "is_forthcoming", "order")
+    list_filter = ("is_forthcoming",)
+    ordering = ("order",)
+
+
+@admin.register(ResearchProject)
+class ResearchProjectAdmin(admin.ModelAdmin):
+    list_display = ("title", "status", "funder", "period", "order")
+    list_filter = ("status",)
+    ordering = ("status", "order")
+
+
+@admin.register(Habilitation)
+class HabilitationAdmin(admin.ModelAdmin):
+    list_display = ("full_name", "period_label", "garant", "order")
+    ordering = ("order",)

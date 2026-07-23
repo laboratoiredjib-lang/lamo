@@ -35,7 +35,7 @@
             <span class="tag tag--teal">{{ member.country }}</span>
           </div>
           {% if member.bio %}
-          <p class="bio-lede">{{ member.bio }}</p>
+          <div class="bio-lede">{{ member.bio|linebreaks }}</div>
           {% endif %}
         </div>
         <div class="member-hero-photo-compact">

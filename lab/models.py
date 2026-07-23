@@ -207,6 +207,68 @@ class Activity(models.Model):
         return f"{self.get_category_display()} — {self.title}"
 
 
+class Publication(models.Model):
+    authors = models.CharField(max_length=500)
+    title = models.CharField(max_length=500)
+    reference = models.CharField(
+        max_length=300, blank=True,
+        help_text="Revue, volume, pages, année. Ex : Scientific African, 31 (2026): e03262.",
+    )
+    is_forthcoming = models.BooleanField(default=False, help_text="Coché si l'article est « à paraître ».")
+    link = models.URLField(blank=True, help_text="Lien DOI, HAL ou arXiv de l'article.")
+    link_label = models.CharField(max_length=20, default="DOI", blank=True)
+    order = models.PositiveIntegerField(default=0)
+
+    class Meta:
+        ordering = ["order"]
+        verbose_name = "Publication"
+        verbose_name_plural = "Publications"
+
+    def __str__(self):
+        return self.title
+
+
+class ResearchProject(models.Model):
+    class Status(models.TextChoices):
+        COMPLETED = "completed", "Projet réalisé"
+        ONGOING = "ongoing", "Projet en cours"
+
+    title = models.CharField(max_length=500)
+    funder = models.CharField(max_length=255, blank=True)
+    period = models.CharField(max_length=100, blank=True)
+    amount = models.CharField(max_length=100, blank=True)
+    status = models.CharField(max_length=20, choices=Status.choices, default=Status.ONGOING)
+    description = models.TextField(blank=True)
+    related_publications = models.ManyToManyField(Publication, blank=True, related_name="projects")
+    order = models.PositiveIntegerField(default=0)
+
+    class Meta:
+        ordering = ["status", "order"]
+        verbose_name = "Projet de recherche"
+        verbose_name_plural = "Projets de recherche"
+
+    def __str__(self):
+        return self.title
+
+
+class Habilitation(models.Model):
+    full_name = models.CharField(max_length=255)
+    period_label = models.CharField(max_length=100, blank=True)
+    garant = models.CharField(max_length=255, blank=True, help_text="Garant de l'HDR")
+    institutions = models.CharField(max_length=500, blank=True)
+    specialization = models.CharField(max_length=500, blank=True)
+    description = models.TextField(blank=True)
+    order = models.PositiveIntegerField(default=0)
+
+    class Meta:
+        ordering = ["order"]
+        verbose_name = "Habilitation à Diriger des Recherches"
+        verbose_name_plural = "Habilitations à Diriger des Recherches"
+
+    def __str__(self):
+        return self.full_name
+
+
 class News(models.Model):
     title = models.CharField(max_length=255)
     date = models.DateField()
