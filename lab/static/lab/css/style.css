@@ -422,9 +422,9 @@ table.data-table { width: 100%; border-collapse: collapse; min-width: 620px; }
   padding: 26px 44px; display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 20px 28px;
   animation: member-enter-up .7s var(--ease-out) .1s both;
 }
-.member-info-band .row { display: flex; flex-direction: column; gap: 4px; }
+.member-info-band .row { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
 .member-info-band .row strong { font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--teal-dark); font-weight: 700; }
-.member-info-band .row span, .member-info-band .row a { font-size: 0.9rem; color: var(--ink); font-weight: 600; }
+.member-info-band .row span, .member-info-band .row a { font-size: 0.9rem; color: var(--ink); font-weight: 600; overflow-wrap: break-word; word-break: break-word; }
 .member-info-band .row a:hover { color: var(--accent); }
 
 .info-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin: 20px 0; }
@@ -733,7 +733,12 @@ table.data-table { width: 100%; border-collapse: collapse; min-width: 620px; }
   .join-box { flex-direction: column; text-align: center; padding: 24px 20px; }
   .section { padding: 32px 0; }
   .hero-inner { padding: 24px 0 28px; }
-  .math-banner-grid { grid-template-columns: repeat(3, 1fr); gap: 4px 10px; }
+  .math-banner-grid {
+    display: flex; overflow-x: auto; gap: 10px; padding-bottom: 2px;
+    -webkit-overflow-scrolling: touch; scrollbar-width: none; scroll-snap-type: x proximity;
+  }
+  .math-banner-grid::-webkit-scrollbar { display: none; }
+  .math-panel { flex: 0 0 118px; min-width: 118px; scroll-snap-align: start; }
 
   .prod-nav { gap: 8px; }
   .prod-nav a { padding: 8px 14px; font-size: 0.8rem; }
@@ -743,13 +748,18 @@ table.data-table { width: 100%; border-collapse: collapse; min-width: 620px; }
   .hdr-card, .project-card { padding: 22px 20px; }
   .hdr-head { flex-direction: column; }
   .project-meta, .hdr-meta { grid-template-columns: 1fr 1fr; }
+
+  table.data-table { min-width: 0; }
+  .data-table thead th, .data-table tbody td { padding: 8px 10px; font-size: 0.8rem; }
+  .data-table .name-cell { flex-wrap: wrap; gap: 6px 10px; }
+  .avatar-chip { width: 28px; height: 28px; font-size: 0.7rem; }
 }
 @media (max-width: 520px) {
   .grid-3, .grid-4 { grid-template-columns: 1fr 1fr; }
   .hero-stats { grid-template-columns: 1fr 1fr; }
   .brand-univ { display: none; }
   .header-row { justify-content: space-between; }
-  .math-banner-grid { grid-template-columns: 1fr 1fr; gap: 6px 8px; }
+  .math-panel { flex-basis: 108px; }
   .tab-nav { flex-wrap: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
   .tab-nav::-webkit-scrollbar { display: none; }
   .tab-nav a { white-space: nowrap; padding: 9px 12px; font-size: 0.8rem; }
