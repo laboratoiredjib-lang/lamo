@@ -1,0 +1,46 @@
+{% extends "lab/base.html" %}
+{% block title %}Encadrement doctoral — {{ site_profile.acronym }}{% endblock %}
+{% block content %}
+
+<section class="page-header">
+  <div class="container page-header-inner">
+    <div class="page-header-text">
+      <div class="breadcrumb"><a href="{% url 'lab:home' %}">Accueil</a><span class="sep">/</span><a href="{% url 'lab:formations' %}">Formations</a><span class="sep">/</span>Encadrement doctoral</div>
+      <span class="eyebrow">Enseignement</span>
+      <h1>Encadrement doctoral</h1>
+      <p>L'encadrement doctoral constitue un axe central des activités du laboratoire, traduisant son engagement dans la formation par la recherche.</p>
+    </div>
+    <div class="page-header-icon">
+      <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="40" cy="28" r="12" stroke="var(--navy)" stroke-width="2.5"/>
+        <path d="M16,66 C16,50 28,44 40,44 C52,44 64,50 64,66" stroke="var(--navy)" stroke-width="2.5" stroke-linecap="round"/>
+        <circle cx="40" cy="28" r="3" fill="var(--accent)"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<section class="section reveal">
+  <div class="container">
+    {% include "lab/_formations_tabs.html" %}
+
+    <div class="thesis-grid stagger">
+      {% for d in doctorants %}
+      <a href="{{ d.get_absolute_url }}" class="thesis-card">
+        <div class="thesis-card-top">
+          <span class="thesis-year">{{ d.start_year }}</span>
+          <span class="thesis-arrow">→</span>
+        </div>
+        <div class="thesis-name">{{ d.full_name }}</div>
+        <div class="thesis-meta">{{ d.partner_university }}</div>
+        <div class="thesis-meta"><strong>Direction :</strong> {{ d.thesis_director }}</div>
+        {% if d.co_supervisor %}<div class="thesis-meta"><strong>Co-encadrement :</strong> {{ d.co_supervisor }}</div>{% endif %}
+      </a>
+      {% empty %}
+      <p>Aucune thèse renseignée pour le moment.</p>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% endblock %}

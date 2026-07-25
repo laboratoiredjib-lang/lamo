@@ -1,0 +1,29 @@
+{% extends "lab/base.html" %}
+{% block title %}Jurys de thèse — {{ site_profile.acronym }}{% endblock %}
+{% block content %}
+
+<section class="page-header">
+  <div class="container page-header-inner">
+    <div class="page-header-text">
+      <div class="breadcrumb"><a href="{% url 'lab:home' %}">Accueil</a><span class="sep">/</span><a href="{% url 'lab:formations' %}">Formations</a><span class="sep">/</span>Jurys de thèse</div>
+      <span class="eyebrow">Enseignement</span>
+      <h1>Participation à des jurys de thèse</h1>
+      <p>Les membres du LAMO contribuent à l'évaluation de travaux doctoraux au sein d'universités partenaires.</p>
+    </div>
+    <div class="page-header-icon">
+      <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M20 30l20-12 20 12v10c0 14-9 24-20 27-11-3-20-13-20-27z" stroke="var(--navy)" stroke-width="2.3" stroke-linejoin="round"/>
+        <path d="M31 40l7 7 12-13" stroke="var(--accent)" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<section class="section reveal">
+  <div class="container">
+    {% include "lab/_formations_tabs.html" %}
+    {% include "lab/_activity_feed.html" %}
+  </div>
+</section>
+
+{% endblock %}

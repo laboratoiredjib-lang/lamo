@@ -7,6 +7,7 @@ from .models import (
     Doctorant,
     Habilitation,
     LabProfile,
+    MasterCourse,
     News,
     Partner,
     PermanentMember,
@@ -133,12 +134,60 @@ def activities(request):
     activities_qs = Activity.objects.all()
     context = {
         "profile": LabProfile.load(),
-        "conferences": activities_qs.filter(category=Activity.Category.CONFERENCE),
-        "seminaires": activities_qs.filter(category=Activity.Category.SEMINAIRE),
-        "olympiades": activities_qs.filter(category=Activity.Category.OLYMPIADES),
-        "offres": activities_qs.filter(category=Activity.Category.OFFRE),
+        "counts": {
+            "conferences": activities_qs.filter(category=Activity.Category.CONFERENCE).count(),
+            "seminaires": activities_qs.filter(category=Activity.Category.SEMINAIRE).count(),
+            "olympiades": activities_qs.filter(category=Activity.Category.OLYMPIADES).count(),
+            "participations": activities_qs.filter(category=Activity.Category.PARTICIPATION).count(),
+            "editorial": activities_qs.filter(category=Activity.Category.EDITORIAL).count(),
+        },
     }
     return render(request, "lab/activities.html", context)
+
+
+def activities_conferences(request):
+    context = {
+        "profile": LabProfile.load(),
+        "activities": Activity.objects.filter(category=Activity.Category.CONFERENCE),
+        "active_activity_tab": "conferences",
+    }
+    return render(request, "lab/activities_conferences.html", context)
+
+
+def activities_seminaires(request):
+    context = {
+        "profile": LabProfile.load(),
+        "activities": Activity.objects.filter(category=Activity.Category.SEMINAIRE),
+        "active_activity_tab": "seminaires",
+    }
+    return render(request, "lab/activities_seminaires.html", context)
+
+
+def activities_olympiades(request):
+    context = {
+        "profile": LabProfile.load(),
+        "activities": Activity.objects.filter(category=Activity.Category.OLYMPIADES),
+        "active_activity_tab": "olympiades",
+    }
+    return render(request, "lab/activities_olympiades.html", context)
+
+
+def activities_participations(request):
+    context = {
+        "profile": LabProfile.load(),
+        "activities": Activity.objects.filter(category=Activity.Category.PARTICIPATION),
+        "active_activity_tab": "participations",
+    }
+    return render(request, "lab/activities_participations.html", context)
+
+
+def activities_editorial(request):
+    context = {
+        "profile": LabProfile.load(),
+        "activities": Activity.objects.filter(category=Activity.Category.EDITORIAL),
+        "active_activity_tab": "editorial",
+    }
+    return render(request, "lab/activities_editorial.html", context)
 
 
 def production(request):
@@ -157,5 +206,57 @@ def formations(request):
     context = {
         "profile": LabProfile.load(),
         "doctorants_count": Doctorant.objects.count(),
+        "counts": {
+            "masters": MasterCourse.objects.count(),
+            "doctoral": Doctorant.objects.count(),
+            "jury": Activity.objects.filter(category=Activity.Category.JURY).count(),
+            "stage": Activity.objects.filter(category=Activity.Category.STAGE).count(),
+            "capacity": Activity.objects.filter(category=Activity.Category.CAPACITY).count(),
+        },
     }
     return render(request, "lab/formations.html", context)
+
+
+def formations_masters(request):
+    context = {
+        "profile": LabProfile.load(),
+        "courses": MasterCourse.objects.all(),
+        "active_formation_tab": "masters",
+    }
+    return render(request, "lab/formations_masters.html", context)
+
+
+def formations_doctoral(request):
+    context = {
+        "profile": LabProfile.load(),
+        "doctorants": Doctorant.objects.all(),
+        "active_formation_tab": "doctoral",
+    }
+    return render(request, "lab/formations_doctoral.html", context)
+
+
+def formations_jury(request):
+    context = {
+        "profile": LabProfile.load(),
+        "activities": Activity.objects.filter(category=Activity.Category.JURY),
+        "active_formation_tab": "jury",
+    }
+    return render(request, "lab/formations_jury.html", context)
+
+
+def formations_stage(request):
+    context = {
+        "profile": LabProfile.load(),
+        "activities": Activity.objects.filter(category=Activity.Category.STAGE),
+        "active_formation_tab": "stage",
+    }
+    return render(request, "lab/formations_stage.html", context)
+
+
+def formations_capacity(request):
+    context = {
+        "profile": LabProfile.load(),
+        "activities": Activity.objects.filter(category=Activity.Category.CAPACITY),
+        "active_formation_tab": "capacity",
+    }
+    return render(request, "lab/formations_capacity.html", context)

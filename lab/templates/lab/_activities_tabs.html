@@ -1,0 +1,7 @@
+<div class="tab-nav">
+  <a href="{% url 'lab:activities_conferences' %}" class="{% if active_activity_tab == 'conferences' %}active{% endif %}">Conférences</a>
+  <a href="{% url 'lab:activities_seminaires' %}" class="{% if active_activity_tab == 'seminaires' %}active{% endif %}">Séminaires</a>
+  <a href="{% url 'lab:activities_olympiades' %}" class="{% if active_activity_tab == 'olympiades' %}active{% endif %}">Olympiades</a>
+  <a href="{% url 'lab:activities_participations' %}" class="{% if active_activity_tab == 'participations' %}active{% endif %}">Participations</a>
+  <a href="{% url 'lab:activities_editorial' %}" class="{% if active_activity_tab == 'editorial' %}active{% endif %}">Responsabilités éditoriales</a>
+</div>

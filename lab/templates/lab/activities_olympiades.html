@@ -1,0 +1,28 @@
+{% extends "lab/base.html" %}
+{% block title %}Olympiades — {{ site_profile.acronym }}{% endblock %}
+{% block content %}
+
+<section class="page-header">
+  <div class="container page-header-inner">
+    <div class="page-header-text">
+      <div class="breadcrumb"><a href="{% url 'lab:home' %}">Accueil</a><span class="sep">/</span><a href="{% url 'lab:activities' %}">Activités</a><span class="sep">/</span>Olympiades</div>
+      <span class="eyebrow">Vie scientifique</span>
+      <h1>Olympiades de mathématiques</h1>
+      <p>Les Olympiades Nationales de Mathématiques, organisées avec l'association ADAM-Maths pour promouvoir l'excellence scientifique auprès des jeunes.</p>
+    </div>
+    <div class="page-header-icon">
+      <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M40,14 L48,32 L68,32 L52,44 L58,64 L40,52 L22,64 L28,44 L12,32 L32,32 Z" stroke="var(--accent)" stroke-width="2.2" stroke-linejoin="round"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<section class="section reveal">
+  <div class="container">
+    {% include "lab/_activities_tabs.html" %}
+    {% include "lab/_activity_feed.html" %}
+  </div>
+</section>
+
+{% endblock %}

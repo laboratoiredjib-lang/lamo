@@ -24,22 +24,50 @@
   <div class="container">
     <div class="info-card-grid">
 
-      <div class="info-card">
+      <a href="{% url 'lab:formations_masters' %}" class="info-card info-card--link">
         <span class="ic-icon">
           <svg viewBox="0 0 24 24" fill="none"><path d="M12 4L3 8l9 4 9-4-9-4z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M3 8v7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M7 10.5V16c0 1.5 2.2 3 5 3s5-1.5 5-3v-5.5" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
         </span>
-        <h3>Masters</h3>
-        <p>Les étudiants de Master participent aux projets de recherche appliquée et aux stages de fin d'études du laboratoire, en lien direct avec ses axes scientifiques. Cette immersion progressive dans la recherche les prépare à une poursuite d'études en doctorat.</p>
-      </div>
+        <h3>Masters <span class="ic-count">{{ counts.masters }}</span></h3>
+        <p>Les enseignements assurés par le LAMO dans les Masters IAMD et MPM de l'Université de Djibouti.</p>
+        <span class="ic-link">Découvrir →</span>
+      </a>
 
-      <div class="info-card">
+      <a href="{% url 'lab:formations_doctoral' %}" class="info-card info-card--link">
         <span class="ic-icon">
           <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="5" stroke="currentColor" stroke-width="1.8"/><path d="M8.5 12.5L7 21l5-2.5 5 2.5-1.5-8.5" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
         </span>
-        <h3>Formation doctorale</h3>
-        <p>Pilier stratégique du LAMO, la formation doctorale s'appuie sur un encadrement conjoint entre le laboratoire et des équipes de recherche internationales reconnues, favorisant la mobilité scientifique et l'ouverture disciplinaire.</p>
-        <a href="{% url 'lab:members_doctorants' %}" class="ic-link">Voir les doctorants →</a>
-      </div>
+        <h3>Encadrement doctoral <span class="ic-count">{{ counts.doctoral }}</span></h3>
+        <p>Pilier stratégique du LAMO, la formation doctorale s'appuie sur un encadrement conjoint avec des équipes internationales reconnues.</p>
+        <span class="ic-link">Découvrir →</span>
+      </a>
+
+      <a href="{% url 'lab:formations_jury' %}" class="info-card info-card--link">
+        <span class="ic-icon">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M12 3l7 4v5c0 4.5-3 8-7 9-4-1-7-4.5-7-9V7l7-4z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+        <h3>Jurys de thèse <span class="ic-count">{{ counts.jury }}</span></h3>
+        <p>Les participations des membres du LAMO à des jurys de soutenance de thèse en France.</p>
+        <span class="ic-link">Découvrir →</span>
+      </a>
+
+      <a href="{% url 'lab:formations_stage' %}" class="info-card info-card--link">
+        <span class="ic-icon">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M4 19.5V6a2 2 0 012-2h13v15" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M6 19.5A1.5 1.5 0 017.5 18H19v3H7.5A1.5 1.5 0 016 19.5z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+        </span>
+        <h3>Offres de stage <span class="ic-count">{{ counts.stage }}</span></h3>
+        <p>Les stages de fin d'études encadrés par le LAMO pour les étudiants du Master IAMD.</p>
+        <span class="ic-link">Découvrir →</span>
+      </a>
+
+      <a href="{% url 'lab:formations_capacity' %}" class="info-card info-card--link">
+        <span class="ic-icon">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M12 2v4M12 18v4M4.9 4.9l2.8 2.8M16.3 16.3l2.8 2.8M2 12h4M18 12h4M4.9 19.1l2.8-2.8M16.3 7.7l2.8-2.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><circle cx="12" cy="12" r="3.5" stroke="currentColor" stroke-width="1.6"/></svg>
+        </span>
+        <h3>Renforcement de capacités <span class="ic-count">{{ counts.capacity }}</span></h3>
+        <p>Les formations internationales suivies par les membres du LAMO pour développer leurs compétences.</p>
+        <span class="ic-link">Découvrir →</span>
+      </a>
 
     </div>
   </div>

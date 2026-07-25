@@ -6,6 +6,7 @@ from .models import (
     Doctorant,
     Habilitation,
     LabProfile,
+    MasterCourse,
     News,
     Partner,
     PermanentMember,
@@ -82,9 +83,16 @@ class NewsAdmin(admin.ModelAdmin):
 
 @admin.register(Activity)
 class ActivityAdmin(admin.ModelAdmin):
-    list_display = ("title", "category", "edition_label", "year", "order")
+    list_display = ("title", "category", "edition_label", "year", "people", "order")
     list_filter = ("category",)
     ordering = ("category", "order")
+
+
+@admin.register(MasterCourse)
+class MasterCourseAdmin(admin.ModelAdmin):
+    list_display = ("program", "course_title", "instructor", "order")
+    list_filter = ("program",)
+    ordering = ("order",)
 
 
 @admin.register(Publication)

@@ -188,11 +188,21 @@ class Activity(models.Model):
         SEMINAIRE = "seminaire", "Séminaire"
         OLYMPIADES = "olympiades", "Olympiades"
         OFFRE = "offre", "Offre de thèse et de stage"
+        PARTICIPATION = "participation", "Participation à une manifestation scientifique"
+        EDITORIAL = "editorial", "Responsabilité éditoriale"
+        JURY = "jury", "Participation à un jury de thèse"
+        STAGE = "stage", "Encadrement de stage"
+        CAPACITY = "capacity", "Renforcement de capacités"
 
     category = models.CharField(max_length=20, choices=Category.choices)
     title = models.CharField(max_length=255, help_text="Ex : 2e édition — M2ISDA 2027")
     edition_label = models.CharField(max_length=100, blank=True, help_text="Ex : 1ère édition, Édition 2025")
-    year = models.CharField(max_length=20, blank=True)
+    year = models.CharField(max_length=20, blank=True, help_text="Date ou période de l'activité.")
+    location = models.CharField(max_length=255, blank=True)
+    people = models.CharField(
+        max_length=500, blank=True,
+        help_text="Présentateur, intervenant ou représentation du LAMO, ex : Dr Yahyeh SOULEIMAN",
+    )
     description = models.TextField(blank=True)
     image = models.ImageField(upload_to="activities/", blank=True, null=True)
     link = models.URLField(blank=True, help_text="Lien externe (inscription, appel à candidature...)")
@@ -205,6 +215,22 @@ class Activity(models.Model):
 
     def __str__(self):
         return f"{self.get_category_display()} — {self.title}"
+
+
+class MasterCourse(models.Model):
+    program = models.CharField(max_length=255, help_text="Ex : Master 1 IAMD")
+    course_title = models.CharField(max_length=255)
+    instructor = models.CharField(max_length=255)
+    description = models.TextField(blank=True)
+    order = models.PositiveIntegerField(default=0)
+
+    class Meta:
+        ordering = ["order"]
+        verbose_name = "Cours de Master"
+        verbose_name_plural = "Cours de Master"
+
+    def __str__(self):
+        return f"{self.program} — {self.course_title}"
 
 
 class Publication(models.Model):

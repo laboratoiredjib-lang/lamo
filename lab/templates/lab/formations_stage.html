@@ -1,0 +1,29 @@
+{% extends "lab/base.html" %}
+{% block title %}Offres de stage — {{ site_profile.acronym }}{% endblock %}
+{% block content %}
+
+<section class="page-header">
+  <div class="container page-header-inner">
+    <div class="page-header-text">
+      <div class="breadcrumb"><a href="{% url 'lab:home' %}">Accueil</a><span class="sep">/</span><a href="{% url 'lab:formations' %}">Formations</a><span class="sep">/</span>Offres de stage</div>
+      <span class="eyebrow">Enseignement</span>
+      <h1>Offres de stage</h1>
+      <p>Les stages de fin d'études encadrés par le LAMO pour les étudiants du Master IAMD.</p>
+    </div>
+    <div class="page-header-icon">
+      <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M20 32L40 20 60 32 40 44Z" stroke="var(--navy)" stroke-width="2.3" stroke-linejoin="round"/>
+        <path d="M26 38v14c0 3 6 7 14 7s14-4 14-7V38" stroke="var(--teal)" stroke-width="2.1"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<section class="section reveal">
+  <div class="container">
+    {% include "lab/_formations_tabs.html" %}
+    {% include "lab/_activity_feed.html" %}
+  </div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends "lab/base.html" %}
+{% block title %}Séminaires — {{ site_profile.acronym }}{% endblock %}
+{% block content %}
+
+<section class="page-header">
+  <div class="container page-header-inner">
+    <div class="page-header-text">
+      <div class="breadcrumb"><a href="{% url 'lab:home' %}">Accueil</a><span class="sep">/</span><a href="{% url 'lab:activities' %}">Activités</a><span class="sep">/</span>Séminaires</div>
+      <span class="eyebrow">Vie scientifique</span>
+      <h1>Séminaires</h1>
+      <p>Les séminaires et exposés scientifiques organisés ou accueillis par le LAMO.</p>
+    </div>
+    <div class="page-header-icon">
+      <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="40" cy="40" r="24" stroke="var(--navy)" stroke-width="2.5"/>
+        <path d="M40,26 V40 L50,48" stroke="var(--teal)" stroke-width="2.5" stroke-linecap="round"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<section class="section reveal">
+  <div class="container">
+    {% include "lab/_activities_tabs.html" %}
+    {% include "lab/_activity_feed.html" %}
+  </div>
+</section>
+
+{% endblock %}

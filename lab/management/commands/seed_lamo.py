@@ -9,6 +9,7 @@ from lab.models import (
     Doctorant,
     Habilitation,
     LabProfile,
+    MasterCourse,
     Partner,
     PermanentMember,
     Publication,
@@ -42,6 +43,8 @@ class Command(BaseCommand):
         self.seed_doctorants()
         self.seed_associates()
         self.seed_activities()
+        self.seed_master_courses()
+        self.seed_formation_activities()
         self.seed_partners()
         self.seed_publications()
         self.seed_research_projects()
@@ -220,31 +223,84 @@ class Command(BaseCommand):
     def seed_permanent_members(self, team_dyn, team_sto):
         members = [
             ("Dr. Liban ISMAIL", "Maître de conférences en Mathématiques appliquées", "", True, team_dyn,
-             "", "", "",
-             "Directeur du LAMO. Ses travaux portent sur la modélisation et le contrôle de systèmes dynamiques complexes, avec des collaborations internationales autour de l'encadrement doctoral."),
+             "", "", "", "member_liban_ismail.png",
+             "Le Dr Liban ISMAIL est Maître de conférences en mathématiques appliquées à l'Université de "
+             "Djibouti et Directeur du Laboratoire d'Analyse, de Modélisation et d'Optimisation (LAMO). Ses "
+             "activités de recherche portent principalement sur la modélisation mathématique, les "
+             "statistiques, la science des données, la recherche opérationnelle et l'optimisation, avec des "
+             "applications dans les domaines de la santé publique, de l'environnement, de l'énergie, de la "
+             "logistique et du développement durable. À travers ses travaux, il contribue au développement "
+             "de solutions innovantes fondées sur les méthodes quantitatives pour répondre à des "
+             "problématiques scientifiques et sociétales complexes.\n\n"
+             "En parallèle de ses activités de recherche et d'enseignement, le Dr Liban ISMAIL est "
+             "activement impliqué dans l'expertise scientifique internationale en qualité de reviewer pour "
+             "des revues scientifiques internationales à comité de lecture. Au cours de la période "
+             "2025–2026, il a représenté le LAMO dans le cadre de l'évaluation par les pairs de plusieurs "
+             "manuscrits scientifiques publiés chez Springer Nature. Ses expertises couvrent notamment la "
+             "modélisation mathématique, l'analyse de sensibilité globale, le contrôle optimal, la "
+             "modélisation environnementale, la transition énergétique ainsi que les applications de "
+             "l'intelligence artificielle aux systèmes complexes."),
             ("Dr. Yahyeh SOULEIMAN", "Maître de conférences en Mathématiques appliquées",
              "Doyen de l'IUT-T", False, team_sto,
              "yahyeh_souleiman@univ.edu.dj", "souleimanyahyeh@gmail.com", "+253 77 86 80 46 | +253 21 32 36 03",
-             "Dr. Yahyeh SOULEIMAN est Maître de Conférences en Mathématiques Appliquées et Doyen de "
-             "l'Institut Universitaire de Technologie Tertiaire (IUT-T) au Laboratoire d'Analyse, "
-             "Modélisation et Optimisation (LAMO), Université de Djibouti. Mathématicien appliqué avec "
-             "14 ans d'expérience dans l'enseignement supérieur et la recherche, son expertise porte sur "
-             "la modélisation mathématique, l'analyse de données et l'optimisation dans les secteurs de "
-             "la santé publique et de l'environnement. Il fait également preuve de leadership en tant "
-             "que responsable de groupes de recherche, membre du comité éditorial de Applied Mathematics "
-             "and Statistics (PJAMS), réviseur de plusieurs articles pour différentes revues "
-             "internationales et directeur de thèses doctorales. Auteur de plusieurs publications "
-             "évaluées par les pairs, il est également intervenant régulier lors de conférences "
-             "scientifiques internationales."),
+             "member_yahyeh_souleiman.jpg",
+             "Dr Yahyeh SOULEIMAN est Maître de Conférences en Mathématiques Appliquées, Doyen de l'Institut "
+             "Universitaire de Technologie Tertiaire (IUT-T) de l'Université de Djibouti et membre "
+             "permanent du LAMO. Fort de plus de quatorze années d'expérience dans l'enseignement "
+             "supérieur, la recherche et les responsabilités académiques, il développe des travaux "
+             "scientifiques à l'interface des mathématiques appliquées, de la modélisation et de l'analyse "
+             "quantitative. Ses domaines d'expertise couvrent notamment la modélisation mathématique, "
+             "l'analyse statistique et la science des données, l'optimisation, ainsi que leurs applications "
+             "à la santé publique, à l'environnement et au développement durable.\n\n"
+             "Très engagé dans l'animation de la recherche scientifique, il exerce un rôle de leadership "
+             "académique à travers la coordination de groupes de recherche, l'encadrement de mémoires et de "
+             "thèses de doctorat, ainsi que le développement de collaborations scientifiques nationales et "
+             "internationales. Il est également membre du comité éditorial de la revue Applied Mathematics "
+             "and Statistics (PJAMS) et intervient régulièrement comme évaluateur scientifique (reviewer) "
+             "pour plusieurs revues internationales à comité de lecture.\n\n"
+             "Auteur de nombreuses publications scientifiques dans des revues internationales indexées et "
+             "conférencier invité lors de plusieurs manifestations scientifiques internationales, il "
+             "participe activement au rayonnement scientifique de l'Université de Djibouti et du LAMO, "
+             "tout en favorisant le transfert des connaissances vers les secteurs socio-économiques et les "
+             "politiques publiques."),
             ("Dr. Souleiman OMAR", "Maître de conférences en Mathématiques fondamentales", "", False, team_dyn,
-             "", "", "",
-             "Travaux en analyse mathématique et systèmes dynamiques, au service de la modélisation de phénomènes complexes."),
+             "", "", "", "member_souleiman_omar.png",
+             "Dr Souleiman Omar Hoch est Maître de conférences en mathématiques à l'Université de Djibouti "
+             "et une figure importante de la recherche scientifique et de l'enseignement supérieur à "
+             "Djibouti. Il est reconnu pour ses travaux en mathématiques pures, notamment en théorie des "
+             "groupes quantiques, algèbres d'opérateurs et géométrie non commutative, avec plusieurs "
+             "publications dans des revues internationales.\n\n"
+             "En parallèle de ses activités académiques, il occupe des fonctions de direction et de "
+             "coordination au sein de l'Université de Djibouti. Il est notamment Directeur du Centre "
+             "d'Excellence Africain en Logistique et Transport (CEALT/CELT), un centre financé dans le "
+             "cadre du programme ACE-Impact de la Banque mondiale. À ce titre, il pilote les activités de "
+             "recherche, de formation, de coopération internationale et de développement institutionnel du "
+             "centre.\n\n"
+             "Ses responsabilités comprennent également la coordination de projets internationaux visant à "
+             "renforcer les capacités de recherche de l'Université de Djibouti dans les domaines de la "
+             "logistique, des transports, de l'ingénierie et de l'innovation. Plus récemment, il a "
+             "participé au développement de nouvelles infrastructures de recherche, notamment dans le "
+             "domaine des énergies renouvelables, afin de soutenir la transition énergétique et le "
+             "développement durable à Djibouti."),
             ("Dr. Doualeh ABDILLAHI", "Maître de conférences en Statistiques appliquées", "", False, team_sto,
-             "", "", "",
-             "Spécialiste de statistique appliquée et de science des données, au service de projets interdisciplinaires du laboratoire."),
+             "", "", "", "member_doualeh_abdillahi.png",
+             "Dr Doualeh Abdillahi Ali est Maître de conférences en mathématiques appliquées et Directeur "
+             "des études à la Faculté de Droit, Économie et Gestion de l'Université de Djibouti. Il est "
+             "titulaire d'un doctorat en mathématiques appliquées, spécialité statistique, obtenu en 2023 à "
+             "l'Université Clermont Auvergne, après y avoir également réalisé un Master en mathématiques "
+             "appliquées.\n\n"
+             "Ses activités d'enseignement et de recherche portent principalement sur les statistiques, les "
+             "mathématiques appliquées, l'analyse des données et les méthodes quantitatives. Au sein de "
+             "l'Université de Djibouti, il participe aux activités de formation, d'encadrement des "
+             "étudiants et au développement de la recherche scientifique dans ces domaines.\n\n"
+             "Sur le plan institutionnel, il est également membre du LAMO, où il contribue aux activités "
+             "scientifiques du laboratoire, notamment à l'organisation de conférences internationales, de "
+             "séminaires de recherche et de projets collaboratifs. Il a ainsi fait partie de la délégation "
+             "de l'Université de Djibouti ayant représenté le LAMO lors de la conférence internationale "
+             "DATA-SD 2025 organisée par l'Université d'Amoud (Somalie)."),
         ]
-        for order, (full_name, title, role_tag, is_director, team, email, email_secondary, phone, bio) in enumerate(members, start=1):
-            PermanentMember.objects.update_or_create(
+        for order, (full_name, title, role_tag, is_director, team, email, email_secondary, phone, photo, bio) in enumerate(members, start=1):
+            member, _ = PermanentMember.objects.update_or_create(
                 full_name=full_name,
                 defaults={
                     "title": title, "role_tag": role_tag, "is_director": is_director, "team": team,
@@ -252,9 +308,7 @@ class Command(BaseCommand):
                     "bio": bio, "order": order,
                 },
             )
-        yahyeh = PermanentMember.objects.filter(full_name="Dr. Yahyeh SOULEIMAN").first()
-        if yahyeh:
-            attach_image(yahyeh, "photo", "member_yahyeh_souleiman.jpg")
+            attach_image(member, "photo", photo)
 
     def seed_doctorants(self):
         rows = [
@@ -433,25 +487,128 @@ class Command(BaseCommand):
 
     def seed_associates(self):
         rows = [
-            ("M. Hacène DJELLOUT", "Professeur", "Université Clermont Auvergne (UCA)", "France"),
-            ("Mme. Raluca EFTIMIE", "Professeure", "Université Marie et Louis Pasteur", "France"),
-            ("Mme. Nathalie VERDIÈRE", "Professeure", "Université Le Havre Normandie", "France"),
-            ("M. Abdisalam HASSAN", "Professeur", "Université AMOUD", "Somalie"),
-            ("M. Lemecha LEGESSE", "Professeur", "Adama Science and Technology University", "Éthiopie"),
+            ("M. Hacène DJELLOUT", "Professeur", "Université Clermont Auvergne (UCA)", "France", "associate_hacene_djellout.jpeg",
+             "Hacène Djellout est Professeur des universités en mathématiques appliquées à l'Université "
+             "Clermont Auvergne (France), où il exerce au sein du Laboratoire de Mathématiques Blaise "
+             "Pascal (LMBP). Il est spécialiste des probabilités, des statistiques, des processus "
+             "stochastiques, de la modélisation mathématique et de l'analyse de sensibilité. Il est "
+             "également responsable pédagogique du Master Mathématiques de l'Université Clermont "
+             "Auvergne.\n\n"
+             "Ses travaux de recherche portent principalement sur les grandes déviations, les déviations "
+             "modérées, les équations différentielles stochastiques, les chaînes de Markov, les méthodes "
+             "spectrales, le chaos polynomial (Polynomial Chaos Expansion), ainsi que la quantification "
+             "des incertitudes et l'analyse de sensibilité globale. Il est l'auteur de nombreuses "
+             "publications dans des revues internationales de premier plan telles que The Annals of "
+             "Applied Probability, Annales de l'Institut Henri Poincaré, Probabilistic Engineering "
+             "Mechanics, Mathematical Methods in the Applied Sciences et Journal of Theoretical "
+             "Probability.\n\n"
+             "Il a développé une collaboration scientifique avec le LAMO de l'Université de Djibouti, "
+             "participant à plusieurs travaux de recherche en modélisation mathématique, analyse de "
+             "sensibilité globale et modélisation épidémiologique, notamment sur l'analyse de sensibilité "
+             "du modèle SIHR appliqué à la COVID-19 et sur la modélisation des systèmes climatiques "
+             "utilisant les développements en chaos polynomial."),
+            ("Mme. Raluca EFTIMIE", "Professeure", "Université Marie et Louis Pasteur", "France", "associate_raluca_eftimie.png",
+             "Raluca Eftimie est Professeure des universités en mathématiques appliquées à l'Université "
+             "Marie et Louis Pasteur (anciennement Université de Franche-Comté), où elle est membre du "
+             "Laboratoire de Mathématiques de Besançon (LMB). Elle est une spécialiste reconnue en "
+             "biologie mathématique, modélisation mathématique, équations différentielles ordinaires et "
+             "aux dérivées partielles (EDO/EDP), ainsi qu'en modélisation des systèmes biologiques "
+             "complexes.\n\n"
+             "Ses recherches portent principalement sur la modélisation mathématique du cancer (oncologie "
+             "mathématique), de l'immunologie, de l'épidémiologie, de l'écologie mathématique, ainsi que "
+             "sur l'étude des phénomènes de formation de motifs (pattern formation) et des systèmes non "
+             "linéaires et non locaux, avec des applications à la médecine, à l'immunothérapie et aux "
+             "maladies infectieuses.\n\n"
+             "Auteure de plus de 130 publications scientifiques dans des revues internationales de haut "
+             "niveau, elle siège aux comités éditoriaux de plusieurs revues prestigieuses, notamment "
+             "Journal of Mathematical Biology, Journal of Theoretical Biology, Mathematical Biosciences "
+             "and Engineering et Computational and Systems Oncology, et est Chief Editor de la section "
+             "Mathematical Biology de la revue Frontiers in Applied Mathematics and Statistics. Elle "
+             "développe des collaborations scientifiques avec le LAMO de l'Université de Djibouti dans "
+             "les domaines de la modélisation mathématique des maladies infectieuses, de l'immunologie et "
+             "de la biologie mathématique."),
+            ("Mme. Nathalie VERDIÈRE", "Maîtresse de conférences HDR", "Université Le Havre Normandie", "France", "",
+             "Nathalie Verdière est Maîtresse de conférences HDR (Habilitée à Diriger des Recherches) en "
+             "Mathématiques Appliquées à l'Université Le Havre Normandie. Elle est membre permanent du "
+             "Laboratoire de Mathématiques Appliquées du Havre (LMAH) et enseigne principalement au "
+             "département Génie Électrique et Informatique Industrielle (GEII) de l'IUT du Havre. Elle "
+             "est également membre associée du LAMO de l'Université de Djibouti, où elle participe au "
+             "développement de collaborations scientifiques internationales.\n\n"
+             "Ses recherches portent sur la modélisation mathématique des systèmes dynamiques, "
+             "l'identifiabilité, l'observabilité, la détection et le diagnostic de défauts, la "
+             "contrôlabilité des réseaux de systèmes complexes ainsi que l'estimation de paramètres, avec "
+             "des applications dans des domaines variés tels que la physique, l'automatique, la biologie, "
+             "les neurosciences, la dynamique des populations et les sciences de l'environnement.\n\n"
+             "Auteure de plus de 60 publications scientifiques dans des revues internationales à comité "
+             "de lecture, elle encadre des doctorants et participe à plusieurs projets de recherche "
+             "nationaux et internationaux. Dans le cadre de sa collaboration avec le LAMO, elle apporte "
+             "son expertise en modélisation mathématique, en théorie du contrôle et en analyse des "
+             "systèmes dynamiques, notamment à travers l'encadrement de la thèse du doctorant Gouled "
+             "Souleiman."),
+            ("M. Abdisalam HASSAN", "Professeur associé", "Université AMOUD", "Somalie", "associate_abdisalam_hassan.png",
+             "Le Dr Abdisalam Hassan Muse est Professeur associé en statistique et mathématiques "
+             "appliquées à l'Université d'Amoud (Amoud University), en Somalie (Borama). Il est "
+             "actuellement Directeur du Research and Innovation Centre et Doyen de la School of "
+             "Postgraduate Studies and Research, où il dirige également les programmes de master en "
+             "statistique appliquée, mathématiques appliquées et statistique médicale. Fort de plus de "
+             "dix années d'expérience dans l'enseignement supérieur et la recherche, il joue un rôle "
+             "majeur dans le développement de la recherche scientifique en Afrique de l'Est.\n\n"
+             "Ses domaines d'expertise couvrent les statistiques appliquées, les mathématiques, la "
+             "science des données, les méthodes bayésiennes, l'analyse de survie, la cartographie des "
+             "maladies (disease mapping), la modélisation spatiale et l'analyse de données. Il est "
+             "l'auteur de plus de 70 publications scientifiques dans des revues internationales et "
+             "supervise de nombreux étudiants en master et en doctorat.\n\n"
+             "Selon l'AD Scientific Index 2026, il figure parmi les chercheurs les mieux classés de "
+             "Somalie en sciences mathématiques, avec un h-index de 19 et plus de 1 000 citations. Il "
+             "entretient des relations scientifiques avec le LAMO de l'Université de Djibouti, "
+             "participant à des conférences internationales, à des projets de recherche collaboratifs et "
+             "au renforcement des partenariats académiques entre les deux institutions."),
+            ("M. Lemecha LEGESSE", "Professeur", "Adama Science and Technology University", "Éthiopie", "associate_legesse_lemecha.jpeg",
+             "Legesse Lemecha Obsu est Professeur en mathématiques appliquées à l'Adama Science and "
+             "Technology University (ASTU), en Éthiopie, et Directeur de l'École Doctorale. Il est membre "
+             "du Département de Mathématiques Appliquées, où il exerce des activités d'enseignement, de "
+             "recherche et d'encadrement de doctorants.\n\n"
+             "Ses travaux de recherche portent principalement sur la modélisation mathématique, les "
+             "équations différentielles, le contrôle optimal, la recherche opérationnelle, les méthodes "
+             "numériques et l'optimisation, appliqués à des problématiques d'intérêt sociétal : "
+             "épidémiologie, agriculture, gestion des ressources naturelles, dynamique des populations et "
+             "optimisation des systèmes de transport.\n\n"
+             "Cette coopération scientifique avec le LAMO se traduit par des échanges réguliers, la "
+             "co-signature de plusieurs articles scientifiques et le développement de travaux de "
+             "recherche conjoints. Il a également participé à l'atelier scientifique organisé par le "
+             "laboratoire en 2024 et à une rencontre scientifique à Djibouti en novembre 2024, "
+             "contribuant activement au renforcement des liens académiques entre les deux institutions."),
         ]
-        for order, (full_name, grade, institution, country) in enumerate(rows, start=1):
-            AssociateResearcher.objects.update_or_create(
+        for order, (full_name, grade, institution, country, photo, bio) in enumerate(rows, start=1):
+            associate, _ = AssociateResearcher.objects.update_or_create(
                 full_name=full_name,
                 defaults={
                     "grade": grade,
                     "institution": institution,
                     "country": country,
-                    "bio": f"Chercheur associé au LAMO, {grade.lower()} à {institution}.",
+                    "bio": bio,
                     "order": order,
                 },
             )
+            if photo:
+                attach_image(associate, "photo", photo)
+
+    def _seed_activity_rows(self, rows):
+        for row in rows:
+            defaults = dict(row["defaults"])
+            image = defaults.pop("image", "")
+            activity, _ = Activity.objects.update_or_create(
+                category=row["category"], title=row["title"], defaults=defaults,
+            )
+            if image:
+                attach_image(activity, "image", image)
 
     def seed_activities(self):
+        # Anciens intitulés génériques remplacés par les activités détaillées ci-dessous.
+        Activity.objects.filter(
+            title__in=["Conférence LAMO", "Olympiades de mathématiques"]
+        ).delete()
+
         conference, _ = Activity.objects.update_or_create(
             category=Activity.Category.CONFERENCE,
             title="M2ISDA — Mathematical Modeling and Innovations in Advanced Data Science",
@@ -471,19 +628,612 @@ class Command(BaseCommand):
         )
         attach_image(conference, "image", "activity_m2isda_2027_poster.jpg")
 
-        Activity.objects.update_or_create(
+        conference_2024, _ = Activity.objects.update_or_create(
             category=Activity.Category.CONFERENCE,
-            title="Conférence LAMO",
-            defaults={"edition_label": "1ère édition", "year": "2024", "order": 1},
+            title="M2ISDA — Modélisation mathématique et innovation en sciences des données avancées",
+            defaults={
+                "edition_label": "1ère édition",
+                "year": "30–31 octobre 2024",
+                "location": "Salle de conférences de la faculté d'ingénieurs de l'Université de Djibouti",
+                "description": (
+                    "Cet atelier scientifique a été organisé par le LAMO dans le but de renforcer les "
+                    "échanges autour des approches modernes de modélisation mathématique et des "
+                    "innovations en sciences des données avancées. Il a réuni des chercheurs, des "
+                    "enseignants-chercheurs, des praticiens ainsi que des représentants d'institutions "
+                    "nationales et internationales, notamment le Pr. Hacène Djellout (Université Clermont "
+                    "Auvergne), le Dr. Abdisalam (Université d'Amoud), le Dr. Usame (Université de "
+                    "Jigjiga) et le Pr. Legesse (Adama Science and Technology University).\n\n"
+                    "L'atelier a mis en lumière les dernières avancées en science des données et en "
+                    "intelligence artificielle, en soulignant leur rôle central dans l'aide à la décision "
+                    "et l'analyse des systèmes complexes. Les discussions ont également impliqué "
+                    "l'Institut National de la Statistique de Djibouti (INSTAD) et l'Hôpital Militaire de "
+                    "Djibouti, ouvrant des perspectives de collaboration scientifique, en particulier dans "
+                    "la validation des modèles à partir de données réelles.\n\n"
+                    "L'événement a bénéficié de la présence et du soutien des autorités nationales, "
+                    "notamment du Ministère de l'Enseignement supérieur et de la Recherche ainsi que de "
+                    "l'Université de Djibouti, constituant un cadre privilégié de dialogue scientifique et "
+                    "de renforcement des partenariats."
+                ),
+                "order": 1,
+            },
         )
+        attach_image(conference_2024, "image", "activity_m2isda2024_comite.jpeg")
 
-        for order, year in enumerate(["2025", "2026"], start=1):
-            Activity.objects.update_or_create(
-                category=Activity.Category.OLYMPIADES,
-                title="Olympiades de mathématiques",
-                edition_label=f"Édition {year}",
-                defaults={"year": "", "order": order},
+        seminaires = [
+            {
+                "category": Activity.Category.SEMINAIRE,
+                "title": "Modélisation mathématique des écosystèmes forestiers dans un contexte de changement climatique",
+                "defaults": {
+                    "year": "24 avril 2025", "location": "Laboratoire d'Analyse, de Modélisation et d'Optimisation (LAMO)",
+                    "people": "Gouled SOULEIMAN (doctorant LAMO)", "order": 1,
+                    "description": (
+                        "Séminaire doctoral consacré à la présentation des travaux de recherche du "
+                        "doctorant Gouled SOULEIMAN, portant sur la modélisation mathématique des "
+                        "écosystèmes forestiers dans un contexte de changement climatique et "
+                        "environnemental. L'étude met en évidence les impacts combinés des facteurs "
+                        "climatiques (incendies, inondations, sécheresses, vagues de chaleur, espèces "
+                        "invasives) et anthropiques (déforestation, surpâturage, pollution) sur la "
+                        "structure et le fonctionnement des forêts.\n\n"
+                        "L'objectif principal de cette recherche est de développer des outils "
+                        "mathématiques permettant de mieux comprendre la dynamique de ces écosystèmes "
+                        "sous contraintes multiples, afin de proposer des approches d'analyse et de "
+                        "gestion adaptées aux défis environnementaux actuels."
+                    ),
+                    "image": "activity_seminaire_gouled_avril2025.jpeg",
+                },
+            },
+            {
+                "category": Activity.Category.SEMINAIRE,
+                "title": "Prédire la blessure, optimiser l'entraînement : l'intelligence artificielle au service de la performance durable en football",
+                "defaults": {
+                    "year": "15 janvier 2026, à partir de 9h", "location": "Faculté d'Ingénieurs, Salle des conférences",
+                    "people": "Pr. Pierre DRUILHET (Université Clermont Auvergne)", "order": 2,
+                    "description": (
+                        "Séminaire-conférence consacré à l'apport de l'intelligence artificielle dans "
+                        "l'analyse de la performance sportive, en particulier dans le domaine du football, "
+                        "animé par le Professeur Pierre DRUILHET, spécialiste en mathématiques appliquées "
+                        "et en science des données à l'Université Clermont Auvergne.\n\n"
+                        "La conférence a permis de présenter des approches modernes basées sur "
+                        "l'apprentissage automatique et l'analyse de données sportives, avec pour "
+                        "objectif de développer des modèles prédictifs capables d'anticiper les risques "
+                        "de blessures chez les athlètes, tout en optimisant les programmes d'entraînement."
+                    ),
+                    "image": "activity_seminaire_druilhet.jpeg",
+                },
+            },
+            {
+                "category": Activity.Category.SEMINAIRE,
+                "title": "L'intelligence artificielle est-elle multiforme ?",
+                "defaults": {
+                    "year": "12 février 2026", "location": "Faculté d'Ingénieurs, Université de Djibouti",
+                    "people": "Pr. Engelbert Mephu Nguifo", "order": 3,
+                    "description": (
+                        "Séminaire scientifique ayant réuni des enseignants-chercheurs, des chercheurs et "
+                        "des étudiants de l'Université de Djibouti, notamment ceux du Master Intelligence "
+                        "Artificielle et Modélisation des Données (IAMD). Animé par le Professeur "
+                        "Engelbert Mephu Nguifo, spécialiste en intelligence artificielle, le séminaire a "
+                        "présenté une analyse approfondie des différentes formes que revêt aujourd'hui "
+                        "l'intelligence artificielle : apprentissage automatique, apprentissage profond, "
+                        "systèmes de recommandation, systèmes intelligents et technologies génératives.\n\n"
+                        "La séance d'ouverture a été assurée par le Directeur du LAMO, Dr Liban Ismail "
+                        "Abdillahi, qui a rappelé le rôle stratégique de la recherche en intelligence "
+                        "artificielle dans le développement scientifique, technologique et "
+                        "socio-économique de Djibouti."
+                    ),
+                    "image": "activity_seminaire_mephu.jpeg",
+                },
+            },
+            {
+                "category": Activity.Category.SEMINAIRE,
+                "title": "Mathématiques appliquées et intelligence artificielle",
+                "defaults": {
+                    "year": "Jeudi 2 avril 2026, à partir de 9h30", "location": "Faculté d'Ingénieurs, Salle des conférences",
+                    "people": "M. Gouled Souleiman (LAMO) et Pr. Andrzej Stos (Université Clermont Auvergne)", "order": 4,
+                    "description": (
+                        "Séminaire scientifique consacré aux thématiques actuelles en mathématiques "
+                        "appliquées et en intelligence artificielle, réunissant M. Gouled Souleiman, "
+                        "doctorant en mathématiques appliquées et membre du LAMO, ainsi que le Professeur "
+                        "Andrzej Stos, chercheur à l'Université Clermont Auvergne, spécialiste en analyse "
+                        "mathématique et en probabilités, avec des applications en machine learning et "
+                        "deep learning.\n\n"
+                        "La modération a été assurée par le directeur du LAMO, Dr Liban Ismail Abdillahi. "
+                        "Ce séminaire a constitué un espace d'échange entre chercheurs, étudiants et "
+                        "professionnels autour des applications de la science des données dans des "
+                        "secteurs stratégiques tels que le numérique, les télécommunications et la "
+                        "finance."
+                    ),
+                    "image": "activity_seminaire_avril2026_affiche.jpeg",
+                },
+            },
+            {
+                "category": Activity.Category.SEMINAIRE,
+                "title": "Journée de sensibilisation aux mathématiques et aux sciences – École d'Excellence",
+                "defaults": {
+                    "year": "29 janvier 2026 (jeudi)", "location": "École d'Excellence, Djibouti",
+                    "people": "Pr. Stéphanie LÉGER (Polytech Clermont – Université Clermont Auvergne)", "order": 5,
+                    "description": (
+                        "Matinée de sensibilisation aux mathématiques et aux sciences organisée au sein "
+                        "de l'École d'Excellence, dans une dynamique visant à renforcer l'intérêt des "
+                        "élèves pour les disciplines scientifiques et à encourager l'émergence de "
+                        "vocations scientifiques dès le cycle secondaire.\n\n"
+                        "La séance a été animée par la Professeure Stéphanie LÉGER, Maître de Conférences "
+                        "en Ingénierie Mathématique et Data Science à Polytech Clermont, en mission "
+                        "académique à l'Université de Djibouti dans le cadre du Master IAMD."
+                    ),
+                    "image": "activity_ecoleexcellence_affiche.jpeg",
+                },
+            },
+        ]
+        self._seed_activity_rows(seminaires)
+
+        olympiades = [
+            {
+                "category": Activity.Category.OLYMPIADES,
+                "title": "Journée Internationale des Mathématiques",
+                "defaults": {
+                    "edition_label": "Édition 2025", "year": "12 & 13 février 2025", "location": "Université de Djibouti",
+                    "order": 1,
+                    "description": (
+                        "Journée des Mathématiques organisée sur deux jours, réunissant des étudiants "
+                        "universitaires ainsi que des élèves des lycées de la capitale, avec pour objectif "
+                        "de stimuler l'excellence scientifique et de renforcer l'intérêt des jeunes pour "
+                        "les mathématiques. Le premier jour a été consacré à un concours de mathématiques ; "
+                        "le second a été marqué par des conférences scientifiques et pédagogiques animées "
+                        "par des enseignants-chercheurs et des professeurs de lycée."
+                    ),
+                    "image": "activity_jim2025_presentation.jpeg",
+                },
+            },
+            {
+                "category": Activity.Category.OLYMPIADES,
+                "title": "Cérémonie de remise des prix — Journée Internationale des Mathématiques 2025",
+                "defaults": {
+                    "edition_label": "Édition 2025", "year": "13 février 2025", "location": "Université de Djibouti",
+                    "order": 2,
+                    "description": (
+                        "Cérémonie officielle de remise des prix, en présence du Ministre de l'Éducation "
+                        "nationale, M. Moustapha Mohamed, et du Président de l'Université de Djibouti, "
+                        "Dr Djama Mohamed, célébrant les lauréats du concours de mathématiques et saluant "
+                        "leur engagement et leurs performances remarquables."
+                    ),
+                    "image": "activity_jim2025_remise_prix.jpeg",
+                },
+            },
+            {
+                "category": Activity.Category.OLYMPIADES,
+                "title": "Lancement de la phase de sensibilisation — Olympiades Nationales de Mathématiques",
+                "defaults": {
+                    "edition_label": "Édition 2026", "year": "4 au 8 janvier 2026",
+                    "location": "Université de Djibouti et établissements partenaires dans tout le pays",
+                    "people": "LAMO & ADAM-Maths", "order": 3,
+                    "description": (
+                        "Lancement officiel de la phase de sensibilisation des Olympiades Nationales de "
+                        "Mathématiques, en collaboration avec l'association ADAM-Maths. Cette phase s'est "
+                        "déroulée sur l'ensemble du territoire national : les trois communes de la "
+                        "capitale (Balbala, Boulaos et Ras-Dika), ainsi que les cinq régions de l'intérieur "
+                        "du pays (Ali Sabieh, Arta, Dikhil, Obock et Tadjourah)."
+                    ),
+                    "image": "activity_onm2026_sensibilisation.jpeg",
+                },
+            },
+            {
+                "category": Activity.Category.OLYMPIADES,
+                "title": "Lancement des épreuves de la phase régionale — ONM 2026",
+                "defaults": {
+                    "edition_label": "Édition 2026", "year": "12 janvier 2026",
+                    "location": "Université de Djibouti et sites régionaux décentralisés",
+                    "people": "LAMO & ADAM-Maths", "order": 4,
+                    "description": (
+                        "Lancement officiel de la phase régionale des épreuves, étape clé du processus de "
+                        "sélection des meilleurs candidats à l'échelle nationale, déployée simultanément "
+                        "dans les trois communes de la capitale et les cinq régions de l'intérieur du pays."
+                    ),
+                    "image": "activity_onm2026_regionale_epreuve.jpeg",
+                },
+            },
+            {
+                "category": Activity.Category.OLYMPIADES,
+                "title": "Cérémonie de remise des prix — phase régionale ONM 2026",
+                "defaults": {
+                    "edition_label": "Édition 2026", "year": "15 janvier 2026",
+                    "location": "Université de Djibouti (site central) et sites décentralisés",
+                    "people": "LAMO & ADAM-Maths", "order": 5,
+                    "description": (
+                        "Cérémonie de remise des prix de la phase régionale, en présence du Président de "
+                        "l'Université de Djibouti, Dr Djama Mohamed, et du Conseiller du Ministre de "
+                        "l'Enseignement supérieur et de la Recherche, Dr Fahmi. Les trois premiers "
+                        "lauréats de chaque niveau ont été récompensés pour leurs performances "
+                        "exceptionnelles."
+                    ),
+                    "image": "activity_onm2026_regionale_remise.jpeg",
+                },
+            },
+            {
+                "category": Activity.Category.OLYMPIADES,
+                "title": "Répartition des candidats — phase régionale ONM 2026",
+                "defaults": {
+                    "edition_label": "Édition 2026", "order": 6,
+                    "description": (
+                        "Participation globale de 6 100 candidats à la phase régionale : 5 500 candidats "
+                        "de niveau scolaire (90 %) et 600 candidats de niveau universitaire (10 %), "
+                        "traduisant une forte mobilisation des élèves du secondaire et une implication "
+                        "significative de l'enseignement supérieur."
+                    ),
+                    "image": "activity_onm2026_stats_regionale.jpeg",
+                },
+            },
+            {
+                "category": Activity.Category.OLYMPIADES,
+                "title": "Lancement des épreuves de la phase nationale — ONM 2026",
+                "defaults": {
+                    "edition_label": "Édition 2026", "year": "1er février 2026 (dimanche)", "location": "Université de Djibouti",
+                    "people": "LAMO & ADAM-Maths", "order": 7,
+                    "description": (
+                        "Lancement de la phase nationale, aboutissement du processus de sélection "
+                        "réunissant les meilleurs candidats issus des phases régionales, en présence du "
+                        "Secrétaire Général du MENFOP, M. Mohamed Abdallah, et du Président de "
+                        "l'Université de Djibouti, Dr Djama Mohamed."
+                    ),
+                    "image": "activity_onm2026_nationale_epreuve.jpeg",
+                },
+            },
+            {
+                "category": Activity.Category.OLYMPIADES,
+                "title": "Cérémonie de remise des prix — phase nationale ONM 2026",
+                "defaults": {
+                    "edition_label": "Édition 2026", "year": "23 mars 2026 (lundi)", "location": "Université de Djibouti (site central)",
+                    "people": "LAMO & ADAM-Maths", "order": 8,
+                    "description": (
+                        "Cérémonie officielle marquant l'aboutissement du processus national de "
+                        "sélection, honorée par la présence du Ministre de l'Enseignement Supérieur et de "
+                        "la Recherche, Dr Nabil Mohamed, du Ministre de l'Éducation Nationale, M. "
+                        "Moustapha Mohamed, et du Ministre du Budget, M. Isman Robleh. Les trois premiers "
+                        "lauréats de chaque niveau ont été récompensés par des prix et certificats "
+                        "d'excellence."
+                    ),
+                    "image": "activity_onm2026_nationale_remise.jpeg",
+                },
+            },
+            {
+                "category": Activity.Category.OLYMPIADES,
+                "title": "Répartition des candidats par genre — phase nationale ONM 2026",
+                "defaults": {
+                    "edition_label": "Édition 2026", "order": 9,
+                    "description": (
+                        "Sur 581 candidats à la phase nationale : 217 filles (37 %) et 364 garçons (63 %), "
+                        "une répartition qui traduit une progression encourageante de l'implication "
+                        "féminine dans les activités mathématiques compétitives."
+                    ),
+                    "image": "activity_onm2026_stats_genre.jpeg",
+                },
+            },
+            {
+                "category": Activity.Category.OLYMPIADES,
+                "title": "Répartition des lauréats par région — ONM 2026",
+                "defaults": {
+                    "edition_label": "Édition 2026", "order": 10,
+                    "description": (
+                        "Balbala 27 %, Boulaos 20 %, Université de Djibouti 20 %, CPGE 13 %, Ali-Sabieh "
+                        "7 %, Ras-Dika 6 %, autres secteurs 7 % — une représentation relativement "
+                        "équilibrée des différentes régions et établissements du pays."
+                    ),
+                    "image": "activity_onm2026_stats_region.jpeg",
+                },
+            },
+            {
+                "category": Activity.Category.OLYMPIADES,
+                "title": "Répartition des lauréats par filière — ONM 2026",
+                "defaults": {
+                    "edition_label": "Édition 2026", "order": 11,
+                    "description": (
+                        "5ème 20 %, 9ème 20 %, Licence (FS+IUT-I) 20 %, CPGE (L1+L2) 13 %, Seconde 13 %, "
+                        "1ère S 7 %, Terminale S 7 % — une diversité de profils illustrant le caractère "
+                        "inclusif des Olympiades Nationales de Mathématiques."
+                    ),
+                    "image": "activity_onm2026_stats_filiere.jpeg",
+                },
+            },
+        ]
+        self._seed_activity_rows(olympiades)
+
+        participations = [
+            {
+                "category": Activity.Category.PARTICIPATION,
+                "title": "Mathematical Modeling of Epidemiological Dynamics",
+                "defaults": {
+                    "year": "17 au 21 juin 2024", "location": "Université Le Havre Normandie, France",
+                    "people": "Dr Yahyeh SOULEIMAN", "order": 1,
+                    "description": (
+                        "Le Dr Yahyeh SOULEIMAN a présenté ses travaux de recherche en modélisation "
+                        "mathématique des dynamiques épidémiologiques lors de cette conférence "
+                        "internationale, en tant que représentant du LAMO. Les échanges scientifiques ont "
+                        "porté sur le développement de modèles épidémiologiques, l'analyse des dynamiques "
+                        "de transmission et l'élaboration de stratégies de contrôle."
+                    ),
+                    "image": "activity_participation_lehavre2024.jpeg",
+                },
+            },
+            {
+                "category": Activity.Category.PARTICIPATION,
+                "title": "1ère édition des Journées Scientifiques du CHU de Djibouti",
+                "defaults": {
+                    "year": "22 et 23 décembre 2024", "location": "Palais du Peuple, Djibouti",
+                    "people": "Dr Liban ISMAIL et Dr Yahyeh SOULEIMAN", "order": 2,
+                    "description": (
+                        "Les membres du LAMO ont participé à la première édition des Journées "
+                        "Scientifiques du Centre Hospitalier Universitaire de Djibouti, qui a rassemblé "
+                        "plus de 300 professionnels de santé autour du thème « La recherche médicale au "
+                        "service de la qualité des soins ». À travers leur participation, ils ont mis en "
+                        "évidence l'apport des mathématiques appliquées et de la modélisation dans "
+                        "l'amélioration des systèmes de santé."
+                    ),
+                    "image": "activity_participation_chu2024.jpeg",
+                },
+            },
+            {
+                "category": Activity.Category.PARTICIPATION,
+                "title": "Colloque annuel des doctorantes et doctorants — La Rochelle Université",
+                "defaults": {
+                    "year": "19 et 20 mai 2025", "location": "La Rochelle Université, France",
+                    "people": "Ali MOHAMED (doctorant LAMO)", "order": 3,
+                    "description": (
+                        "Le doctorant Ali MOHAMED a présenté ses travaux de thèse portant sur l'analyse "
+                        "mathématique et les méthodes numériques, à travers une contribution intitulée "
+                        "« Observability inequality for the wavelet-based Galerkin method », publiée dans "
+                        "les actes de la conférence IFAC (IFAC PapersOnLine, volume 59, numéro 13, pages "
+                        "46–51, 2025)."
+                    ),
+                },
+            },
+            {
+                "category": Activity.Category.PARTICIPATION,
+                "title": "A Mathematical Model to Investigate the Impact of Climate Change on Forest Ecosystems and a Strategy for Its Regeneration",
+                "defaults": {
+                    "year": "6 juin 2025", "location": "Carcans Maubuisson, France",
+                    "people": "Gouled SOULEIMAN (doctorant LAMO)", "order": 4,
+                    "description": (
+                        "Exposé scientifique présenté par le doctorant Gouled SOULEIMAN dans le cadre de "
+                        "la 12ième Biennale Française des Mathématiques Appliquées et Industrielles, "
+                        "portant sur la modélisation mathématique des effets du changement climatique sur "
+                        "les écosystèmes forestiers et des stratégies de régénération optimales."
+                    ),
+                    "image": "activity_participation_biennale2025_affiche.jpeg",
+                },
+            },
+            {
+                "category": Activity.Category.PARTICIPATION,
+                "title": "Conférence internationale DATA-SD 2025",
+                "defaults": {
+                    "year": "18 au 20 août 2025", "location": "Amoud University, Borama, Somaliland",
+                    "people": "Dr Yahyeh SOULEIMAN, Dr Souleiman Omar Hoch, Dr Doualeh, Dr Liban Ismail Abdillahi",
+                    "order": 5,
+                    "description": (
+                        "Le LAMO a participé à la conférence internationale DATA-SD 2025 (International "
+                        "Conference on Data Science for Sustainable Development), réunissant des "
+                        "chercheurs, enseignants-chercheurs et experts autour des avancées récentes en "
+                        "science des données, modélisation mathématique, optimisation et développement "
+                        "durable. Quatre membres du laboratoire ont représenté l'Université de Djibouti, "
+                        "renforçant la visibilité du LAMO et développant de nouvelles collaborations "
+                        "scientifiques."
+                    ),
+                    "image": "activity_participation_datasd2025.jpeg",
+                },
+            },
+            {
+                "category": Activity.Category.PARTICIPATION,
+                "title": "Modeling and investigating malaria Plasmodium falciparum and Plasmodium vivax infections: Application to Djibouti data",
+                "defaults": {
+                    "year": "18 au 20 août 2025", "location": "Amoud University, Borama, Somaliland (DATA-SD 2025)",
+                    "people": "Dr Yahyeh SOULEIMAN, en collaboration avec Liban Ismail et Raluca Eftimie", "order": 6,
+                    "description": (
+                        "Communication scientifique portant sur la modélisation mathématique de la "
+                        "transmission du paludisme à Djibouti, à partir de données épidémiologiques "
+                        "réelles collectées dans le contexte djiboutien, visant à mieux comprendre les "
+                        "mécanismes de propagation et à évaluer l'impact de différentes stratégies de "
+                        "prévention et de contrôle."
+                    ),
+                    "image": "activity_participation_datasd2025_presentation.jpeg",
+                },
+            },
+            {
+                "category": Activity.Category.PARTICIPATION,
+                "title": "Mathematical modeling of active regeneration via a facilitator species strategy: stability and bifurcations",
+                "defaults": {
+                    "year": "1er–2 juin 2026", "location": "Lyon, France",
+                    "people": "Gouled SOULEIMAN (doctorant LAMO)", "order": 7,
+                    "description": (
+                        "Exposé scientifique présenté par le doctorant Gouled SOULEIMAN dans le cadre de "
+                        "The French Conference on Complex Systems, portant sur la modélisation "
+                        "mathématique des dynamiques de régénération active dans les systèmes écologiques, "
+                        "avec une analyse des conditions de stabilité et des phénomènes de bifurcation."
+                    ),
+                    "image": "activity_participation_lyon2026_affiche.jpeg",
+                },
+            },
+        ]
+        self._seed_activity_rows(participations)
+
+        editorial = [
+            {
+                "category": Activity.Category.EDITORIAL,
+                "title": "Membre du comité éditorial — Precision Journal of Applied Mathematics and Statistics (PJAMS)",
+                "defaults": {
+                    "year": "2026", "people": "Dr Yahyeh SOULEIMAN", "order": 1,
+                    "description": (
+                        "Le Dr Yahyeh SOULEIMAN a été nommé membre du comité éditorial (Editorial Board "
+                        "Member) de la revue scientifique internationale à comité de lecture Precision "
+                        "Journal of Applied Mathematics and Statistics (PJAMS), dédiée à la publication de "
+                        "travaux originaux en mathématiques appliquées, statistiques et disciplines "
+                        "interdisciplinaires associées. Cette nomination témoigne de la reconnaissance "
+                        "internationale de son expertise scientifique et contribue au renforcement du "
+                        "rayonnement du LAMO et de l'Université de Djibouti."
+                    ),
+                    "image": "activity_editorial_pjams_logo.jpeg",
+                },
+            },
+            {
+                "category": Activity.Category.EDITORIAL,
+                "title": "Activités d'expertise scientifique : évaluation d'articles (Dr Yahyeh SOULEIMAN)",
+                "defaults": {
+                    "year": "2021–2026", "people": "Dr Yahyeh SOULEIMAN — Reviewer", "order": 2,
+                    "description": (
+                        "Le Dr Yahyeh SOULEIMAN s'implique activement comme évaluateur scientifique "
+                        "(reviewer) pour plusieurs revues internationales à comité de lecture, couvrant "
+                        "notamment la modélisation mathématique, le calcul fractionnaire, les équations "
+                        "différentielles, le contrôle optimal, la mécanique des milieux continus et la "
+                        "modélisation des maladies infectieuses. Manuscrits évalués :\n\n"
+                        "2021 – Palestine Journal of Mathematics : A Quasistatic Frictional Contact "
+                        "Problem for Thermo-Electro-Viscoelastic Materials.\n"
+                        "2022 – Asian Research Journal of Mathematics : On the Solution of a Non-linear "
+                        "Fractional-Order Mathematical Model of Glucose–Insulin System Incorporating "
+                        "β-Cells Compartment.\n"
+                        "2023 – Asian Research Journal of Mathematics : Fixed Point Results for Rational "
+                        "Type Contraction in Metric Spaces.\n"
+                        "2024 – Precision Journal of Disease Biology (PJDB) : Identification of Bioactive "
+                        "Postbiotics Against Neonatal Meningitis Caused by Group B Streptococcus via "
+                        "Srr2-Targeted In-Silico Screening.\n"
+                        "2025 – Evolution Equations and Control Theory : Exponential Decay for a "
+                        "Thermo-Viscoelastic Dynamic Contact Problem with Friction and Infinite Memory.\n"
+                        "2026 – Scientific African : Impact of Behavioural Protection on HIV–Mpox "
+                        "Co-infection Dynamics : A Mathematical Modelling Approach."
+                    ),
+                },
+            },
+            {
+                "category": Activity.Category.EDITORIAL,
+                "title": "Activités d'expertise scientifique : évaluation d'articles (Dr Liban ISMAIL)",
+                "defaults": {
+                    "year": "2025–2026", "people": "Dr Liban ISMAIL — Reviewer", "order": 3,
+                    "description": (
+                        "Le Dr Liban ISMAIL, Directeur du LAMO, participe aux activités d'expertise "
+                        "scientifique internationale en qualité d'évaluateur pour des revues à comité de "
+                        "lecture, couvrant la modélisation mathématique, l'analyse de sensibilité globale, "
+                        "le contrôle optimal, la modélisation environnementale, la transition énergétique "
+                        "et les applications de l'intelligence artificielle. Manuscrits évalués :\n\n"
+                        "2025 – Carbon Balance and Management (Springer Nature) : Mathematical Modeling "
+                        "of Carbon Dioxide Emissions with GDP Linkage : Sensitivity Analysis and Optimal "
+                        "Control Strategy (recommandation de révision suivie d'une acceptation).\n"
+                        "2026 – Earth Systems and Environment (Springer) : Machine learning-based "
+                        "Performance Prediction of Horizontal Ground Source Heat Pump in Tropical "
+                        "Country."
+                    ),
+                },
+            },
+        ]
+        self._seed_activity_rows(editorial)
+
+    def seed_master_courses(self):
+        courses = [
+            ("Master 1 IAMD", "Outils mathématiques pour les données", "Dr Liban ISMAIL ABDILLAHI",
+             "Fournir aux étudiants les fondements mathématiques essentiels à la manipulation, l'analyse "
+             "et la modélisation des données, avec un accent particulier sur les espaces vectoriels, "
+             "l'algèbre linéaire et les méthodes d'optimisation."),
+            ("Master 1 IAMD", "Méthodologie de la recherche", "Dr Souleiman OMAR HOCH",
+             "Familiariser les étudiants avec les principes fondamentaux de la recherche scientifique, la "
+             "construction d'un projet de recherche, la rédaction académique ainsi que les outils de "
+             "veille scientifique et bibliographique."),
+            ("Master 1 MPM", "Modélisation statistique et analyse de données", "Dr Liban ISMAIL ABDILLAHI",
+             "Méthodes statistiques avancées, inférence statistique, régression et analyse exploratoire "
+             "de données, avec des applications concrètes en sciences de l'ingénieur et en data science."),
+            ("Master 1 MPM", "Recherche opérationnelle", "Dr Yahyeh Souleiman Isman",
+             "Méthodes d'optimisation, programmation linéaire et entière, ainsi que techniques de prise "
+             "de décision dans des systèmes complexes."),
+        ]
+        for order, (program, course_title, instructor, description) in enumerate(courses, start=1):
+            MasterCourse.objects.update_or_create(
+                program=program, course_title=course_title,
+                defaults={"instructor": instructor, "description": description, "order": order},
             )
+
+    def seed_formation_activities(self):
+        jury = [
+            {
+                "category": Activity.Category.JURY,
+                "title": "Soutenance de thèse de Mohamed ABDILLAHI — Université Clermont Auvergne",
+                "defaults": {
+                    "year": "Décembre 2024", "location": "Université Clermont Auvergne, France",
+                    "people": "Dr Yahyeh SOULEIMAN — membre du jury", "order": 1,
+                    "description": (
+                        "Le Dr Yahyeh SOULEIMAN a participé, en qualité de membre de jury, à la "
+                        "soutenance de thèse de Mohamed ABDILLAHI. Cette participation s'inscrit dans le "
+                        "cadre des collaborations scientifiques développées avec les équipes de recherche "
+                        "françaises et contribue au renforcement des échanges académiques entre les "
+                        "établissements partenaires."
+                    ),
+                    "image": "formation_jury_clermont_2024.jpeg",
+                },
+            },
+            {
+                "category": Activity.Category.JURY,
+                "title": "Soutenance de thèse d'Abdoulrazack MOHAMED — Université de La Rochelle",
+                "defaults": {
+                    "year": "Décembre 2024", "location": "Université de La Rochelle, France",
+                    "people": "Dr Yahyeh SOULEIMAN — membre du jury", "order": 2,
+                    "description": (
+                        "Le Dr Yahyeh SOULEIMAN a également participé à la soutenance de thèse "
+                        "d'Abdoulrazack MOHAMED, illustrant son implication dans l'évaluation des travaux "
+                        "de recherche doctorale au niveau international ainsi que sa contribution aux "
+                        "collaborations scientifiques entre l'Université de Djibouti et les établissements "
+                        "d'enseignement supérieur français."
+                    ),
+                    "image": "formation_jury_larochelle_2024.jpeg",
+                },
+            },
+        ]
+        self._seed_activity_rows(jury)
+
+        stages = [
+            {
+                "category": Activity.Category.STAGE,
+                "title": "Magdi ALI — Étude comparative des méthodes d'explicabilité pour la détection des biais dans les modèles de classification",
+                "defaults": {
+                    "year": "2025–2026", "people": "Encadrement : Dr Liban ISMAIL ABDILLAHI et Dr Souleiman OMAR HOCH",
+                    "order": 1,
+                    "description": "Application aux données de crédit bancaire, dans le cadre du stage de fin d'études du Master IAMD.",
+                },
+            },
+            {
+                "category": Activity.Category.STAGE,
+                "title": "Ahmed ILMI — Analyse du prix de vente des maisons : étude prédictive",
+                "defaults": {
+                    "year": "2025–2026", "people": "Encadrement : Dr Liban ISMAIL ABDILLAHI et Dr Souleiman OMAR HOCH",
+                    "order": 2,
+                    "description": "Étude prédictive basée sur le jeu de données Ames Housing, dans le cadre du stage de fin d'études du Master IAMD.",
+                },
+            },
+            {
+                "category": Activity.Category.STAGE,
+                "title": "Houssein AHMED — Prédiction de séries temporelles météorologiques réelles",
+                "defaults": {
+                    "year": "2025–2026", "people": "Encadrement : Dr Liban ISMAIL ABDILLAHI et Dr Souleiman OMAR HOCH",
+                    "order": 3,
+                    "description": "Stage de fin d'études du Master IAMD portant sur la prévision de séries temporelles météorologiques réelles.",
+                },
+            },
+        ]
+        self._seed_activity_rows(stages)
+
+        capacity = [
+            {
+                "category": Activity.Category.CAPACITY,
+                "title": "Formation internationale sur le logiciel CROCO",
+                "defaults": {
+                    "year": "Novembre 2024", "location": "Barcelonnette, France",
+                    "people": "Dr Liban ISMAIL et M. Hakim AMER", "order": 1,
+                    "description": (
+                        "Formation internationale consacrée au logiciel CROCO (Coastal and Regional Ocean "
+                        "Community Model), réunissant des chercheurs et des spécialistes travaillant dans "
+                        "le domaine de la modélisation océanique et environnementale. Cette formation a "
+                        "permis d'approfondir les connaissances relatives à la mise en œuvre des modèles "
+                        "hydrodynamiques, un atout important pour le développement des activités de "
+                        "recherche du laboratoire en modélisation des systèmes complexes, environnement "
+                        "marin et érosion côtière."
+                    ),
+                    "image": "formation_croco_training_2024.jpeg",
+                },
+            },
+        ]
+        self._seed_activity_rows(capacity)
 
     def seed_partners(self):
         academic = [

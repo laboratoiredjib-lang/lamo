@@ -1,0 +1,29 @@
+{% extends "lab/base.html" %}
+{% block title %}Responsabilités éditoriales — {{ site_profile.acronym }}{% endblock %}
+{% block content %}
+
+<section class="page-header">
+  <div class="container page-header-inner">
+    <div class="page-header-text">
+      <div class="breadcrumb"><a href="{% url 'lab:home' %}">Accueil</a><span class="sep">/</span><a href="{% url 'lab:activities' %}">Activités</a><span class="sep">/</span>Responsabilités éditoriales</div>
+      <span class="eyebrow">Vie scientifique</span>
+      <h1>Responsabilités éditoriales</h1>
+      <p>Comités éditoriaux et activités d'expertise scientifique (évaluation par les pairs) des membres du LAMO.</p>
+    </div>
+    <div class="page-header-icon">
+      <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="40" cy="32" r="14" stroke="var(--navy)" stroke-width="2.2"/>
+        <path d="M32,42 L28,64 L40,58 L52,64 L48,42" stroke="var(--accent)" stroke-width="2.2" stroke-linejoin="round"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<section class="section reveal">
+  <div class="container">
+    {% include "lab/_activities_tabs.html" %}
+    {% include "lab/_activity_feed.html" %}
+  </div>
+</section>
+
+{% endblock %}

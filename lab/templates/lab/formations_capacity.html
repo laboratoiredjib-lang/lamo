@@ -1,0 +1,29 @@
+{% extends "lab/base.html" %}
+{% block title %}Renforcement de capacités — {{ site_profile.acronym }}{% endblock %}
+{% block content %}
+
+<section class="page-header">
+  <div class="container page-header-inner">
+    <div class="page-header-text">
+      <div class="breadcrumb"><a href="{% url 'lab:home' %}">Accueil</a><span class="sep">/</span><a href="{% url 'lab:formations' %}">Formations</a><span class="sep">/</span>Renforcement de capacités</div>
+      <span class="eyebrow">Enseignement</span>
+      <h1>Renforcement de capacités</h1>
+      <p>Les formations internationales suivies par les membres du LAMO pour développer leurs compétences scientifiques et techniques.</p>
+    </div>
+    <div class="page-header-icon">
+      <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="40" cy="40" r="14" stroke="var(--navy)" stroke-width="2.3"/>
+        <path d="M40 10v8M40 62v8M10 40h8M62 40h8M17.5 17.5l5.7 5.7M56.8 56.8l5.7 5.7M17.5 62.5l5.7-5.7M56.8 23.2l5.7-5.7" stroke="var(--accent)" stroke-width="2.1" stroke-linecap="round"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<section class="section reveal">
+  <div class="container">
+    {% include "lab/_formations_tabs.html" %}
+    {% include "lab/_activity_feed.html" %}
+  </div>
+</section>
+
+{% endblock %}

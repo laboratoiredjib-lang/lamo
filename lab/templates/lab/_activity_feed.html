@@ -1,0 +1,26 @@
+<div class="activity-feed stagger">
+  {% for a in activities %}
+  <article class="activity-feed-card{% if not a.image %} activity-feed-card--no-media{% endif %}">
+    {% if a.image %}
+    <div class="activity-feed-media">
+      <img src="{{ a.image.url }}" alt="{{ a.title }}" loading="lazy">
+    </div>
+    {% endif %}
+    <div class="activity-feed-body">
+      {% if a.edition_label %}<span class="tag tag--accent">{{ a.edition_label }}</span>{% endif %}
+      <h3>{{ a.title }}</h3>
+      <div class="activity-feed-meta">
+        {% if a.year %}<span><strong>Date :</strong> {{ a.year }}</span>{% endif %}
+        {% if a.location %}<span><strong>Lieu :</strong> {{ a.location }}</span>{% endif %}
+        {% if a.people %}<span><strong>Représentation :</strong> {{ a.people }}</span>{% endif %}
+      </div>
+      {% if a.description %}<div class="prose">{{ a.description|linebreaks }}</div>{% endif %}
+      {% if a.link %}<a href="{{ a.link }}" target="_blank" rel="noopener noreferrer" class="pub-link">En savoir plus ↗</a>{% endif %}
+    </div>
+  </article>
+  {% empty %}
+  <div class="empty-state">
+    <p>Aucune activité renseignée pour le moment.</p>
+  </div>
+  {% endfor %}
+</div>

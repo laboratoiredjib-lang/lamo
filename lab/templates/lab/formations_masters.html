@@ -1,0 +1,46 @@
+{% extends "lab/base.html" %}
+{% block title %}Masters — {{ site_profile.acronym }}{% endblock %}
+{% block content %}
+
+<section class="page-header">
+  <div class="container page-header-inner">
+    <div class="page-header-text">
+      <div class="breadcrumb"><a href="{% url 'lab:home' %}">Accueil</a><span class="sep">/</span><a href="{% url 'lab:formations' %}">Formations</a><span class="sep">/</span>Masters</div>
+      <span class="eyebrow">Enseignement</span>
+      <h1>Masters</h1>
+      <p>Les enseignements assurés par les membres du LAMO dans les Masters de l'Université de Djibouti.</p>
+    </div>
+    <div class="page-header-icon">
+      <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 32L40 20 68 32 40 44Z" stroke="var(--navy)" stroke-width="2.5" stroke-linejoin="round"/>
+        <path d="M26 38V54c0 3 6 8 14 8s14-5 14-8V38" stroke="var(--teal)" stroke-width="2.2"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<section class="section reveal">
+  <div class="container">
+    {% include "lab/_formations_tabs.html" %}
+
+    {% regroup courses by program as program_list %}
+    {% for program in program_list %}
+    <div class="category-block">
+      <div class="category-head"><h2>{{ program.grouper }}</h2></div>
+      <div class="course-list stagger">
+        {% for c in program.list %}
+        <div class="course-card">
+          <h3>{{ c.course_title }}</h3>
+          <div class="course-instructor">{{ c.instructor }}</div>
+          <p>{{ c.description }}</p>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    {% empty %}
+    <div class="empty-state"><p>Aucun cours renseigné pour le moment.</p></div>
+    {% endfor %}
+  </div>
+</section>
+
+{% endblock %}

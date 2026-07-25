@@ -65,6 +65,8 @@ img { max-width: 100%; display: block; }
 .layout > *, .split > *, .contact-grid > *,
 .grid-2 > *, .grid-3 > *, .grid-4 > *,
 .member-grid > *, .related-members > *, .thesis-grid > *, .hdr-meta > *, .project-meta > * { min-width: 0; }
+.activity-feed-card { min-width: 0; }
+.activity-feed-body { min-width: 0; }
 a { color: var(--accent); text-decoration: none; }
 a:hover { text-decoration: underline; }
 ul { list-style: none; margin: 0; padding: 0; }
@@ -507,6 +509,19 @@ table.data-table { width: 100%; border-collapse: collapse; min-width: 620px; }
 .info-card p { font-size: 0.88rem; margin-bottom: 0; }
 .info-card .ic-link { display: inline-flex; align-items: center; gap: 6px; margin-top: 10px; font-weight: 700; font-size: 0.86rem; color: var(--navy); }
 .info-card .ic-link:hover { color: var(--accent); }
+.info-card--link { display: block; text-decoration: none !important; color: inherit; position: relative; overflow: hidden; }
+.info-card--link::before {
+  content: ""; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, var(--teal), var(--accent)); transform: scaleX(0); transform-origin: left;
+  transition: transform .3s var(--ease);
+}
+.info-card--link:hover::before { transform: scaleX(1); }
+.info-card--link:hover .ic-link { color: var(--accent); }
+.info-card h3 { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.ic-count {
+  font-size: 0.68rem; font-weight: 800; padding: 2px 9px; border-radius: 100px;
+  background: var(--accent-tint); color: var(--accent-dark);
+}
 
 /* ---------- Member tabs ---------- */
 .tab-nav { display: flex; gap: 4px; border-bottom: 1px solid var(--line); margin-bottom: 18px; flex-wrap: wrap; }
@@ -573,6 +588,28 @@ table.data-table { width: 100%; border-collapse: collapse; min-width: 620px; }
 .partner-strip img { max-height: 18px; width: auto; }
 
 .footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); padding: 12px 0; display: flex; justify-content: space-between; align-items: center; font-size: 0.76rem; color: rgba(255,255,255,0.48); flex-wrap: wrap; gap: 8px; }
+
+/* ---------- Activités / Formations : flux détaillé (conférences, séminaires, participations...) ---------- */
+.activity-feed { display: flex; flex-direction: column; gap: 24px; }
+.activity-feed-card {
+  display: grid; grid-template-columns: 0.85fr 1.15fr; gap: 0; background: #fff; border: 1px solid var(--line);
+  border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow);
+  transition: box-shadow .25s var(--ease), transform .25s var(--ease);
+}
+.activity-feed-card:hover { box-shadow: var(--shadow-lg); transform: translateY(-3px); }
+.activity-feed-card--no-media { grid-template-columns: 1fr; }
+.activity-feed-media { background: var(--bg-alt); min-height: 220px; }
+.activity-feed-media img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.activity-feed-body { padding: 28px 30px; min-width: 0; }
+.activity-feed-body h3 { color: var(--navy); font-size: 1.15rem; margin: 8px 0 14px; line-height: 1.4; }
+.activity-feed-meta { display: flex; flex-wrap: wrap; gap: 8px 20px; margin-bottom: 14px; font-size: 0.84rem; color: var(--muted); }
+.activity-feed-meta strong { color: var(--teal-dark); font-weight: 700; }
+
+.course-list { display: flex; flex-direction: column; gap: 16px; }
+.course-card { background: #fff; border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 22px 26px; }
+.course-card h3 { color: var(--navy); font-size: 1.02rem; margin-bottom: 4px; }
+.course-instructor { font-size: 0.82rem; font-weight: 700; color: var(--teal-dark); margin-bottom: 10px; }
+.course-card p { font-size: 0.9rem; color: var(--ink); margin: 0; line-height: 1.6; }
 
 /* ---------- Production scientifique : sommaire, articles, thèses, HDR, projets ---------- */
 .prod-nav {
@@ -748,6 +785,10 @@ table.data-table { width: 100%; border-collapse: collapse; min-width: 620px; }
   .hdr-card, .project-card { padding: 22px 20px; }
   .hdr-head { flex-direction: column; }
   .project-meta, .hdr-meta { grid-template-columns: 1fr 1fr; }
+
+  .activity-feed-card { grid-template-columns: 1fr; }
+  .activity-feed-media { min-height: 200px; }
+  .activity-feed-body { padding: 22px 20px; }
 
   table.data-table { min-width: 0; }
   .data-table thead th, .data-table tbody td { padding: 8px 10px; font-size: 0.8rem; }

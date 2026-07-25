@@ -1,4 +1,5 @@
 {% extends "lab/base.html" %}
+{% load static %}
 {% block title %}Partenaires — {{ site_profile.acronym }}{% endblock %}
 {% block content %}
 
@@ -49,6 +50,85 @@
       {% empty %}
       <p>Aucun partenaire institutionnel renseigné pour le moment.</p>
       {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="section reveal">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Coopération</span>
+      <h2>Partenaires nationaux</h2>
+      <p class="lede">Le LAMO entretient des relations étroites avec plusieurs institutions nationales, dans une logique de collaboration scientifique, d'appui à la décision et de valorisation des données au service du développement socio-économique de Djibouti.</p>
+    </div>
+
+    <div class="activity-feed stagger">
+      <article class="activity-feed-card">
+        <div class="activity-feed-media"><img src="{% static 'lab/img/collab_dpcr.jpeg' %}" alt="Collaboration LAMO – DPCR" loading="lazy"></div>
+        <div class="activity-feed-body">
+          <h3>Santé publique, statistique et logistique portuaire</h3>
+          <div class="prose">
+            <p>Dans le domaine de la santé publique, une collaboration active a été établie avec l'Institut National de Santé Publique de Djibouti (INSPD), notamment à travers des sujets de thèse proposés par ses cadres sur l'épidémiologie de la brucellose humaine et sur des problématiques sanitaires connexes, en co-encadrement avec le LAMO.</p>
+            <p>Le LAMO collabore également avec l'Institut National de la Statistique de Djibouti (INSTAD) dans le traitement et l'analyse des données de recensement, ainsi qu'avec l'Hôpital Militaire de Djibouti pour la modélisation appliquée aux maladies neurologiques et aux pathologies ORL.</p>
+            <p>Dans le secteur portuaire et logistique, le laboratoire développe une collaboration avec le Djibouti Ports Corridor Road (DPCR) autour de l'optimisation des flux de transport, ainsi qu'avec le Djibouti Port Community System (DPCS) et la Société de Gestion du Terminal à Conteneurs de Doraleh (SGTD) pour l'analyse des performances portuaires et logistiques.</p>
+          </div>
+        </div>
+      </article>
+
+      <article class="activity-feed-card">
+        <div class="activity-feed-media"><img src="{% static 'lab/img/collab_adammaths.jpeg' %}" alt="Collaboration LAMO – ADAM-Maths" loading="lazy"></div>
+        <div class="activity-feed-body">
+          <h3>ADAM-Maths : culture mathématique et Olympiades</h3>
+          <div class="prose">
+            <p>Le LAMO développe une collaboration avec l'association ADAM-Maths dans le cadre de la promotion de la culture mathématique et du développement des compétences scientifiques chez les jeunes. Cette collaboration s'est notamment concrétisée à travers l'organisation et l'accompagnement des Olympiades Nationales de Mathématiques, favorisant l'excellence, la créativité et l'intérêt des élèves pour les disciplines scientifiques.</p>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="section section--alt reveal">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Coopération</span>
+      <h2>Partenaires régionaux et internationaux</h2>
+      <p class="lede">Le LAMO s'inscrit dans une dynamique d'ouverture internationale à travers des collaborations académiques structurées avec plusieurs universités et chercheurs de renom, contribuant au renforcement des capacités de recherche et à l'encadrement doctoral.</p>
+    </div>
+
+    <div class="activity-feed stagger">
+      <article class="activity-feed-card">
+        <div class="activity-feed-media"><img src="{% static 'lab/img/collab_clermont.jpeg' %}" alt="Visite académique LAMO – Université Clermont Auvergne" loading="lazy"></div>
+        <div class="activity-feed-body">
+          <h3>Université Clermont Auvergne</h3>
+          <div class="prose">
+            <p>Une collaboration privilégiée lie le LAMO à l'Université Clermont Auvergne, notamment le Laboratoire de Mathématiques Blaise Pascal (LMBP), à travers le Professeur Hacène Djellout, qui a assuré la direction de thèse du Dr Liban Ismail Abdillahi. Une visite académique a été effectuée en novembre 2022 pour renforcer cette coopération.</p>
+            <p>Le Professeur Djellout a également contribué à la création du Master en Data Science (2019) et du Master Intelligence Artificielle et Modélisation des Données — IAMD (2025) à l'Université de Djibouti, consolidant un partenariat stratégique durable.</p>
+          </div>
+        </div>
+      </article>
+
+      <article class="activity-feed-card">
+        <div class="activity-feed-media"><img src="{% static 'lab/img/collab_besancon.jpeg' %}" alt="Visite académique LAMO – Université de Besançon" loading="lazy"></div>
+        <div class="activity-feed-body">
+          <h3>Université de Besançon (Marie et Louis Pasteur)</h3>
+          <div class="prose">
+            <p>Le LAMO entretient une collaboration scientifique avec l'Université de Besançon à travers la Professeure Raluca Eftimie, se traduisant par des projets de recherche conjoints et l'encadrement doctoral de Kadir Ali Moussa, dont la thèse porte sur la modélisation multi-échelle des infections à papillomavirus humain (HPV). Une visite académique a été réalisée en novembre 2024.</p>
+            <p>Une collaboration est également établie avec l'Université Le Havre Normandie, en partenariat avec la Professeure Nathalie Verdière, portant sur l'encadrement de la thèse du doctorant Gouled Souleiman consacrée à la modélisation d'écosystèmes forestiers.</p>
+          </div>
+        </div>
+      </article>
+
+      <article class="activity-feed-card">
+        <div class="activity-feed-media"><img src="{% static 'lab/img/collab_adama.jpeg' %}" alt="Rencontre scientifique LAMO – Université d'Adama et Université d'Amoud" loading="lazy"></div>
+        <div class="activity-feed-body">
+          <h3>Corne de l'Afrique : Adama et Amoud</h3>
+          <div class="prose">
+            <p>Au niveau régional, le LAMO collabore avec l'Université d'Adama (Éthiopie), à travers le Professeur Lemecha Legesse, Directeur de l'École Doctorale, et avec l'Université d'Amoud (Borama, Somalie), représentée par le Professeur Abdisalam Hassan. Ces coopérations se traduisent par la co-signature de plusieurs articles scientifiques et le développement de travaux de recherche conjoints.</p>
+            <p>Une rencontre scientifique a été organisée en novembre 2024 à Djibouti avec les deux professeurs, permettant de consolider les relations de coopération et d'identifier de nouvelles opportunités de collaboration entre le LAMO et les institutions partenaires de la région.</p>
+          </div>
+        </div>
+      </article>
     </div>
   </div>
 </section>

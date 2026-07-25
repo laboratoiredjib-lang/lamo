@@ -1,0 +1,36 @@
+{% extends "lab/base.html" %}
+{% block title %}Participations — {{ site_profile.acronym }}{% endblock %}
+{% block content %}
+
+<section class="page-header">
+  <div class="container page-header-inner">
+    <div class="page-header-text">
+      <div class="breadcrumb"><a href="{% url 'lab:home' %}">Accueil</a><span class="sep">/</span><a href="{% url 'lab:activities' %}">Activités</a><span class="sep">/</span>Participations</div>
+      <span class="eyebrow">Vie scientifique</span>
+      <h1>Participations</h1>
+      <p>Les communications et participations des membres du LAMO à des manifestations scientifiques nationales et internationales.</p>
+    </div>
+    <div class="page-header-icon">
+      <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="40" cy="40" r="6" fill="var(--accent)"/>
+        <circle cx="18" cy="24" r="4" stroke="var(--navy)" stroke-width="2"/>
+        <circle cx="62" cy="24" r="4" stroke="var(--navy)" stroke-width="2"/>
+        <circle cx="18" cy="58" r="4" stroke="var(--navy)" stroke-width="2"/>
+        <circle cx="62" cy="58" r="4" stroke="var(--navy)" stroke-width="2"/>
+        <line x1="22" y1="26" x2="35" y2="37" stroke="var(--teal)" stroke-width="1.5"/>
+        <line x1="58" y1="26" x2="45" y2="37" stroke="var(--teal)" stroke-width="1.5"/>
+        <line x1="22" y1="56" x2="35" y2="43" stroke="var(--teal)" stroke-width="1.5"/>
+        <line x1="58" y1="56" x2="45" y2="43" stroke="var(--teal)" stroke-width="1.5"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<section class="section reveal">
+  <div class="container">
+    {% include "lab/_activities_tabs.html" %}
+    {% include "lab/_activity_feed.html" %}
+  </div>
+</section>
+
+{% endblock %}
