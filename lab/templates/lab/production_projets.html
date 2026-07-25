@@ -1,0 +1,60 @@
+{% extends "lab/base.html" %}
+{% block title %}Projets de recherche — {{ site_profile.acronym }}{% endblock %}
+{% block content %}
+
+<section class="page-header">
+  <div class="container page-header-inner">
+    <div class="page-header-text">
+      <div class="breadcrumb"><a href="{% url 'lab:home' %}">Accueil</a><span class="sep">/</span><a href="{% url 'lab:production' %}">Production scientifique</a><span class="sep">/</span>Projets</div>
+      <span class="eyebrow">Recherche appliquée</span>
+      <h1>Projets de recherche</h1>
+      <p>Des projets structurés, financés en partenariat avec des institutions nationales et internationales.</p>
+    </div>
+    <div class="page-header-icon">
+      <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M20,60 L20,30 L40,14 L60,30 L60,60 Z" stroke="var(--navy)" stroke-width="2.5" stroke-linejoin="round"/>
+        <circle cx="40" cy="42" r="8" stroke="var(--accent)" stroke-width="2.3"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<section class="section reveal">
+  <div class="container">
+    {% include "lab/_production_tabs.html" %}
+
+    <div class="project-list">
+      {% for proj in projects %}
+      <div class="project-card">
+        <div class="project-head">
+          <span class="status-badge status-badge--{{ proj.status }}">{{ proj.get_status_display }}</span>
+          <h3>{{ proj.title }}</h3>
+        </div>
+        <div class="project-meta">
+          {% if proj.funder %}<div class="row"><strong>Financeur</strong><span>{{ proj.funder }}</span></div>{% endif %}
+          {% if proj.period %}<div class="row"><strong>Période</strong><span>{{ proj.period }}</span></div>{% endif %}
+          {% if proj.amount %}<div class="row"><strong>Montant</strong><span>{{ proj.amount }}</span></div>{% endif %}
+        </div>
+        {% if proj.description %}<div class="prose">{{ proj.description|linebreaks }}</div>{% endif %}
+        {% if proj.related_publications.all %}
+        <div class="project-pubs">
+          <strong>Publications issues de ce projet :</strong>
+          <ul>
+            {% for pub in proj.related_publications.all %}
+            <li>
+              {{ pub.title }}{% if pub.reference %} — {{ pub.reference }}{% endif %}
+              {% if pub.link %}<a href="{{ pub.link }}" target="_blank" rel="noopener noreferrer" class="pub-link pub-link--inline">{{ pub.link_label|default:"Voir" }} ↗</a>{% endif %}
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
+        {% endif %}
+      </div>
+      {% empty %}
+      <p>Aucun projet renseigné pour le moment.</p>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% endblock %}

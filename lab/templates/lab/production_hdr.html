@@ -1,0 +1,47 @@
+{% extends "lab/base.html" %}
+{% block title %}Habilitation à Diriger des Recherches — {{ site_profile.acronym }}{% endblock %}
+{% block content %}
+
+<section class="page-header">
+  <div class="container page-header-inner">
+    <div class="page-header-text">
+      <div class="breadcrumb"><a href="{% url 'lab:home' %}">Accueil</a><span class="sep">/</span><a href="{% url 'lab:production' %}">Production scientifique</a><span class="sep">/</span>HDR</div>
+      <span class="eyebrow">Habilitation à Diriger des Recherches</span>
+      <h1>HDR en préparation</h1>
+      <p>Les habilitations à diriger des recherches en cours de préparation par les enseignants-chercheurs du LAMO.</p>
+    </div>
+    <div class="page-header-icon">
+      <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="40" cy="28" r="12" stroke="var(--navy)" stroke-width="2.5"/>
+        <path d="M27,42 L21,64 L40,55 L59,64 L53,42" stroke="var(--accent)" stroke-width="2.5" stroke-linejoin="round"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<section class="section reveal">
+  <div class="container">
+    {% include "lab/_production_tabs.html" %}
+
+    {% for hdr in habilitations %}
+    <div class="hdr-card">
+      <div class="hdr-head">
+        <div>
+          <div class="hdr-name">{{ hdr.full_name }}</div>
+          <div class="hdr-spec">{{ hdr.specialization }}</div>
+        </div>
+        {% if hdr.period_label %}<span class="tag tag--accent">{{ hdr.period_label }}</span>{% endif %}
+      </div>
+      <div class="hdr-meta">
+        {% if hdr.garant %}<div class="row"><strong>Garant de l'HDR</strong><span>{{ hdr.garant }}</span></div>{% endif %}
+        {% if hdr.institutions %}<div class="row"><strong>Établissements</strong><span>{{ hdr.institutions }}</span></div>{% endif %}
+      </div>
+      {% if hdr.description %}<div class="prose">{{ hdr.description|linebreaks }}</div>{% endif %}
+    </div>
+    {% empty %}
+    <div class="empty-state"><p>Aucune HDR renseignée pour le moment.</p></div>
+    {% endfor %}
+  </div>
+</section>
+
+{% endblock %}

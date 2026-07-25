@@ -1,0 +1,50 @@
+{% extends "lab/base.html" %}
+{% block title %}Articles scientifiques — {{ site_profile.acronym }}{% endblock %}
+{% block content %}
+
+<section class="page-header">
+  <div class="container page-header-inner">
+    <div class="page-header-text">
+      <div class="breadcrumb"><a href="{% url 'lab:home' %}">Accueil</a><span class="sep">/</span><a href="{% url 'lab:production' %}">Production scientifique</a><span class="sep">/</span>Articles</div>
+      <span class="eyebrow">Publications</span>
+      <h1>Articles scientifiques</h1>
+      <p>Publications des membres du laboratoire dans des revues et supports scientifiques internationaux.</p>
+    </div>
+    <div class="page-header-icon">
+      <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="20" y="14" width="34" height="44" rx="2" stroke="var(--navy)" stroke-width="2.5"/>
+        <line x1="27" y1="26" x2="47" y2="26" stroke="var(--teal)" stroke-width="2"/>
+        <line x1="27" y1="34" x2="47" y2="34" stroke="var(--teal)" stroke-width="2"/>
+        <line x1="27" y1="42" x2="41" y2="42" stroke="var(--teal)" stroke-width="2"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<section class="section reveal">
+  <div class="container">
+    {% include "lab/_production_tabs.html" %}
+
+    <ol class="pub-list stagger">
+      {% for pub in publications %}
+      <li class="pub-item">
+        <span class="pub-num">{{ forloop.counter }}</span>
+        <div class="pub-body">
+          <div class="pub-authors">{{ pub.authors }}</div>
+          <div class="pub-title">{{ pub.title }}</div>
+          {% if pub.reference %}<div class="pub-ref">{{ pub.reference }}</div>{% endif %}
+        </div>
+        {% if pub.link %}
+        <a href="{{ pub.link }}" target="_blank" rel="noopener noreferrer" class="pub-link">{{ pub.link_label|default:"Voir" }} ↗</a>
+        {% elif pub.is_forthcoming %}
+        <span class="pub-badge">À paraître</span>
+        {% endif %}
+      </li>
+      {% empty %}
+      <p>Aucune publication renseignée pour le moment.</p>
+      {% endfor %}
+    </ol>
+  </div>
+</section>
+
+{% endblock %}

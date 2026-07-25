@@ -1,0 +1,45 @@
+{% extends "lab/base.html" %}
+{% block title %}Thèses — {{ site_profile.acronym }}{% endblock %}
+{% block content %}
+
+<section class="page-header">
+  <div class="container page-header-inner">
+    <div class="page-header-text">
+      <div class="breadcrumb"><a href="{% url 'lab:home' %}">Accueil</a><span class="sep">/</span><a href="{% url 'lab:production' %}">Production scientifique</a><span class="sep">/</span>Thèses</div>
+      <span class="eyebrow">Formation doctorale</span>
+      <h1>Thèses en cours</h1>
+      <p>{{ doctorants|length }} thèse{{ doctorants|length|pluralize }} menée{{ doctorants|length|pluralize }} au LAMO, en cotutelle avec des universités partenaires internationales.</p>
+    </div>
+    <div class="page-header-icon">
+      <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M10,32 L40,20 L70,32 L40,44 Z" stroke="var(--navy)" stroke-width="2.5" stroke-linejoin="round"/>
+        <path d="M24,38 V54 C24,54 30,60 40,60 C50,60 56,54 56,54 V38" stroke="var(--teal)" stroke-width="2.5"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<section class="section reveal">
+  <div class="container">
+    {% include "lab/_production_tabs.html" %}
+
+    <div class="thesis-grid stagger">
+      {% for d in doctorants %}
+      <a href="{{ d.get_absolute_url }}" class="thesis-card">
+        <div class="thesis-card-top">
+          <span class="thesis-year">{{ d.start_year }}</span>
+          <span class="thesis-arrow">→</span>
+        </div>
+        <div class="thesis-name">{{ d.full_name }}</div>
+        <div class="thesis-meta">{{ d.partner_university }}</div>
+        <div class="thesis-meta"><strong>Direction :</strong> {{ d.thesis_director }}</div>
+        {% if d.co_supervisor %}<div class="thesis-meta"><strong>Co-encadrement :</strong> {{ d.co_supervisor }}</div>{% endif %}
+      </a>
+      {% empty %}
+      <p>Aucune thèse renseignée pour le moment.</p>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% endblock %}

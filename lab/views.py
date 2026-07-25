@@ -193,13 +193,50 @@ def activities_editorial(request):
 def production(request):
     context = {
         "profile": LabProfile.load(),
-        "doctorants": Doctorant.objects.all(),
-        "doctorants_count": Doctorant.objects.count(),
-        "publications": Publication.objects.all(),
-        "projects": ResearchProject.objects.prefetch_related("related_publications"),
-        "habilitations": Habilitation.objects.all(),
+        "counts": {
+            "articles": Publication.objects.count(),
+            "theses": Doctorant.objects.count(),
+            "hdr": Habilitation.objects.count(),
+            "projets": ResearchProject.objects.count(),
+        },
     }
     return render(request, "lab/production.html", context)
+
+
+def production_articles(request):
+    context = {
+        "profile": LabProfile.load(),
+        "publications": Publication.objects.all(),
+        "active_production_tab": "articles",
+    }
+    return render(request, "lab/production_articles.html", context)
+
+
+def production_theses(request):
+    context = {
+        "profile": LabProfile.load(),
+        "doctorants": Doctorant.objects.all(),
+        "active_production_tab": "theses",
+    }
+    return render(request, "lab/production_theses.html", context)
+
+
+def production_hdr(request):
+    context = {
+        "profile": LabProfile.load(),
+        "habilitations": Habilitation.objects.all(),
+        "active_production_tab": "hdr",
+    }
+    return render(request, "lab/production_hdr.html", context)
+
+
+def production_projets(request):
+    context = {
+        "profile": LabProfile.load(),
+        "projects": ResearchProject.objects.prefetch_related("related_publications"),
+        "active_production_tab": "projets",
+    }
+    return render(request, "lab/production_projets.html", context)
 
 
 def formations(request):

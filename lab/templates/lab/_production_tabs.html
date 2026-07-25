@@ -1,0 +1,6 @@
+<div class="tab-nav">
+  <a href="{% url 'lab:production_articles' %}" class="{% if active_production_tab == 'articles' %}active{% endif %}">Articles</a>
+  <a href="{% url 'lab:production_theses' %}" class="{% if active_production_tab == 'theses' %}active{% endif %}">Thèses</a>
+  <a href="{% url 'lab:production_hdr' %}" class="{% if active_production_tab == 'hdr' %}active{% endif %}">HDR</a>
+  <a href="{% url 'lab:production_projets' %}" class="{% if active_production_tab == 'projets' %}active{% endif %}">Projets</a>
+</div>
