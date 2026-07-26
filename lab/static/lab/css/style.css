@@ -537,6 +537,8 @@ table.data-table { width: 100%; border-collapse: collapse; min-width: 620px; }
 }
 .partner-tile:hover { border-color: transparent; box-shadow: var(--shadow); transform: translateY(-3px); }
 .partner-tile img { max-height: 42px; width: auto; }
+.partner-tile--link { text-decoration: none !important; cursor: pointer; }
+.partner-tile--link:hover { border-color: var(--teal); }
 
 /* ---------- Contact ---------- */
 .contact-grid { display: grid; grid-template-columns: 340px 1fr; gap: 20px; }

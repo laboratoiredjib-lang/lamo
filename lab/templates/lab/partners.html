@@ -30,7 +30,11 @@
     </div>
     <div class="grid-4 stagger">
       {% for p in academic_partners %}
-      <div class="partner-tile"><img src="{{ p.logo.url }}" alt="{{ p.name }}" title="{{ p.name }}{% if p.country %} — {{ p.country }}{% endif %}"></div>
+      {% if p.website %}
+      <a href="{{ p.website }}" target="_blank" rel="noopener noreferrer" class="partner-tile partner-tile--link" title="{{ p.name }}{% if p.country %} — {{ p.country }}{% endif %} — visiter le site ↗"><img src="{{ p.logo.url }}" alt="{{ p.name }}"></a>
+      {% else %}
+      <div class="partner-tile" title="{{ p.name }}{% if p.country %} — {{ p.country }}{% endif %}"><img src="{{ p.logo.url }}" alt="{{ p.name }}"></div>
+      {% endif %}
       {% empty %}
       <p>Aucun partenaire académique renseigné pour le moment.</p>
       {% endfor %}
@@ -46,7 +50,11 @@
     </div>
     <div class="grid-4 stagger">
       {% for p in institutional_partners %}
-      <div class="partner-tile"><img src="{{ p.logo.url }}" alt="{{ p.name }}" title="{{ p.name }}"></div>
+      {% if p.website %}
+      <a href="{{ p.website }}" target="_blank" rel="noopener noreferrer" class="partner-tile partner-tile--link" title="{{ p.name }} — visiter le site ↗"><img src="{{ p.logo.url }}" alt="{{ p.name }}"></a>
+      {% else %}
+      <div class="partner-tile" title="{{ p.name }}"><img src="{{ p.logo.url }}" alt="{{ p.name }}"></div>
+      {% endif %}
       {% empty %}
       <p>Aucun partenaire institutionnel renseigné pour le moment.</p>
       {% endfor %}

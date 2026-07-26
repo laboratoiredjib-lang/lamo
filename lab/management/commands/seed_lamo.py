@@ -1261,35 +1261,35 @@ class Command(BaseCommand):
 
     def seed_partners(self):
         academic = [
-            ("Université La Rochelle", "partner_la_rochelle.png", "France"),
-            ("Université Marie et Louis Pasteur", "partner_marie_louis_pasteur.png", "France"),
-            ("Adama Science and Technology University", "partner_adama.png", "Éthiopie"),
-            ("Université Clermont Auvergne", "partner_clermont_auvergne.jpeg", "France"),
-            ("Université Le Havre Normandie", "partner_le_havre_normandie.png", "France"),
-            ("Université de Toulon", "partner_toulon.png", "France"),
-            ("Université de Nantes", "partner_nantes.png", "France"),
-            ("Amoud University", "partner_amoud.png", "Somalie"),
-            ("Université de Lorraine", "partner_lorraine.png", "France"),
+            ("Université La Rochelle", "partner_la_rochelle.png", "France", "https://www.univ-larochelle.fr/"),
+            ("Université Marie et Louis Pasteur", "partner_marie_louis_pasteur.png", "France", "https://www.umlp.fr/"),
+            ("Adama Science and Technology University", "partner_adama.png", "Éthiopie", "https://www.astu.edu.et/"),
+            ("Université Clermont Auvergne", "partner_clermont_auvergne.jpeg", "France", "https://www.uca.fr/"),
+            ("Université Le Havre Normandie", "partner_le_havre_normandie.png", "France", "https://www.univ-lehavre.fr/"),
+            ("Université de Toulon", "partner_toulon.png", "France", "https://www.univ-tln.fr/"),
+            ("Université de Nantes", "partner_nantes.png", "France", "https://www.univ-nantes.fr/"),
+            ("Amoud University", "partner_amoud.png", "Somalie", "https://amouduniversity.org/"),
+            ("Université de Lorraine", "partner_lorraine.png", "France", "https://www.univ-lorraine.fr/"),
         ]
         institutional = [
-            ("Institut National de Santé Publique de Djibouti", "partner_inspd.png", "Djibouti"),
-            ("INSTAD - Institut National de la Statistique de Djibouti", "partner_instad.png", "Djibouti"),
-            ("DPCS - Djibouti Port Community Systems", "partner_dpcs.png", "Djibouti"),
-            ("Service de Santé des Armées", "partner_service_sante_armees.png", "Djibouti"),
-            ("DPCR - Djibouti Ports Corridor Road", "partner_dpcr.png", "Djibouti"),
-            ("SGTD - Société de Gestion du Terminal à Conteneurs de Doraleh", "partner_sgtd.png", "Djibouti"),
+            ("Institut National de Santé Publique de Djibouti", "partner_inspd.png", "Djibouti", "https://inspdj.net/"),
+            ("INSTAD - Institut National de la Statistique de Djibouti", "partner_instad.png", "Djibouti", "https://instad.dj/"),
+            ("DPCS - Djibouti Port Community Systems", "partner_dpcs.png", "Djibouti", "https://www.dpcs.dj/"),
+            ("Service de Santé des Armées", "partner_service_sante_armees.png", "Djibouti", ""),
+            ("DPCR - Djibouti Ports Corridor Road", "partner_dpcr.png", "Djibouti", "https://dpcr.dj/"),
+            ("SGTD - Société de Gestion du Terminal à Conteneurs de Doraleh", "partner_sgtd.png", "Djibouti", "https://www.sgtd-terminal.com/"),
         ]
-        for order, (name, filename, country) in enumerate(academic, start=1):
+        for order, (name, filename, country, website) in enumerate(academic, start=1):
             partner, _ = Partner.objects.update_or_create(
                 name=name,
-                defaults={"category": Partner.Category.ACADEMIC, "country": country, "order": order},
+                defaults={"category": Partner.Category.ACADEMIC, "country": country, "website": website, "order": order},
             )
             attach_image(partner, "logo", filename)
 
-        for order, (name, filename, country) in enumerate(institutional, start=1):
+        for order, (name, filename, country, website) in enumerate(institutional, start=1):
             partner, _ = Partner.objects.update_or_create(
                 name=name,
-                defaults={"category": Partner.Category.INSTITUTIONAL, "country": country, "order": order},
+                defaults={"category": Partner.Category.INSTITUTIONAL, "country": country, "website": website, "order": order},
             )
             attach_image(partner, "logo", filename)
 
