@@ -89,10 +89,10 @@ class ActivityImageInline(admin.TabularInline):
 
 @admin.register(Activity)
 class ActivityAdmin(admin.ModelAdmin):
-    list_display = ("title", "category", "edition_label", "year", "people", "order")
+    list_display = ("title", "category", "edition_label", "year", "sort_date", "people", "order")
     list_filter = ("category",)
     inlines = [ActivityImageInline]
-    ordering = ("category", "order")
+    ordering = ("category", "-sort_date", "order")
 
 
 @admin.register(MasterCourse)
@@ -104,9 +104,9 @@ class MasterCourseAdmin(admin.ModelAdmin):
 
 @admin.register(Publication)
 class PublicationAdmin(admin.ModelAdmin):
-    list_display = ("title", "authors", "reference", "is_forthcoming", "order")
+    list_display = ("title", "authors", "reference", "year", "is_forthcoming", "order")
     list_filter = ("is_forthcoming",)
-    ordering = ("order",)
+    ordering = ("-year", "order")
 
 
 @admin.register(ResearchProject)

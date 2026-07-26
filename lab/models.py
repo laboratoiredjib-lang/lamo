@@ -129,7 +129,7 @@ class Doctorant(models.Model):
     order = models.PositiveIntegerField(default=0)
 
     class Meta:
-        ordering = ["order", "start_year", "full_name"]
+        ordering = ["-start_year", "order", "full_name"]
         verbose_name = "Doctorant"
         verbose_name_plural = "Doctorants"
 
@@ -206,10 +206,14 @@ class Activity(models.Model):
     description = models.TextField(blank=True)
     image = models.ImageField(upload_to="activities/", blank=True, null=True)
     link = models.URLField(blank=True, help_text="Lien externe (inscription, appel à candidature...)")
+    sort_date = models.DateField(
+        null=True, blank=True,
+        help_text="Date utilisée uniquement pour classer l'activité de la plus récente à la plus ancienne.",
+    )
     order = models.PositiveIntegerField(default=0)
 
     class Meta:
-        ordering = ["category", "order", "year"]
+        ordering = ["category", "-sort_date", "order"]
         verbose_name = "Activité"
         verbose_name_plural = "Activités"
 
@@ -264,10 +268,13 @@ class Publication(models.Model):
     is_forthcoming = models.BooleanField(default=False, help_text="Coché si l'article est « à paraître ».")
     link = models.URLField(blank=True, help_text="Lien DOI, HAL ou arXiv de l'article.")
     link_label = models.CharField(max_length=20, default="DOI", blank=True)
+    year = models.PositiveIntegerField(
+        null=True, blank=True, help_text="Année de publication, utilisée pour classer les articles du plus récent au plus ancien.",
+    )
     order = models.PositiveIntegerField(default=0)
 
     class Meta:
-        ordering = ["order"]
+        ordering = ["-year", "order"]
         verbose_name = "Publication"
         verbose_name_plural = "Publications"
 
@@ -290,7 +297,7 @@ class ResearchProject(models.Model):
     order = models.PositiveIntegerField(default=0)
 
     class Meta:
-        ordering = ["status", "order"]
+        ordering = ["-order"]
         verbose_name = "Projet de recherche"
         verbose_name_plural = "Projets de recherche"
 

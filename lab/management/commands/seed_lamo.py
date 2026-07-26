@@ -1,3 +1,4 @@
+from datetime import date
 from pathlib import Path
 
 from django.core.files import File
@@ -636,6 +637,7 @@ class Command(BaseCommand):
                     "logistique portuaire, aide à la décision."
                 ),
                 "link": "https://urls.fr/SHONvz",
+                "sort_date": date(2027, 1, 19),
                 "order": 2,
             },
         )
@@ -667,6 +669,7 @@ class Command(BaseCommand):
                     "l'Université de Djibouti, constituant un cadre privilégié de dialogue scientifique et "
                     "de renforcement des partenariats."
                 ),
+                "sort_date": date(2024, 10, 30),
                 "order": 1,
             },
         )
@@ -678,7 +681,7 @@ class Command(BaseCommand):
                 "title": "Modélisation mathématique des écosystèmes forestiers dans un contexte de changement climatique",
                 "defaults": {
                     "year": "24 avril 2025", "location": "Laboratoire d'Analyse, de Modélisation et d'Optimisation (LAMO)",
-                    "people": "Gouled SOULEIMAN (doctorant LAMO)", "order": 1,
+                    "people": "Gouled SOULEIMAN (doctorant LAMO)", "sort_date": date(2025, 4, 24), "order": 1,
                     "description": (
                         "Séminaire doctoral consacré à la présentation des travaux de recherche du "
                         "doctorant Gouled SOULEIMAN, portant sur la modélisation mathématique des "
@@ -700,7 +703,7 @@ class Command(BaseCommand):
                 "title": "Prédire la blessure, optimiser l'entraînement : l'intelligence artificielle au service de la performance durable en football",
                 "defaults": {
                     "year": "15 janvier 2026, à partir de 9h", "location": "Faculté d'Ingénieurs, Salle des conférences",
-                    "people": "Pr. Pierre DRUILHET (Université Clermont Auvergne)", "order": 2,
+                    "people": "Pr. Pierre DRUILHET (Université Clermont Auvergne)", "sort_date": date(2026, 1, 15), "order": 2,
                     "description": (
                         "Séminaire-conférence consacré à l'apport de l'intelligence artificielle dans "
                         "l'analyse de la performance sportive, en particulier dans le domaine du football, "
@@ -719,7 +722,7 @@ class Command(BaseCommand):
                 "title": "L'intelligence artificielle est-elle multiforme ?",
                 "defaults": {
                     "year": "12 février 2026", "location": "Faculté d'Ingénieurs, Université de Djibouti",
-                    "people": "Pr. Engelbert Mephu Nguifo", "order": 3,
+                    "people": "Pr. Engelbert Mephu Nguifo", "sort_date": date(2026, 2, 12), "order": 3,
                     "description": (
                         "Séminaire scientifique ayant réuni des enseignants-chercheurs, des chercheurs et "
                         "des étudiants de l'Université de Djibouti, notamment ceux du Master Intelligence "
@@ -741,7 +744,7 @@ class Command(BaseCommand):
                 "title": "Mathématiques appliquées et intelligence artificielle",
                 "defaults": {
                     "year": "Jeudi 2 avril 2026, à partir de 9h30", "location": "Faculté d'Ingénieurs, Salle des conférences",
-                    "people": "M. Gouled Souleiman (LAMO) et Pr. Andrzej Stos (Université Clermont Auvergne)", "order": 4,
+                    "people": "M. Gouled Souleiman (LAMO) et Pr. Andrzej Stos (Université Clermont Auvergne)", "sort_date": date(2026, 4, 2), "order": 4,
                     "description": (
                         "Séminaire scientifique consacré aux thématiques actuelles en mathématiques "
                         "appliquées et en intelligence artificielle, réunissant M. Gouled Souleiman, "
@@ -764,7 +767,7 @@ class Command(BaseCommand):
                 "title": "Journée de sensibilisation aux mathématiques et aux sciences – École d'Excellence",
                 "defaults": {
                     "year": "29 janvier 2026 (jeudi)", "location": "École d'Excellence, Djibouti",
-                    "people": "Pr. Stéphanie LÉGER (Polytech Clermont – Université Clermont Auvergne)", "order": 5,
+                    "people": "Pr. Stéphanie LÉGER (Polytech Clermont – Université Clermont Auvergne)", "sort_date": date(2026, 1, 29), "order": 5,
                     "description": (
                         "Matinée de sensibilisation aux mathématiques et aux sciences organisée au sein "
                         "de l'École d'Excellence, dans une dynamique visant à renforcer l'intérêt des "
@@ -786,7 +789,7 @@ class Command(BaseCommand):
                 "title": "Journée Internationale des Mathématiques",
                 "defaults": {
                     "edition_label": "Édition 2025", "year": "12 & 13 février 2025", "location": "Université de Djibouti",
-                    "order": 1,
+                    "sort_date": date(2025, 2, 12), "order": 1,
                     "description": (
                         "Journée des Mathématiques organisée sur deux jours, réunissant des étudiants "
                         "universitaires ainsi que des élèves des lycées de la capitale, avec pour objectif "
@@ -803,7 +806,7 @@ class Command(BaseCommand):
                 "title": "Cérémonie de remise des prix — Journée Internationale des Mathématiques 2025",
                 "defaults": {
                     "edition_label": "Édition 2025", "year": "13 février 2025", "location": "Université de Djibouti",
-                    "order": 2,
+                    "sort_date": date(2025, 2, 13), "order": 2,
                     "description": (
                         "Cérémonie officielle de remise des prix, en présence du Ministre de l'Éducation "
                         "nationale, M. Moustapha Mohamed, et du Président de l'Université de Djibouti, "
@@ -819,7 +822,7 @@ class Command(BaseCommand):
                 "defaults": {
                     "edition_label": "Édition 2026", "year": "4 au 8 janvier 2026",
                     "location": "Université de Djibouti et établissements partenaires dans tout le pays",
-                    "people": "LAMO & ADAM-Maths", "order": 3,
+                    "people": "LAMO & ADAM-Maths", "sort_date": date(2026, 1, 4), "order": 3,
                     "description": (
                         "Lancement officiel de la phase de sensibilisation des Olympiades Nationales de "
                         "Mathématiques, en collaboration avec l'association ADAM-Maths. Cette phase s'est "
@@ -836,7 +839,7 @@ class Command(BaseCommand):
                 "defaults": {
                     "edition_label": "Édition 2026", "year": "12 janvier 2026",
                     "location": "Université de Djibouti et sites régionaux décentralisés",
-                    "people": "LAMO & ADAM-Maths", "order": 4,
+                    "people": "LAMO & ADAM-Maths", "sort_date": date(2026, 1, 12), "order": 4,
                     "description": (
                         "Lancement officiel de la phase régionale des épreuves, étape clé du processus de "
                         "sélection des meilleurs candidats à l'échelle nationale, déployée simultanément "
@@ -852,7 +855,7 @@ class Command(BaseCommand):
                 "defaults": {
                     "edition_label": "Édition 2026", "year": "15 janvier 2026",
                     "location": "Université de Djibouti (site central) et sites décentralisés",
-                    "people": "LAMO & ADAM-Maths", "order": 5,
+                    "people": "LAMO & ADAM-Maths", "sort_date": date(2026, 1, 15), "order": 5,
                     "description": (
                         "Cérémonie de remise des prix de la phase régionale, en présence du Président de "
                         "l'Université de Djibouti, Dr Djama Mohamed, et du Conseiller du Ministre de "
@@ -867,7 +870,7 @@ class Command(BaseCommand):
                 "category": Activity.Category.OLYMPIADES,
                 "title": "Répartition des candidats — phase régionale ONM 2026",
                 "defaults": {
-                    "edition_label": "Édition 2026", "order": 6,
+                    "edition_label": "Édition 2026", "sort_date": date(2026, 1, 15), "order": 6,
                     "description": (
                         "Participation globale de 6 100 candidats à la phase régionale : 5 500 candidats "
                         "de niveau scolaire (90 %) et 600 candidats de niveau universitaire (10 %), "
@@ -882,7 +885,7 @@ class Command(BaseCommand):
                 "title": "Lancement des épreuves de la phase nationale — ONM 2026",
                 "defaults": {
                     "edition_label": "Édition 2026", "year": "1er février 2026 (dimanche)", "location": "Université de Djibouti",
-                    "people": "LAMO & ADAM-Maths", "order": 7,
+                    "people": "LAMO & ADAM-Maths", "sort_date": date(2026, 2, 1), "order": 7,
                     "description": (
                         "Lancement de la phase nationale, aboutissement du processus de sélection "
                         "réunissant les meilleurs candidats issus des phases régionales, en présence du "
@@ -898,7 +901,7 @@ class Command(BaseCommand):
                 "title": "Cérémonie de remise des prix — phase nationale ONM 2026",
                 "defaults": {
                     "edition_label": "Édition 2026", "year": "23 mars 2026 (lundi)", "location": "Université de Djibouti (site central)",
-                    "people": "LAMO & ADAM-Maths", "order": 8,
+                    "people": "LAMO & ADAM-Maths", "sort_date": date(2026, 3, 23), "order": 8,
                     "description": (
                         "Cérémonie officielle marquant l'aboutissement du processus national de "
                         "sélection, honorée par la présence du Ministre de l'Enseignement Supérieur et de "
@@ -919,7 +922,7 @@ class Command(BaseCommand):
                 "category": Activity.Category.OLYMPIADES,
                 "title": "Répartition des candidats par genre — phase nationale ONM 2026",
                 "defaults": {
-                    "edition_label": "Édition 2026", "order": 9,
+                    "edition_label": "Édition 2026", "sort_date": date(2026, 3, 23), "order": 9,
                     "description": (
                         "Sur 581 candidats à la phase nationale : 217 filles (37 %) et 364 garçons (63 %), "
                         "une répartition qui traduit une progression encourageante de l'implication "
@@ -932,7 +935,7 @@ class Command(BaseCommand):
                 "category": Activity.Category.OLYMPIADES,
                 "title": "Répartition des lauréats par région — ONM 2026",
                 "defaults": {
-                    "edition_label": "Édition 2026", "order": 10,
+                    "edition_label": "Édition 2026", "sort_date": date(2026, 3, 23), "order": 10,
                     "description": (
                         "Balbala 27 %, Boulaos 20 %, Université de Djibouti 20 %, CPGE 13 %, Ali-Sabieh "
                         "7 %, Ras-Dika 6 %, autres secteurs 7 % — une représentation relativement "
@@ -945,7 +948,7 @@ class Command(BaseCommand):
                 "category": Activity.Category.OLYMPIADES,
                 "title": "Répartition des lauréats par filière — ONM 2026",
                 "defaults": {
-                    "edition_label": "Édition 2026", "order": 11,
+                    "edition_label": "Édition 2026", "sort_date": date(2026, 3, 23), "order": 11,
                     "description": (
                         "5ème 20 %, 9ème 20 %, Licence (FS+IUT-I) 20 %, CPGE (L1+L2) 13 %, Seconde 13 %, "
                         "1ère S 7 %, Terminale S 7 % — une diversité de profils illustrant le caractère "
@@ -963,7 +966,7 @@ class Command(BaseCommand):
                 "title": "Mathematical Modeling of Epidemiological Dynamics",
                 "defaults": {
                     "year": "17 au 21 juin 2024", "location": "Université Le Havre Normandie, France",
-                    "people": "Dr Yahyeh SOULEIMAN", "order": 1,
+                    "people": "Dr Yahyeh SOULEIMAN", "sort_date": date(2024, 6, 17), "order": 1,
                     "description": (
                         "Le Dr Yahyeh SOULEIMAN a présenté ses travaux de recherche en modélisation "
                         "mathématique des dynamiques épidémiologiques lors de cette conférence "
@@ -979,7 +982,7 @@ class Command(BaseCommand):
                 "title": "1ère édition des Journées Scientifiques du CHU de Djibouti",
                 "defaults": {
                     "year": "22 et 23 décembre 2024", "location": "Palais du Peuple, Djibouti",
-                    "people": "Dr Liban ISMAIL et Dr Yahyeh SOULEIMAN", "order": 2,
+                    "people": "Dr Liban ISMAIL et Dr Yahyeh SOULEIMAN", "sort_date": date(2024, 12, 22), "order": 2,
                     "description": (
                         "Les membres du LAMO ont participé à la première édition des Journées "
                         "Scientifiques du Centre Hospitalier Universitaire de Djibouti, qui a rassemblé "
@@ -996,7 +999,7 @@ class Command(BaseCommand):
                 "title": "Colloque annuel des doctorantes et doctorants — La Rochelle Université",
                 "defaults": {
                     "year": "19 et 20 mai 2025", "location": "La Rochelle Université, France",
-                    "people": "Ali MOHAMED (doctorant LAMO)", "order": 3,
+                    "people": "Ali MOHAMED (doctorant LAMO)", "sort_date": date(2025, 5, 19), "order": 3,
                     "description": (
                         "Le doctorant Ali MOHAMED a présenté ses travaux de thèse portant sur l'analyse "
                         "mathématique et les méthodes numériques, à travers une contribution intitulée "
@@ -1011,7 +1014,7 @@ class Command(BaseCommand):
                 "title": "A Mathematical Model to Investigate the Impact of Climate Change on Forest Ecosystems and a Strategy for Its Regeneration",
                 "defaults": {
                     "year": "6 juin 2025", "location": "Carcans Maubuisson, France",
-                    "people": "Gouled SOULEIMAN (doctorant LAMO)", "order": 4,
+                    "people": "Gouled SOULEIMAN (doctorant LAMO)", "sort_date": date(2025, 6, 6), "order": 4,
                     "description": (
                         "Exposé scientifique présenté par le doctorant Gouled SOULEIMAN dans le cadre de "
                         "la 12ième Biennale Française des Mathématiques Appliquées et Industrielles, "
@@ -1027,7 +1030,7 @@ class Command(BaseCommand):
                 "defaults": {
                     "year": "18 au 20 août 2025", "location": "Amoud University, Borama, Somaliland",
                     "people": "Dr Yahyeh SOULEIMAN, Dr Souleiman Omar Hoch, Dr Doualeh, Dr Liban Ismail Abdillahi",
-                    "order": 5,
+                    "sort_date": date(2025, 8, 18), "order": 5,
                     "description": (
                         "Le LAMO a participé à la conférence internationale DATA-SD 2025 (International "
                         "Conference on Data Science for Sustainable Development), réunissant des "
@@ -1045,7 +1048,7 @@ class Command(BaseCommand):
                 "title": "Modeling and investigating malaria Plasmodium falciparum and Plasmodium vivax infections: Application to Djibouti data",
                 "defaults": {
                     "year": "18 au 20 août 2025", "location": "Amoud University, Borama, Somaliland (DATA-SD 2025)",
-                    "people": "Dr Yahyeh SOULEIMAN, en collaboration avec Liban Ismail et Raluca Eftimie", "order": 6,
+                    "people": "Dr Yahyeh SOULEIMAN, en collaboration avec Liban Ismail et Raluca Eftimie", "sort_date": date(2025, 8, 18), "order": 6,
                     "description": (
                         "Communication scientifique portant sur la modélisation mathématique de la "
                         "transmission du paludisme à Djibouti, à partir de données épidémiologiques "
@@ -1061,7 +1064,7 @@ class Command(BaseCommand):
                 "title": "Mathematical modeling of active regeneration via a facilitator species strategy: stability and bifurcations",
                 "defaults": {
                     "year": "1er–2 juin 2026", "location": "Lyon, France",
-                    "people": "Gouled SOULEIMAN (doctorant LAMO)", "order": 7,
+                    "people": "Gouled SOULEIMAN (doctorant LAMO)", "sort_date": date(2026, 6, 1), "order": 7,
                     "description": (
                         "Exposé scientifique présenté par le doctorant Gouled SOULEIMAN dans le cadre de "
                         "The French Conference on Complex Systems, portant sur la modélisation "
@@ -1079,7 +1082,7 @@ class Command(BaseCommand):
                 "category": Activity.Category.EDITORIAL,
                 "title": "Membre du comité éditorial — Precision Journal of Applied Mathematics and Statistics (PJAMS)",
                 "defaults": {
-                    "year": "2026", "people": "Dr Yahyeh SOULEIMAN", "order": 1,
+                    "year": "2026", "people": "Dr Yahyeh SOULEIMAN", "sort_date": date(2026, 1, 1), "order": 1,
                     "description": (
                         "Le Dr Yahyeh SOULEIMAN a été nommé membre du comité éditorial (Editorial Board "
                         "Member) de la revue scientifique internationale à comité de lecture Precision "
@@ -1096,7 +1099,7 @@ class Command(BaseCommand):
                 "category": Activity.Category.EDITORIAL,
                 "title": "Activités d'expertise scientifique : évaluation d'articles (Dr Yahyeh SOULEIMAN)",
                 "defaults": {
-                    "year": "2021–2026", "people": "Dr Yahyeh SOULEIMAN — Reviewer", "order": 2,
+                    "year": "2021–2026", "people": "Dr Yahyeh SOULEIMAN — Reviewer", "sort_date": date(2026, 6, 1), "order": 2,
                     "description": (
                         "Le Dr Yahyeh SOULEIMAN s'implique activement comme évaluateur scientifique "
                         "(reviewer) pour plusieurs revues internationales à comité de lecture, couvrant "
@@ -1124,7 +1127,7 @@ class Command(BaseCommand):
                 "category": Activity.Category.EDITORIAL,
                 "title": "Activités d'expertise scientifique : évaluation d'articles (Dr Liban ISMAIL)",
                 "defaults": {
-                    "year": "2025–2026", "people": "Dr Liban ISMAIL — Reviewer", "order": 3,
+                    "year": "2025–2026", "people": "Dr Liban ISMAIL — Reviewer", "sort_date": date(2026, 3, 1), "order": 3,
                     "description": (
                         "Le Dr Liban ISMAIL, Directeur du LAMO, participe aux activités d'expertise "
                         "scientifique internationale en qualité d'évaluateur pour des revues à comité de "
@@ -1173,7 +1176,7 @@ class Command(BaseCommand):
                 "title": "Soutenance de thèse de Mohamed ABDILLAHI — Université Clermont Auvergne",
                 "defaults": {
                     "year": "Décembre 2024", "location": "Université Clermont Auvergne, France",
-                    "people": "Dr Yahyeh SOULEIMAN — membre du jury", "order": 1,
+                    "people": "Dr Yahyeh SOULEIMAN — membre du jury", "sort_date": date(2024, 12, 18), "order": 1,
                     "description": (
                         "Le Dr Yahyeh SOULEIMAN a participé, en qualité de membre de jury, à la "
                         "soutenance de thèse de Mohamed ABDILLAHI. Cette participation s'inscrit dans le "
@@ -1189,7 +1192,7 @@ class Command(BaseCommand):
                 "title": "Soutenance de thèse d'Abdoulrazack MOHAMED — Université de La Rochelle",
                 "defaults": {
                     "year": "Décembre 2024", "location": "Université de La Rochelle, France",
-                    "people": "Dr Yahyeh SOULEIMAN — membre du jury", "order": 2,
+                    "people": "Dr Yahyeh SOULEIMAN — membre du jury", "sort_date": date(2024, 12, 11), "order": 2,
                     "description": (
                         "Le Dr Yahyeh SOULEIMAN a également participé à la soutenance de thèse "
                         "d'Abdoulrazack MOHAMED, illustrant son implication dans l'évaluation des travaux "
@@ -1209,7 +1212,7 @@ class Command(BaseCommand):
                 "title": "Magdi ALI — Étude comparative des méthodes d'explicabilité pour la détection des biais dans les modèles de classification",
                 "defaults": {
                     "year": "2025–2026", "people": "Encadrement : Dr Liban ISMAIL ABDILLAHI et Dr Souleiman OMAR HOCH",
-                    "order": 1,
+                    "sort_date": date(2026, 1, 1), "order": 1,
                     "description": "Application aux données de crédit bancaire, dans le cadre du stage de fin d'études du Master IAMD.",
                 },
             },
@@ -1218,7 +1221,7 @@ class Command(BaseCommand):
                 "title": "Ahmed ILMI — Analyse du prix de vente des maisons : étude prédictive",
                 "defaults": {
                     "year": "2025–2026", "people": "Encadrement : Dr Liban ISMAIL ABDILLAHI et Dr Souleiman OMAR HOCH",
-                    "order": 2,
+                    "sort_date": date(2026, 1, 1), "order": 2,
                     "description": "Étude prédictive basée sur le jeu de données Ames Housing, dans le cadre du stage de fin d'études du Master IAMD.",
                 },
             },
@@ -1227,7 +1230,7 @@ class Command(BaseCommand):
                 "title": "Houssein AHMED — Prédiction de séries temporelles météorologiques réelles",
                 "defaults": {
                     "year": "2025–2026", "people": "Encadrement : Dr Liban ISMAIL ABDILLAHI et Dr Souleiman OMAR HOCH",
-                    "order": 3,
+                    "sort_date": date(2026, 1, 1), "order": 3,
                     "description": "Stage de fin d'études du Master IAMD portant sur la prévision de séries temporelles météorologiques réelles.",
                 },
             },
@@ -1240,7 +1243,7 @@ class Command(BaseCommand):
                 "title": "Formation internationale sur le logiciel CROCO",
                 "defaults": {
                     "year": "Novembre 2024", "location": "Barcelonnette, France",
-                    "people": "Dr Liban ISMAIL et M. Hakim AMER", "order": 1,
+                    "people": "Dr Liban ISMAIL et M. Hakim AMER", "sort_date": date(2024, 11, 1), "order": 1,
                     "description": (
                         "Formation internationale consacrée au logiciel CROCO (Coastal and Regional Ocean "
                         "Community Model), réunissant des chercheurs et des spécialistes travaillant dans "
@@ -1294,62 +1297,62 @@ class Command(BaseCommand):
         rows = [
             ("Haile Getachew Fetene, Yahyeh Souleiman, and Legesse Lemecha Obsu",
              "A Fractional Mathematical Model of Malaria Transmission Dynamics with Liver Stage Relapse",
-             "Discover Applied Sciences, 2026", False, "https://doi.org/10.1007/s42452-026-09116-9", "DOI"),
+             "Discover Applied Sciences, 2026", False, "https://doi.org/10.1007/s42452-026-09116-9", "DOI", 2026),
             ("Yahyeh Souleiman, Liban Ismail, and Legesse Lemecha Obsu",
              "Optimal Control Strategies and Cost-Effectiveness Analysis of Malaria for Plasmodium falciparum and Plasmodium vivax in Djibouti",
-             "Scientific African, 31 (2026): e03262", False, "https://doi.org/10.1016/j.sciaf.2026.e03262", "DOI"),
+             "Scientific African, 31 (2026): e03262", False, "https://doi.org/10.1016/j.sciaf.2026.e03262", "DOI", 2026),
             ("Yahyeh Souleiman, Liban Ismail, and Raluca Eftimie",
              "Modeling and Investigating Plasmodium falciparum and Plasmodium vivax Infections: Application to Djibouti Data",
-             "Infectious Disease Modelling, 9(4) (2024): 1095–1116", False, "https://doi.org/10.1016/j.idm.2024.05.005", "DOI"),
+             "Infectious Disease Modelling, 9(4) (2024): 1095–1116", False, "https://doi.org/10.1016/j.idm.2024.05.005", "DOI", 2024),
             ("Liban Ismail, Hacène Djellout, and Cédric Chauvière",
              "Global Sensitivity Analysis in the SIHR Epidemiological Model with Application to COVID-19",
-             "Journal of Statistics & Management Systems, 27(7) (2024): 1277–1299", False, "https://doi.org/10.47974/JSMS-1019", "DOI"),
+             "Journal of Statistics & Management Systems, 27(7) (2024): 1277–1299", False, "https://doi.org/10.47974/JSMS-1019", "DOI", 2024),
             ("Liban Ismail, Hacène Djellout, and Cédric Chauvière",
              "Climate System: A Global Sensitivity Approach",
-             "Iranian Journal of Science, 47(1) (2023): 211–227", False, "https://doi.org/10.1007/s40995-022-01456-4", "DOI"),
+             "Iranian Journal of Science, 47(1) (2023): 211–227", False, "https://doi.org/10.1007/s40995-022-01456-4", "DOI", 2023),
             ("Yahyeh Souleiman, Abdoulrazack Mohamed, and Liban Ismail",
              "Analysis of the Dynamics of the SIHR Model: COVID-19 Case in Djibouti",
-             "Applied Mathematics, 12(10) (2021): 867–881", False, "https://doi.org/10.4236/am.2021.1210058", "DOI"),
+             "Applied Mathematics, 12(10) (2021): 867–881", False, "https://doi.org/10.4236/am.2021.1210058", "DOI", 2021),
             ("Liban Ismail, Yahyeh Souleiman, Saralees Nadarajah, and Abdisalam Hassan",
              "Time-Dependent Intervention Modeling and Global Sensitivity Analysis of Epidemic Dynamics under Uncertainty in Resource-Limited African Settings",
-             "À paraître", True, "", ""),
+             "À paraître", True, "", "", 2026),
             ("Gouled Souleiman, Nathalie Verdière, Alexandre Berred, Yahyeh Souleiman, Simon Badji, et al.",
              "Optimal Control and Calibration Modeling of Forest Regeneration Under Anthropogenic Pressures: the Day Forest Ecosystem (Djibouti)",
-             "Modeling Earth Systems and Environment, 2026 — à paraître", True, "https://hal.science/", "HAL"),
+             "Modeling Earth Systems and Environment, 2026 — à paraître", True, "https://hal.science/", "HAL", 2026),
             ("Said Ismail, Benjamin Ambrosio, Moulay Ahmed Aziz-Alaoui, and Yahyeh Souleiman",
              "A Dynamical System Approach to Modeling Neural Network Activity in Drosophila Orientation",
-             "À paraître", True, "", ""),
+             "À paraître", True, "", "", 2026),
             ("Gouled Souleiman, Nathalie Verdière, Alexandre Berred, and Yahyeh Souleiman",
              "A Mathematical Model to Investigate the Impact of Climate Change on Forest Ecosystems and a Strategy for Its Regeneration",
-             "À paraître", True, "", ""),
+             "À paraître", True, "", "", 2026),
             ("Yahyeh Souleiman",
              "Convergences and Numerical Analysis of a Contact Problem with Normal Compliance and Unilateral Constraint",
-             "African Journal of Mathematics and Computer Science Research, 14(1) (2021): 13–23", False, "https://doi.org/10.5897/AJMCSR2020.0865", "DOI"),
+             "African Journal of Mathematics and Computer Science Research, 14(1) (2021): 13–23", False, "https://doi.org/10.5897/AJMCSR2020.0865", "DOI", 2021),
             ("Yahyeh Souleiman and Mikael Barboteu",
              "Numerical Analysis of a Sliding Frictional Contact Problem with Normal Compliance and Unilateral Contact",
-             "Open Journal of Modelling and Simulation, 9(4) (2021): 385–402", False, "https://doi.org/10.4236/ojmsi.2021.94025", "DOI"),
+             "Open Journal of Modelling and Simulation, 9(4) (2021): 385–402", False, "https://doi.org/10.4236/ojmsi.2021.94025", "DOI", 2021),
             ("Mircea Sofonea and Yahyeh Souleiman",
              "Analysis of a Sliding Frictional Contact Problem with Unilateral Constraint",
-             "Mathematics and Mechanics of Solids, 22(3) (2017): 324–342", False, "https://doi.org/10.1177/1081286515591304", "DOI"),
+             "Mathematics and Mechanics of Solids, 22(3) (2017): 324–342", False, "https://doi.org/10.1177/1081286515591304", "DOI", 2017),
             ("Mircea Sofonea, Flavius Pétrulescu, and Yahyeh Souleiman",
              "Analysis of a Contact Problem with Wear and Unilateral Constraint",
-             "Applicable Analysis, 95(11) (2016): 2590–2607", False, "https://doi.org/10.1080/00036811.2015.1102892", "DOI"),
+             "Applicable Analysis, 95(11) (2016): 2590–2607", False, "https://doi.org/10.1080/00036811.2015.1102892", "DOI", 2016),
             ("Mircea Sofonea and Yahyeh Souleiman",
              "A Viscoelastic Sliding Contact Problem with Normal Compliance, Unilateral Constraint and Memory Term",
-             "Mediterranean Journal of Mathematics, 13(5) (2016): 2863–2886", False, "https://doi.org/10.1007/s00009-015-0661-9", "DOI"),
+             "Mediterranean Journal of Mathematics, 13(5) (2016): 2863–2886", False, "https://doi.org/10.1007/s00009-015-0661-9", "DOI", 2016),
             ("Alexandru Chirvasitu and Souleiman Omar Hoch",
              "Ergodic Actions of the Compact Quantum Group O₋₁(2)",
-             "arXiv Preprint, 2017", False, "https://arxiv.org/", "arXiv"),
+             "arXiv Preprint, 2017", False, "https://arxiv.org/", "arXiv", 2017),
             ("Alexandru Chirvasitu, Souleiman Omar Hoch, and Paweł Kasprzak",
              "Fundamental Isomorphism Theorems for Quantum Groups",
-             "Expositiones Mathematicae", False, "https://doi.org/10.1016/j.exmath.2019.02.002", "DOI"),
+             "Expositiones Mathematicae", False, "https://doi.org/10.1016/j.exmath.2019.02.002", "DOI", None),
         ]
-        for order, (authors, title, reference, forthcoming, link, link_label) in enumerate(rows, start=1):
+        for order, (authors, title, reference, forthcoming, link, link_label, year) in enumerate(rows, start=1):
             Publication.objects.update_or_create(
                 title=title,
                 defaults={
                     "authors": authors, "reference": reference, "is_forthcoming": forthcoming,
-                    "link": link, "link_label": link_label, "order": order,
+                    "link": link, "link_label": link_label, "year": year, "order": order,
                 },
             )
 
