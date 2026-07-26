@@ -1,9 +1,13 @@
 <div class="activity-feed stagger">
   {% for a in activities %}
-  <article class="activity-feed-card{% if not a.image %} activity-feed-card--no-media{% endif %}">
-    {% if a.image %}
-    <div class="activity-feed-media">
-      <img src="{{ a.image.url }}" alt="{{ a.title }}" loading="lazy">
+  {% with imgs=a.all_images %}
+  <article class="activity-feed-card{% if not imgs %} activity-feed-card--no-media{% endif %}">
+    {% if imgs %}
+    <div class="activity-feed-media{% if imgs|length > 1 %} activity-feed-media--carousel{% endif %}">
+      {% for img in imgs %}
+      <img src="{{ img.url }}" alt="{{ a.title }}" loading="lazy">
+      {% endfor %}
+      {% if imgs|length > 1 %}<span class="activity-feed-count">1 / {{ imgs|length }}</span>{% endif %}
     </div>
     {% endif %}
     <div class="activity-feed-body">
@@ -18,6 +22,7 @@
       {% if a.link %}<a href="{{ a.link }}" target="_blank" rel="noopener noreferrer" class="pub-link">En savoir plus ↗</a>{% endif %}
     </div>
   </article>
+  {% endwith %}
   {% empty %}
   <div class="empty-state">
     <p>Aucune activité renseignée pour le moment.</p>

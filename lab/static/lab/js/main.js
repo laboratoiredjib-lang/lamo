@@ -119,4 +119,22 @@
       }
     });
   }
+
+  /* Carrousel photo des activités : met à jour le compteur "n / total" au défilement. */
+  document.querySelectorAll(".activity-feed-media--carousel").forEach(function (carousel) {
+    var counter = carousel.parentElement.querySelector(".activity-feed-count");
+    var total = carousel.querySelectorAll("img").length;
+    if (!counter || !total) return;
+    var updating = false;
+    carousel.addEventListener("scroll", function () {
+      if (updating) return;
+      updating = true;
+      requestAnimationFrame(function () {
+        var index = Math.round(carousel.scrollLeft / carousel.clientWidth) + 1;
+        index = Math.max(1, Math.min(total, index));
+        counter.textContent = index + " / " + total;
+        updating = false;
+      });
+    });
+  });
 })();

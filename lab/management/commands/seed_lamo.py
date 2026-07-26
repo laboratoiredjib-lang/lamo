@@ -5,6 +5,7 @@ from django.core.management.base import BaseCommand
 
 from lab.models import (
     Activity,
+    ActivityImage,
     AssociateResearcher,
     Doctorant,
     Habilitation,
@@ -597,11 +598,23 @@ class Command(BaseCommand):
         for row in rows:
             defaults = dict(row["defaults"])
             image = defaults.pop("image", "")
+            gallery = defaults.pop("gallery", [])
             activity, _ = Activity.objects.update_or_create(
                 category=row["category"], title=row["title"], defaults=defaults,
             )
             if image:
                 attach_image(activity, "image", image)
+            if gallery:
+                activity.gallery.all().delete()
+                for order, filename in enumerate(gallery, start=1):
+                    path = SEED_MEDIA / filename
+                    if not path.exists():
+                        continue
+                    with open(path, "rb") as fh:
+                        ActivityImage.objects.create(
+                            activity=activity, order=order,
+                            image=File(fh, name=filename),
+                        )
 
     def seed_activities(self):
         # Anciens intitulés génériques remplacés par les activités détaillées ci-dessous.
@@ -743,6 +756,7 @@ class Command(BaseCommand):
                         "finance."
                     ),
                     "image": "activity_seminaire_avril2026_affiche.jpeg",
+                    "gallery": ["activity_seminaire_stos.jpeg", "activity_seminaire_avril2026_gouled.jpeg"],
                 },
             },
             {
@@ -829,6 +843,7 @@ class Command(BaseCommand):
                         "dans les trois communes de la capitale et les cinq régions de l'intérieur du pays."
                     ),
                     "image": "activity_onm2026_regionale_epreuve.jpeg",
+                    "gallery": ["activity_onm2026_regionale_epreuve_2.jpeg"],
                 },
             },
             {
@@ -875,6 +890,7 @@ class Command(BaseCommand):
                         "l'Université de Djibouti, Dr Djama Mohamed."
                     ),
                     "image": "activity_onm2026_nationale_epreuve.jpeg",
+                    "gallery": ["activity_onm2026_nationale_epreuve_2.jpeg"],
                 },
             },
             {
@@ -892,6 +908,11 @@ class Command(BaseCommand):
                         "d'excellence."
                     ),
                     "image": "activity_onm2026_nationale_remise.jpeg",
+                    "gallery": [
+                        "activity_onm2026_nationale_remise_2.jpeg",
+                        "activity_onm2026_nationale_laureats.jpeg",
+                        "activity_onm2026_nationale_laureats_2.jpeg",
+                    ],
                 },
             },
             {

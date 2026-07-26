@@ -216,6 +216,27 @@ class Activity(models.Model):
     def __str__(self):
         return f"{self.get_category_display()} — {self.title}"
 
+    def all_images(self):
+        images = []
+        if self.image:
+            images.append(self.image)
+        images += [gi.image for gi in self.gallery.all()]
+        return images
+
+
+class ActivityImage(models.Model):
+    activity = models.ForeignKey(Activity, on_delete=models.CASCADE, related_name="gallery")
+    image = models.ImageField(upload_to="activities/gallery/")
+    order = models.PositiveIntegerField(default=0)
+
+    class Meta:
+        ordering = ["order"]
+        verbose_name = "Photo supplémentaire d'activité"
+        verbose_name_plural = "Photos supplémentaires d'activité"
+
+    def __str__(self):
+        return f"Photo de {self.activity.title}"
+
 
 class MasterCourse(models.Model):
     program = models.CharField(max_length=255, help_text="Ex : Master 1 IAMD")

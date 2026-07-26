@@ -2,6 +2,7 @@ from django.contrib import admin
 
 from .models import (
     Activity,
+    ActivityImage,
     AssociateResearcher,
     Doctorant,
     Habilitation,
@@ -81,10 +82,16 @@ class NewsAdmin(admin.ModelAdmin):
     ordering = ("-date",)
 
 
+class ActivityImageInline(admin.TabularInline):
+    model = ActivityImage
+    extra = 1
+
+
 @admin.register(Activity)
 class ActivityAdmin(admin.ModelAdmin):
     list_display = ("title", "category", "edition_label", "year", "people", "order")
     list_filter = ("category",)
+    inlines = [ActivityImageInline]
     ordering = ("category", "order")
 
 
