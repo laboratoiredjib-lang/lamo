@@ -118,5 +118,5 @@ class ResearchProjectAdmin(admin.ModelAdmin):
 
 @admin.register(Habilitation)
 class HabilitationAdmin(admin.ModelAdmin):
-    list_display = ("full_name", "period_label", "garant", "order")
+    list_display = ("full_name", "title", "period_label", "garant", "order")
     ordering = ("order",)

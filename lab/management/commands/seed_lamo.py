@@ -1438,36 +1438,46 @@ class Command(BaseCommand):
         Habilitation.objects.update_or_create(
             full_name="Yahyeh SOULEIMAN",
             defaults={
+                "title": (
+                    "Contribution à la modélisation, à l'analyse et au contrôle des systèmes complexes : "
+                    "applications à la santé, à l'environnement et à l'aide à la décision"
+                ),
                 "period_label": "2027–2028",
                 "garant": "Pr Raluca Eftimie",
                 "institutions": "Université de Djibouti – Université Marie et Louis Pasteur (France)",
                 "specialization": (
-                    "Modélisation mathématique, biomathématique, systèmes dynamiques, calcul "
-                    "fractionnaire, contrôle optimal et analyse numérique."
+                    "Modélisation mathématique des systèmes complexes : santé publique, environnement et "
+                    "aide à la décision."
                 ),
                 "description": (
-                    "Les travaux de l'HDR visent à synthétiser les contributions scientifiques "
-                    "développées au cours des dernières années dans les domaines de la modélisation des "
-                    "maladies infectieuses, de la modélisation environnementale, de l'analyse des "
-                    "systèmes dynamiques et de l'aide à la décision. Ils mettent en évidence les avancées "
-                    "méthodologiques relatives à l'analyse qualitative des modèles, à l'identification "
-                    "des paramètres, à l'analyse de sensibilité, aux méthodes numériques et aux "
-                    "stratégies de contrôle optimal.\n\n"
-                    "Réalisée sous la responsabilité scientifique du Pr Raluca Eftimie, cette HDR "
-                    "s'inscrit dans le cadre d'une collaboration entre l'Université de Djibouti et "
-                    "l'Université Marie et Louis Pasteur (France). Elle contribue au renforcement des "
-                    "coopérations scientifiques internationales et au développement des activités de "
-                    "recherche du Laboratoire d'Analyse, de Modélisation et d'Optimisation (LAMO).\n\n"
-                    "Cette habilitation a pour objectif de démontrer la capacité du candidat à conduire "
-                    "des recherches de manière autonome, à définir de nouveaux axes scientifiques et à "
-                    "encadrer des travaux doctoraux. Elle permettra de consolider les activités de "
-                    "recherche du LAMO, de renforcer l'encadrement des doctorants et de développer de "
-                    "nouvelles collaborations académiques internationales.\n\n"
-                    "Les perspectives de cette HDR concernent notamment le développement de nouvelles "
-                    "approches de modélisation mathématique appliquées à la santé publique, à "
-                    "l'environnement, à l'intelligence artificielle et aux systèmes complexes, ainsi que "
-                    "le renforcement du rayonnement scientifique de l'Université de Djibouti à l'échelle "
-                    "internationale."
+                    "Cette Habilitation à Diriger des Recherches (HDR), actuellement en cours de "
+                    "réalisation, a pour objectif de présenter une synthèse des contributions "
+                    "scientifiques développées au cours des dernières années dans le domaine de la "
+                    "modélisation mathématique des systèmes complexes. Les travaux s'inscrivent à "
+                    "l'interface des mathématiques appliquées, de la santé publique, des sciences de "
+                    "l'environnement et de l'aide à la décision, en mobilisant des approches théoriques, "
+                    "numériques et computationnelles.\n\n"
+                    "Les recherches portent principalement sur la modélisation des maladies infectieuses, "
+                    "la modélisation des systèmes écologiques et environnementaux, l'analyse qualitative "
+                    "des systèmes dynamiques, la modélisation d'ordre fractionnaire, l'optimisation et le "
+                    "contrôle optimal. Elles visent à développer des modèles mathématiques robustes, à "
+                    "analyser leurs propriétés dynamiques, à identifier les paramètres influents, à "
+                    "évaluer l'impact des stratégies d'intervention et à proposer des outils d'aide à la "
+                    "décision destinés aux acteurs publics et aux décideurs.\n\n"
+                    "Cette HDR est réalisée sous la responsabilité scientifique du Pr Raluca Eftimie, "
+                    "Professeure à l'Université Marie et Louis Pasteur (France), dans le cadre d'une "
+                    "collaboration scientifique entre l'Université de Djibouti et l'Université Marie et "
+                    "Louis Pasteur. Elle contribue au renforcement des coopérations internationales en "
+                    "recherche, au développement des activités scientifiques du Laboratoire d'Analyse, de "
+                    "Modélisation et d'Optimisation (LAMO) et à la consolidation de la formation doctorale "
+                    "au sein de l'Université de Djibouti.\n\n"
+                    "L'objectif de cette habilitation est de démontrer la capacité du candidat à conduire "
+                    "des recherches de manière autonome, à définir de nouveaux axes scientifiques, à "
+                    "piloter des projets de recherche et à encadrer des doctorants. À plus long terme, "
+                    "elle ouvrira de nouvelles perspectives de recherche dans les domaines de la "
+                    "modélisation mathématique, de l'intelligence artificielle, de la science des données "
+                    "et des systèmes complexes, tout en contribuant au rayonnement scientifique de "
+                    "l'Université de Djibouti sur les plans régional et international."
                 ),
                 "order": 1,
             },

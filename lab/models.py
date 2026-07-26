@@ -307,6 +307,7 @@ class ResearchProject(models.Model):
 
 class Habilitation(models.Model):
     full_name = models.CharField(max_length=255)
+    title = models.CharField(max_length=500, blank=True, help_text="Titre des travaux de l'HDR.")
     period_label = models.CharField(max_length=100, blank=True)
     garant = models.CharField(max_length=255, blank=True, help_text="Garant de l'HDR")
     institutions = models.CharField(max_length=500, blank=True)

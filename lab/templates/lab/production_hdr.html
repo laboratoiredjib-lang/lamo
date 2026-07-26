@@ -27,12 +27,13 @@
     <div class="hdr-card">
       <div class="hdr-head">
         <div>
-          <div class="hdr-name">{{ hdr.full_name }}</div>
-          <div class="hdr-spec">{{ hdr.specialization }}</div>
+          {% if hdr.title %}<div class="hdr-name">{{ hdr.title }}</div>{% else %}<div class="hdr-name">{{ hdr.full_name }}</div>{% endif %}
+          {% if hdr.specialization %}<div class="hdr-spec">{{ hdr.specialization }}</div>{% endif %}
         </div>
         {% if hdr.period_label %}<span class="tag tag--accent">{{ hdr.period_label }}</span>{% endif %}
       </div>
       <div class="hdr-meta">
+        {% if hdr.title %}<div class="row"><strong>Candidat</strong><span>{{ hdr.full_name }}</span></div>{% endif %}
         {% if hdr.garant %}<div class="row"><strong>Garant de l'HDR</strong><span>{{ hdr.garant }}</span></div>{% endif %}
         {% if hdr.institutions %}<div class="row"><strong>Établissements</strong><span>{{ hdr.institutions }}</span></div>{% endif %}
       </div>
