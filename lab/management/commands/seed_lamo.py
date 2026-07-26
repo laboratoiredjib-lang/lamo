@@ -1170,37 +1170,84 @@ class Command(BaseCommand):
             )
 
     def seed_formation_activities(self):
+        # Anciens intitulés remplacés par des versions enrichies (voir jury de thèse.docx).
+        Activity.objects.filter(
+            title__in=[
+                "Soutenance de thèse de Mohamed ABDILLAHI — Université Clermont Auvergne",
+                "Soutenance de thèse d'Abdoulrazack MOHAMED — Université de La Rochelle",
+            ]
+        ).delete()
+
         jury = [
             {
                 "category": Activity.Category.JURY,
-                "title": "Soutenance de thèse de Mohamed ABDILLAHI — Université Clermont Auvergne",
+                "title": "Examinateur — Soutenance de thèse de Mohamed ABDILLAHI ISMAN, Université Clermont Auvergne",
                 "defaults": {
-                    "year": "Décembre 2024", "location": "Université Clermont Auvergne, France",
-                    "people": "Dr Yahyeh SOULEIMAN — membre du jury", "sort_date": date(2024, 12, 18), "order": 1,
+                    "year": "18 décembre 2024", "location": "Université Clermont Auvergne, France",
+                    "people": "Dr Yahyeh SOULEIMAN ISMAN — Examinateur", "sort_date": date(2024, 12, 18), "order": 1,
                     "description": (
-                        "Le Dr Yahyeh SOULEIMAN a participé, en qualité de membre de jury, à la "
-                        "soutenance de thèse de Mohamed ABDILLAHI. Cette participation s'inscrit dans le "
-                        "cadre des collaborations scientifiques développées avec les équipes de recherche "
-                        "françaises et contribue au renforcement des échanges académiques entre les "
-                        "établissements partenaires."
+                        "École doctorale : Sciences Fondamentales — Laboratoire : LMBP – Laboratoire de "
+                        "Mathématiques Blaise Pascal (Équipe PAS) — Spécialité : Mathématiques appliquées "
+                        "et applications des mathématiques.\n\n"
+                        "Titre de la thèse : « Contribution à la modélisation de la demande en électricité "
+                        "et à l'estimation non paramétrique à noyau de la densité dans des variétés "
+                        "riemanniennes ».\n\n"
+                        "Directrice de thèse : Pr Anne-Françoise Yao. Co-directeurs : Pr Julien Ah Pine et "
+                        "Pr Paul-Marie Grollemund.\n\n"
+                        "Le Dr Yahyeh SOULEIMAN ISMAN a participé à cette soutenance en qualité "
+                        "d'examinateur. Cette nomination reflète la reconnaissance de son expertise "
+                        "scientifique dans le domaine des mathématiques appliquées et de la modélisation. "
+                        "Elle illustre également son engagement dans l'évaluation de travaux de recherche "
+                        "doctorale et contribue au renforcement des collaborations scientifiques entre "
+                        "l'Université de Djibouti et les établissements d'enseignement supérieur français."
                     ),
                     "image": "formation_jury_clermont_2024.jpeg",
                 },
             },
             {
                 "category": Activity.Category.JURY,
-                "title": "Soutenance de thèse d'Abdoulrazack MOHAMED — Université de La Rochelle",
+                "title": "Co-encadrement — Thèse d'Abdoulrazack MOHAMED ABDI, La Rochelle Université",
                 "defaults": {
-                    "year": "Décembre 2024", "location": "Université de La Rochelle, France",
-                    "people": "Dr Yahyeh SOULEIMAN — membre du jury", "sort_date": date(2024, 12, 11), "order": 2,
+                    "year": "11 décembre 2024", "location": "La Rochelle Université, France",
+                    "people": "Dr Yahyeh SOULEIMAN ISMAN — Co-encadrant", "sort_date": date(2024, 12, 11), "order": 2,
                     "description": (
-                        "Le Dr Yahyeh SOULEIMAN a également participé à la soutenance de thèse "
-                        "d'Abdoulrazack MOHAMED, illustrant son implication dans l'évaluation des travaux "
-                        "de recherche doctorale au niveau international ainsi que sa contribution aux "
-                        "collaborations scientifiques entre l'Université de Djibouti et les établissements "
-                        "d'enseignement supérieur français."
+                        "École doctorale : EUCLIDE — Laboratoire : MIA – Mathématiques, Images et "
+                        "Applications — Discipline : Mathématiques appliquées.\n\n"
+                        "Titre de la thèse : « Contribution mathématique à l'analyse de systèmes "
+                        "différentiels modélisant la transmission ».\n\n"
+                        "Directrice de thèse : Pr Catherine Choquet. Co-encadrant : Dr Yahyeh Souleiman "
+                        "Isman (Université de Djibouti).\n\n"
+                        "Le Dr Yahyeh SOULEIMAN ISMAN a assuré le co-encadrement scientifique de cette "
+                        "thèse de doctorat en collaboration avec la directrice de thèse. Cette activité "
+                        "témoigne de son implication dans la formation par la recherche, le développement "
+                        "de collaborations scientifiques internationales et le renforcement des "
+                        "partenariats académiques entre l'Université de Djibouti et La Rochelle Université."
                     ),
                     "image": "formation_jury_larochelle_2024.jpeg",
+                },
+            },
+            {
+                "category": Activity.Category.JURY,
+                "title": "Invité — Soutenance de thèse du Dr Liban ISMAIL ABDILLAHI, Université Clermont Auvergne",
+                "defaults": {
+                    "year": "28 juin 2023", "location": "Université Clermont Auvergne, France",
+                    "people": "Dr Yahyeh SOULEIMAN ISMAN — Invité", "sort_date": date(2023, 6, 28), "order": 3,
+                    "description": (
+                        "École doctorale : École doctorale des Sciences fondamentales — Laboratoire : LMBP "
+                        "– Laboratoire de Mathématiques Blaise Pascal — Discipline : Mathématiques "
+                        "appliquées.\n\n"
+                        "Titre de la thèse : « Analyse de sensibilité appliquée à certains modèles issus "
+                        "du climat, de l'épidémiologie et de la finance ».\n\n"
+                        "Directeur de thèse : Pr Hacène Djellout. Président du jury : Pr Pierre Druilhet. "
+                        "Rapporteurs : Pr Frédéric Proïa et Pr Raluca Eftimie.\n\n"
+                        "Le Dr Yahyeh SOULEIMAN ISMAN a été invité à assister à cette soutenance de thèse "
+                        "de doctorat, illustrant son intégration au sein des collaborations scientifiques "
+                        "entretenues avec le Laboratoire de Mathématiques Blaise Pascal (LMBP) et les "
+                        "équipes de recherche de l'Université Clermont Auvergne. Cette participation a "
+                        "favorisé le développement de collaborations académiques et le renforcement des "
+                        "échanges scientifiques dans le domaine des mathématiques appliquées."
+                    ),
+                    "image": "formation_jury_liban_these_2023.jpeg",
                 },
             },
         ]
