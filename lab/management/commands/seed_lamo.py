@@ -475,7 +475,7 @@ class Command(BaseCommand):
              "brucellose à Djibouti."),
         ]
         for order, (full_name, start_year, partner_university, thesis_director, co_supervisor, bio) in enumerate(rows, start=1):
-            Doctorant.objects.update_or_create(
+            doctorant, _ = Doctorant.objects.update_or_create(
                 full_name=full_name,
                 defaults={
                     "start_year": start_year,
@@ -486,6 +486,8 @@ class Command(BaseCommand):
                     "order": order,
                 },
             )
+            if full_name == "M. Gouled SOULEIMAN":
+                attach_image(doctorant, "photo", "member_gouled_souleiman.jpg")
 
     def seed_associates(self):
         rows = [
