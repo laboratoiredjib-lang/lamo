@@ -19,7 +19,7 @@
         {% if a.people %}<span><strong>Représentation :</strong> {{ a.people }}</span>{% endif %}
       </div>
       {% if a.description %}<div class="prose">{{ a.description|linebreaks }}</div>{% endif %}
-      {% if a.link %}<a href="{{ a.link }}" target="_blank" rel="noopener noreferrer" class="pub-link">En savoir plus ↗</a>{% endif %}
+      {% if a.link %}<a href="{{ a.link }}" target="_blank" rel="noopener noreferrer" class="pub-link">{% if a.category == "jury" %}Voir la thèse{% else %}En savoir plus{% endif %} ↗</a>{% endif %}
     </div>
   </article>
   {% endwith %}

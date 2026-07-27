@@ -1202,6 +1202,7 @@ class Command(BaseCommand):
                         "l'Université de Djibouti et les établissements d'enseignement supérieur français."
                     ),
                     "image": "formation_jury_clermont_2024.jpeg",
+                    "link": "https://share.google/4HRIG864iKfjvRhFu",
                 },
             },
             {
@@ -1224,6 +1225,7 @@ class Command(BaseCommand):
                         "partenariats académiques entre l'Université de Djibouti et La Rochelle Université."
                     ),
                     "image": "formation_jury_larochelle_2024.jpeg",
+                    "link": "https://share.google/xBN8FuEe3cIvcxgPs",
                 },
             },
             {
@@ -1248,6 +1250,7 @@ class Command(BaseCommand):
                         "échanges scientifiques dans le domaine des mathématiques appliquées."
                     ),
                     "image": "formation_jury_liban_these_2023.jpeg",
+                    "link": "https://share.google/aDdVAXbGWzfHkumq9",
                 },
             },
         ]
