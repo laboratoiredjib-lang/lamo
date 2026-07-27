@@ -241,7 +241,8 @@ class Command(BaseCommand):
              "manuscrits scientifiques publiés chez Springer Nature. Ses expertises couvrent notamment la "
              "modélisation mathématique, l'analyse de sensibilité globale, le contrôle optimal, la "
              "modélisation environnementale, la transition énergétique ainsi que les applications de "
-             "l'intelligence artificielle aux systèmes complexes."),
+             "l'intelligence artificielle aux systèmes complexes.",
+             "https://share.google/lt1kbvm5vQZoReESa"),
             ("Dr. Yahyeh SOULEIMAN", "Maître de conférences en Mathématiques appliquées",
              "Doyen de l'IUT-T", False, team_sto,
              "yahyeh_souleiman@univ.edu.dj", "souleimanyahyeh@gmail.com", "+253 77 86 80 46 | +253 21 32 36 03",
@@ -264,7 +265,8 @@ class Command(BaseCommand):
              "conférencier invité lors de plusieurs manifestations scientifiques internationales, il "
              "participe activement au rayonnement scientifique de l'Université de Djibouti et du LAMO, "
              "tout en favorisant le transfert des connaissances vers les secteurs socio-économiques et les "
-             "politiques publiques."),
+             "politiques publiques.",
+             "https://share.google/BQJbVwSK83PN8kfQV"),
             ("Dr. Souleiman OMAR", "Maître de conférences en Mathématiques fondamentales", "", False, team_dyn,
              "", "", "", "member_souleiman_omar.png",
              "Dr Souleiman Omar Hoch est Maître de conférences en mathématiques à l'Université de Djibouti "
@@ -283,7 +285,8 @@ class Command(BaseCommand):
              "logistique, des transports, de l'ingénierie et de l'innovation. Plus récemment, il a "
              "participé au développement de nouvelles infrastructures de recherche, notamment dans le "
              "domaine des énergies renouvelables, afin de soutenir la transition énergétique et le "
-             "développement durable à Djibouti."),
+             "développement durable à Djibouti.",
+             "https://share.google/dDdC9IlhopRoniqup"),
             ("Dr. Doualeh ABDILLAHI", "Maître de conférences en Statistiques appliquées", "", False, team_sto,
              "", "", "", "member_doualeh_abdillahi.png",
              "Dr Doualeh Abdillahi Ali est Maître de conférences en mathématiques appliquées et Directeur "
@@ -299,15 +302,16 @@ class Command(BaseCommand):
              "scientifiques du laboratoire, notamment à l'organisation de conférences internationales, de "
              "séminaires de recherche et de projets collaboratifs. Il a ainsi fait partie de la délégation "
              "de l'Université de Djibouti ayant représenté le LAMO lors de la conférence internationale "
-             "DATA-SD 2025 organisée par l'Université d'Amoud (Somalie)."),
+             "DATA-SD 2025 organisée par l'Université d'Amoud (Somalie).",
+             "https://share.google/GY2tiwxpPd9ZnralY"),
         ]
-        for order, (full_name, title, role_tag, is_director, team, email, email_secondary, phone, photo, bio) in enumerate(members, start=1):
+        for order, (full_name, title, role_tag, is_director, team, email, email_secondary, phone, photo, bio, thesis_link) in enumerate(members, start=1):
             member, _ = PermanentMember.objects.update_or_create(
                 full_name=full_name,
                 defaults={
                     "title": title, "role_tag": role_tag, "is_director": is_director, "team": team,
                     "email": email, "email_secondary": email_secondary, "phone": phone,
-                    "bio": bio, "order": order,
+                    "bio": bio, "thesis_link": thesis_link, "order": order,
                 },
             )
             attach_image(member, "photo", photo)
@@ -672,10 +676,16 @@ class Command(BaseCommand):
                     "de renforcement des partenariats."
                 ),
                 "sort_date": date(2024, 10, 30),
+                "image_fit_contain": True,
+                "document_label": "Télécharger le livret de l'atelier",
                 "order": 1,
             },
         )
+        # Le visuel du comité a été retravaillé (recadrage) : on force son remplacement.
+        conference_2024.image.delete(save=False)
+        conference_2024.save()
         attach_image(conference_2024, "image", "activity_m2isda2024_comite.jpeg")
+        attach_image(conference_2024, "document", "livret_m2isda_2024.pdf")
 
         seminaires = [
             {

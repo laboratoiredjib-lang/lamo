@@ -35,6 +35,11 @@
           {% if member.bio %}
           <div class="bio-lede">{{ member.bio|linebreaks }}</div>
           {% endif %}
+          {% if member.thesis_link %}
+          <div class="activity-feed-actions">
+            <a href="{{ member.thesis_link }}" target="_blank" rel="noopener noreferrer" class="pub-link">Voir la thèse ↗</a>
+          </div>
+          {% endif %}
         </div>
         <div class="member-hero-photo-compact">
           {% if member.photo %}<img src="{{ member.photo.url }}" alt="{{ member.full_name }}">{% else %}<div class="portrait-initials">{{ member.full_name|initials }}</div>{% endif %}

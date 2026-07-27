@@ -104,6 +104,7 @@ class PermanentMember(models.Model):
     phone = models.CharField(max_length=120, blank=True, help_text="Un ou plusieurs numéros, séparés par « | ».")
     photo = models.ImageField(upload_to="members/", blank=True, null=True)
     bio = models.TextField(blank=True, help_text="Présentation courte affichée sur la fiche du membre.")
+    thesis_link = models.URLField(blank=True, help_text="Lien vers la thèse de doctorat du membre.")
     order = models.PositiveIntegerField(default=0)
 
     class Meta:
@@ -205,7 +206,19 @@ class Activity(models.Model):
     )
     description = models.TextField(blank=True)
     image = models.ImageField(upload_to="activities/", blank=True, null=True)
+    image_fit_contain = models.BooleanField(
+        default=False,
+        help_text="Cocher pour les visuels/affiches qui doivent rester entièrement visibles sans recadrage.",
+    )
     link = models.URLField(blank=True, help_text="Lien externe (inscription, appel à candidature...)")
+    document = models.FileField(
+        upload_to="activities/documents/", blank=True, null=True,
+        help_text="Document à télécharger (livret, programme...).",
+    )
+    document_label = models.CharField(
+        max_length=100, blank=True, default="Télécharger le livret",
+        help_text="Texte du bouton de téléchargement.",
+    )
     sort_date = models.DateField(
         null=True, blank=True,
         help_text="Date utilisée uniquement pour classer l'activité de la plus récente à la plus ancienne.",

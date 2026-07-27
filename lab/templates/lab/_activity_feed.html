@@ -3,7 +3,7 @@
   {% with imgs=a.all_images %}
   <article class="activity-feed-card{% if not imgs %} activity-feed-card--no-media{% endif %}">
     {% if imgs %}
-    <div class="activity-feed-media{% if imgs|length > 1 %} activity-feed-media--carousel{% endif %}">
+    <div class="activity-feed-media{% if imgs|length > 1 %} activity-feed-media--carousel{% endif %}{% if a.image_fit_contain %} activity-feed-media--contain{% endif %}">
       {% for img in imgs %}
       <img src="{{ img.url }}" alt="{{ a.title }}" loading="lazy">
       {% endfor %}
@@ -19,7 +19,10 @@
         {% if a.people %}<span><strong>Représentation :</strong> {{ a.people }}</span>{% endif %}
       </div>
       {% if a.description %}<div class="prose">{{ a.description|linebreaks }}</div>{% endif %}
-      {% if a.link %}<a href="{{ a.link }}" target="_blank" rel="noopener noreferrer" class="pub-link">{% if a.category == "jury" %}Voir la thèse{% else %}En savoir plus{% endif %} ↗</a>{% endif %}
+      <div class="activity-feed-actions">
+        {% if a.link %}<a href="{{ a.link }}" target="_blank" rel="noopener noreferrer" class="pub-link">{% if a.category == "jury" %}Voir la thèse{% else %}En savoir plus{% endif %} ↗</a>{% endif %}
+        {% if a.document %}<a href="{{ a.document.url }}" download class="pub-link pub-link--download">{{ a.document_label }} ↓</a>{% endif %}
+      </div>
     </div>
   </article>
   {% endwith %}
