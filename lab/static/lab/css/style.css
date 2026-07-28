@@ -754,6 +754,7 @@ table.data-table { width: 100%; border-collapse: collapse; min-width: 620px; }
 .pub-link--download { background: var(--teal-dark); }
 .pub-link--download:hover { background: var(--accent); }
 .activity-feed-meta strong { color: var(--teal-dark); font-weight: 700; }
+.prose .field-label { color: var(--teal-dark); font-weight: 700; }
 
 .course-list { display: flex; flex-direction: column; gap: 16px; }
 .course-card { background: #fff; border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 22px 26px; }

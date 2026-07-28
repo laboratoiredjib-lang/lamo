@@ -1,3 +1,4 @@
+{% load lab_extras %}
 <div class="activity-feed stagger">
   {% for a in activities %}
   {% with imgs=a.all_images %}
@@ -18,7 +19,7 @@
         {% if a.location %}<span><strong>Lieu :</strong> {{ a.location }}</span>{% endif %}
         {% if a.people %}<span><strong>Représentation :</strong> {{ a.people }}</span>{% endif %}
       </div>
-      {% if a.description %}<div class="prose">{{ a.description|linebreaks }}</div>{% endif %}
+      {% if a.description %}<div class="prose">{% if a.category == "jury" %}{{ a.description|field_labels }}{% else %}{{ a.description|linebreaks }}{% endif %}</div>{% endif %}
       <div class="activity-feed-actions">
         {% if a.link %}<a href="{{ a.link }}" target="_blank" rel="noopener noreferrer" class="pub-link">{% if a.category == "jury" %}Voir la thèse{% else %}En savoir plus{% endif %} ↗</a>{% endif %}
         {% if a.document %}<a href="{{ a.document.url }}" download class="pub-link pub-link--download">{{ a.document_label }} ↓</a>{% endif %}
