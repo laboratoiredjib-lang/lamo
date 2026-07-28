@@ -3,9 +3,11 @@
 {% block content %}
 
 <section class="hero-v3">
+  <div class="container">
+    <h1 class="hero-v3-title">{{ profile.name }} ({{ profile.acronym }})</h1>
+  </div>
   <div class="container hero-v3-grid">
     <div class="hero-v3-text">
-      <h1>{{ profile.name }} ({{ profile.acronym }})</h1>
       <p class="lede">Mathématiques appliquées, statistique, optimisation, simulation numérique et science des données au service de Djibouti et de la région.</p>
       <div class="hero-v3-actions">
         <a href="{% url 'lab:team_list' %}" class="btn btn-hero-primary">Découvrir nos équipes</a>

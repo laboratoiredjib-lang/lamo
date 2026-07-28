@@ -321,18 +321,18 @@ p { margin: 0 0 1em; color: var(--ink); }
   position: relative; overflow: hidden; padding: 76px 0 44px;
   background: linear-gradient(125deg, var(--navy-dark) 0%, var(--navy) 62%, var(--navy-2) 100%);
 }
-.hero-v3-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 56px; align-items: center; }
-.hero-v3-text h1 {
-  font-size: clamp(1.85rem, 3vw, 2.65rem); color: #fff; margin-bottom: 18px; line-height: 1.18; max-width: 560px;
-  opacity: 0; animation: member-enter-left .8s var(--ease-out) .1s forwards;
+.hero-v3-title {
+  font-size: clamp(1.5rem, 2.65vw, 2.3rem); color: #fff; margin: 0 0 32px; line-height: 1.15;
+  white-space: nowrap; opacity: 0; animation: member-enter-left .8s var(--ease-out) .05s forwards;
 }
+.hero-v3-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 56px; align-items: center; }
 .hero-v3-text .lede {
   color: #c7d4e6; font-size: 1.05rem; max-width: 500px; margin-bottom: 30px;
-  opacity: 0; animation: member-enter-left .8s var(--ease-out) .24s forwards;
+  opacity: 0; animation: member-enter-left .8s var(--ease-out) .2s forwards;
 }
 .hero-v3-actions {
   display: flex; gap: 14px; flex-wrap: wrap;
-  opacity: 0; animation: member-enter-left .8s var(--ease-out) .38s forwards;
+  opacity: 0; animation: member-enter-left .8s var(--ease-out) .34s forwards;
 }
 .hero-v3-media {
   position: relative;
@@ -357,14 +357,15 @@ p { margin: 0 0 1em; color: var(--ink); }
 
 @media (max-width: 980px) {
   .hero-v3-grid { grid-template-columns: 1fr; gap: 34px; }
-  .hero-v3-text h1, .hero-v3-text .lede { max-width: none; }
+  .hero-v3-text .lede { max-width: none; }
 }
 @media (max-width: 520px) {
   .hero-v3 { padding: 56px 0 36px; }
+  .hero-v3-title { font-size: 3vw; white-space: nowrap; margin-bottom: 20px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .hero-v3-text h1, .hero-v3-text .lede, .hero-v3-actions, .hero-v3-media { opacity: 1; animation: none; }
+  .hero-v3-title, .hero-v3-text .lede, .hero-v3-actions, .hero-v3-media { opacity: 1; animation: none; }
   .hero-v3-media-frame { animation: none; }
 }
 
