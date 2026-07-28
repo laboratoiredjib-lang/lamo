@@ -10,16 +10,6 @@
 </head>
 <body>
 
-<div class="topbar">
-  <div class="container">
-    <span>{{ site_profile.affiliation }}</span>
-    <div class="topbar-links">
-      {% if site_profile.email_primary %}<a href="mailto:{{ site_profile.email_primary }}">{{ site_profile.email_primary }}</a>{% endif %}
-      <a href="{% url 'lab:contact' %}">Nous contacter</a>
-    </div>
-  </div>
-</div>
-
 <header class="site-header">
   <div class="container header-row">
     <a href="{% url 'lab:home' %}" class="brand-lamo">

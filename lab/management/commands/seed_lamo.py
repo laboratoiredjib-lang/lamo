@@ -106,6 +106,9 @@ class Command(BaseCommand):
         profile.email_secondary = "liban_ismail_abdillahi@univ.edu.dj"
         profile.save()
         attach_image(profile, "logo", "logo_lamo.png")
+        # Le logo officiel a été remplacé par une version non recadrée : on force son remplacement.
+        profile.university_logo.delete(save=False)
+        profile.save()
         attach_image(profile, "university_logo", "logo_universite_djibouti.png")
 
     def seed_teams(self):

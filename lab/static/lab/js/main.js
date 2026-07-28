@@ -120,6 +120,40 @@
     });
   }
 
+  /* Lueur qui suit le curseur sur les cartes équipe / axe. */
+  document.querySelectorAll(".team-card, .theme-card").forEach(function (card) {
+    card.addEventListener("mousemove", function (e) {
+      var rect = card.getBoundingClientRect();
+      card.style.setProperty("--mx", ((e.clientX - rect.left) / rect.width * 100) + "%");
+      card.style.setProperty("--my", ((e.clientY - rect.top) / rect.height * 100) + "%");
+    });
+  });
+
+  /* Compteurs animés du hero (0 -> valeur cible), joués une fois au chargement. */
+  var counters = document.querySelectorAll(".hero-v2-stat .num[data-count]");
+  if (counters.length) {
+    var animateCounter = function (el) {
+      var target = parseInt(el.getAttribute("data-count"), 10) || 0;
+      var start = null;
+      var duration = 1200;
+      var step = function (ts) {
+        if (start === null) start = ts;
+        var progress = Math.min(1, (ts - start) / duration);
+        var eased = 1 - Math.pow(1 - progress, 3);
+        el.textContent = Math.round(eased * target);
+        if (progress < 1) requestAnimationFrame(step);
+      };
+      requestAnimationFrame(step);
+    };
+    if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      counters.forEach(function (el) { el.textContent = el.getAttribute("data-count"); });
+    } else {
+      window.setTimeout(function () {
+        counters.forEach(animateCounter);
+      }, 550);
+    }
+  }
+
   /* Carrousel photo des activités : met à jour le compteur "n / total" au défilement. */
   document.querySelectorAll(".activity-feed-media--carousel").forEach(function (carousel) {
     var counter = carousel.parentElement.querySelector(".activity-feed-count");
