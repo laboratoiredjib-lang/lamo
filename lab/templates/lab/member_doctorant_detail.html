@@ -43,7 +43,8 @@
         <div class="row"><strong>Université partenaire</strong><span>{{ member.partner_university }}</span></div>
         <div class="row"><strong>Directeur de thèse</strong><span>{{ member.thesis_director }}</span></div>
         {% if member.co_supervisor %}<div class="row"><strong>Co-encadrant</strong><span>{{ member.co_supervisor }}</span></div>{% endif %}
-        <div class="row"><strong>Laboratoire</strong><span>{{ profile.acronym }}, en cotutelle avec {{ member.partner_university }}</span></div>
+        {% if member.email %}<div class="row"><strong>Email</strong><a href="mailto:{{ member.email }}">{{ member.email }}</a></div>{% endif %}
+        <div class="row"><strong>Institution</strong><span>{{ profile.acronym }} en collaboration avec {{ member.partner_university }}</span></div>
       </div>
     </div>
 

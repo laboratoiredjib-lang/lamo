@@ -125,6 +125,7 @@ class Doctorant(models.Model):
     partner_university = models.CharField(max_length=255)
     thesis_director = models.CharField(max_length=255)
     co_supervisor = models.CharField(max_length=255, blank=True)
+    email = models.EmailField(blank=True, help_text="Adresse électronique universitaire du doctorant.")
     photo = models.ImageField(upload_to="members/", blank=True, null=True)
     bio = models.TextField(blank=True, help_text="Sujet de thèse ou présentation courte.")
     order = models.PositiveIntegerField(default=0)

@@ -1,3 +1,5 @@
+import re
+import unicodedata
 from datetime import date
 from pathlib import Path
 
@@ -22,6 +24,14 @@ from lab.models import (
 )
 
 SEED_MEDIA = Path(__file__).resolve().parent.parent.parent.parent / "seed_media"
+
+
+def make_univ_email(full_name):
+    """Adresse provisoire prenom_nom@univ.edu.dj à défaut d'adresse institutionnelle connue."""
+    name = re.sub(r"^(M\.|Mme\.)\s+", "", full_name)
+    name = unicodedata.normalize("NFKD", name).encode("ascii", "ignore").decode("ascii")
+    slug = "_".join(re.findall(r"[a-zA-Z]+", name)).lower()
+    return f"{slug}@univ.edu.dj"
 
 
 def attach_image(instance, field_name, filename):
@@ -491,7 +501,8 @@ class Command(BaseCommand):
                     "partner_university": partner_university,
                     "thesis_director": thesis_director,
                     "co_supervisor": co_supervisor,
-                    "bio": bio or f"Thèse en cotutelle avec {partner_university}, sous la direction de {thesis_director}.",
+                    "email": make_univ_email(full_name),
+                    "bio": bio or f"Thèse en collaboration avec {partner_university}, sous la direction de {thesis_director}.",
                     "order": order,
                 },
             )

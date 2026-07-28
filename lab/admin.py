@@ -56,7 +56,7 @@ class PermanentMemberAdmin(admin.ModelAdmin):
 
 @admin.register(Doctorant)
 class DoctorantAdmin(admin.ModelAdmin):
-    list_display = ("full_name", "start_year", "partner_university", "thesis_director", "co_supervisor")
+    list_display = ("full_name", "start_year", "partner_university", "thesis_director", "co_supervisor", "email")
     list_filter = ("start_year",)
     ordering = ("order",)
 
