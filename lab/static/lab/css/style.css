@@ -91,8 +91,11 @@ p { margin: 0 0 1em; color: var(--ink); }
 .u-link:hover::after { right: 0; }
 
 /* ---------- Scroll reveal (progressive enhancement) ---------- */
-.reveal.reveal-js { opacity: 0; transform: translateY(28px) scale(.985); transition: opacity .8s var(--ease-out), transform .8s var(--ease-out); }
-.reveal.reveal-js.is-visible { opacity: 1; transform: translateY(0) scale(1); }
+.reveal.reveal-js {
+  opacity: 0; transform: translateY(28px) scale(.985); filter: blur(6px);
+  transition: opacity .8s var(--ease-out), transform .8s var(--ease-out), filter .8s var(--ease-out);
+}
+.reveal.reveal-js.is-visible { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
 .stagger.reveal-js > * { opacity: 0; transform: translateY(22px) scale(.96); transition: opacity .6s var(--ease-out), transform .6s var(--ease-out); transition-delay: calc(var(--i, 0) * 80ms); }
 .stagger.reveal-js.is-visible > * { opacity: 1; transform: translateY(0) scale(1); }
 
@@ -124,6 +127,24 @@ p { margin: 0 0 1em; color: var(--ink); }
 .btn-line:hover { background: var(--bg-alt); border-color: var(--navy); }
 .btn-navy { background: var(--navy); color: #fff; }
 .btn-navy:hover { background: var(--navy-2); transform: translateY(-1px); box-shadow: 0 10px 24px rgba(15,42,68,.28); }
+
+/* ---------- Lueur interactive au survol, sur les cartes de contenu du site ---------- */
+.activity-card, .info-card, .pub-item, .thesis-card, .hdr-card, .project-card,
+.axis-item, .news-card, .partner-tile, .activity-feed-card {
+  position: relative; overflow: hidden; z-index: 0; --mx: 50%; --my: 0%;
+}
+.activity-card::after, .info-card::after, .pub-item::after, .thesis-card::after,
+.hdr-card::after, .project-card::after, .axis-item::after, .news-card::after, .partner-tile::after,
+.activity-feed-card::after {
+  content: ""; position: absolute; inset: 0; z-index: -1; opacity: 0; pointer-events: none;
+  transition: opacity .35s var(--ease);
+  background: radial-gradient(260px circle at var(--mx) var(--my), rgba(28,135,131,.13), transparent 62%);
+}
+.activity-card:hover::after, .info-card:hover::after, .pub-item:hover::after, .thesis-card:hover::after,
+.hdr-card:hover::after, .project-card:hover::after, .axis-item:hover::after, .news-card:hover::after, .partner-tile:hover::after,
+.activity-feed-card:hover::after {
+  opacity: 1;
+}
 
 /* ---------- Header / Nav : LAMO à gauche, Université à droite ---------- */
 .site-header { background: #fff; border-bottom: 1px solid var(--line); position: sticky; top: 0; z-index: 60; }
@@ -157,15 +178,15 @@ p { margin: 0 0 1em; color: var(--ink); }
 .main-nav li.is-open .caret { transform: rotate(-135deg); margin-top: 3px; }
 
 .dropdown {
-  position: absolute; top: 100%; left: 50%; transform: translateX(-50%) translateY(6px); min-width: 280px;
+  position: absolute; top: 100%; left: 50%; transform: translateX(-50%) translateY(6px) scale(.97); min-width: 280px;
   background: #fff; border: 1px solid var(--line); border-radius: var(--radius-lg);
   box-shadow: var(--shadow-lg);
-  padding: 8px; opacity: 0; visibility: hidden;
-  transition: opacity .18s var(--ease), transform .18s var(--ease), visibility .18s var(--ease);
+  padding: 8px; opacity: 0; visibility: hidden; transform-origin: top center;
+  transition: opacity .2s var(--ease-out), transform .22s var(--ease-out), visibility .2s var(--ease-out);
 }
-.main-nav li.is-open .dropdown, .main-nav li:hover .dropdown { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0); }
-.dropdown a { display: block; padding: 10px 12px; border-radius: 4px; font-size: 0.86rem; font-weight: 600; color: var(--ink); text-transform: none; letter-spacing: normal; }
-.dropdown a:hover { background: var(--teal-tint); color: var(--teal-dark); text-decoration: none; }
+.main-nav li.is-open .dropdown, .main-nav li:hover .dropdown { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0) scale(1); }
+.dropdown a { display: block; padding: 10px 12px; border-radius: 4px; font-size: 0.86rem; font-weight: 600; color: var(--ink); text-transform: none; letter-spacing: normal; transition: background .15s var(--ease), color .15s var(--ease), padding-left .15s var(--ease); }
+.dropdown a:hover { background: var(--teal-tint); color: var(--teal-dark); text-decoration: none; padding-left: 16px; }
 .dropdown a small { display: block; color: var(--muted); font-weight: 400; margin-top: 2px; }
 
 .nav-toggle { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 8px; position: relative; }
@@ -297,7 +318,15 @@ p { margin: 0 0 1em; color: var(--ink); }
 
 /* Bannière des pages internes : claire, avec liseré et icône contextuelle */
 .page-header { background: var(--bg-alt); border-bottom: 1px solid var(--line); padding: 22px 0; position: relative; }
-.page-header::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--teal), var(--accent)); }
+.page-header::before {
+  content: ""; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, var(--teal), var(--accent), var(--teal));
+  background-size: 200% 100%; animation: page-header-shimmer 7s ease-in-out infinite;
+}
+@keyframes page-header-shimmer {
+  0% { background-position: 0% 0; }
+  100% { background-position: 200% 0; }
+}
 .page-header-inner { display: flex; align-items: center; gap: 20px; justify-content: space-between; flex-wrap: wrap; }
 .page-header-text { flex: 1; min-width: 240px; }
 .page-header .breadcrumb, .page-header .breadcrumb a { color: var(--muted); }

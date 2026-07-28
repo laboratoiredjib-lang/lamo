@@ -120,8 +120,11 @@
     });
   }
 
-  /* Lueur qui suit le curseur sur les cartes équipe / axe. */
-  document.querySelectorAll(".team-card, .theme-card").forEach(function (card) {
+  /* Lueur qui suit le curseur sur les cartes de contenu (accueil, activités, production, formations...). */
+  document.querySelectorAll(
+    ".team-card, .theme-card, .activity-card, .info-card, .pub-item, .thesis-card, " +
+    ".hdr-card, .project-card, .axis-item, .news-card, .partner-tile, .activity-feed-card"
+  ).forEach(function (card) {
     card.addEventListener("mousemove", function (e) {
       var rect = card.getBoundingClientRect();
       card.style.setProperty("--mx", ((e.clientX - rect.left) / rect.width * 100) + "%");

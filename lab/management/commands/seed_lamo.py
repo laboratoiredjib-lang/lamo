@@ -647,10 +647,12 @@ class Command(BaseCommand):
                 ),
                 "link": "https://urls.fr/SHONvz",
                 "sort_date": date(2027, 1, 19),
+                "document_label": "Télécharger l'atelier M2ISDA",
                 "order": 2,
             },
         )
         attach_image(conference, "image", "activity_m2isda_2027_poster.jpg")
+        attach_image(conference, "document", "atelier_m2isda_2027.pdf")
 
         conference_2024, _ = Activity.objects.update_or_create(
             category=Activity.Category.CONFERENCE,
