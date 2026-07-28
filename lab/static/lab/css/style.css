@@ -951,6 +951,8 @@ table.data-table { width: 100%; border-collapse: collapse; min-width: 620px; }
 @media (max-width: 520px) {
   .grid-3, .grid-4 { grid-template-columns: 1fr 1fr; }
   .hero-stats { grid-template-columns: 1fr 1fr; }
+  .hero-v2-inner h1 { font-size: 3vw; white-space: nowrap; margin-bottom: 12px; }
+  .hero-v2-inner .lede { font-size: 0.78rem; margin-bottom: 26px; }
   .brand-univ { display: none; }
   .header-row { justify-content: space-between; }
   .math-panel { flex-basis: 108px; }
