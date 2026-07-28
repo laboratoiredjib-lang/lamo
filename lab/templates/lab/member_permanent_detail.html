@@ -35,9 +35,10 @@
           {% if member.bio %}
           <div class="bio-lede">{{ member.bio|linebreaks }}</div>
           {% endif %}
-          {% if member.thesis_link %}
+          {% if member.thesis_link or member.scholar_link %}
           <div class="activity-feed-actions">
-            <a href="{{ member.thesis_link }}" target="_blank" rel="noopener noreferrer" class="pub-link">Voir la thèse ↗</a>
+            {% if member.thesis_link %}<a href="{{ member.thesis_link }}" target="_blank" rel="noopener noreferrer" class="pub-link">Voir la thèse ↗</a>{% endif %}
+            {% if member.scholar_link %}<a href="{{ member.scholar_link }}" target="_blank" rel="noopener noreferrer" class="pub-link pub-link--download">Voir les articles ↗</a>{% endif %}
           </div>
           {% endif %}
         </div>

@@ -257,7 +257,7 @@ class Command(BaseCommand):
              "modélisation mathématique, l'analyse de sensibilité globale, le contrôle optimal, la "
              "modélisation environnementale, la transition énergétique ainsi que les applications de "
              "l'intelligence artificielle aux systèmes complexes.",
-             "https://share.google/lt1kbvm5vQZoReESa"),
+             "https://share.google/lt1kbvm5vQZoReESa", ""),
             ("Dr. Yahyeh SOULEIMAN", "Maître de conférences en Mathématiques appliquées",
              "Doyen de l'IUT-T", False, team_sto,
              "yahyeh_souleiman@univ.edu.dj", "souleimanyahyeh@gmail.com", "+253 77 86 80 46 | +253 21 32 36 03",
@@ -281,7 +281,8 @@ class Command(BaseCommand):
              "participe activement au rayonnement scientifique de l'Université de Djibouti et du LAMO, "
              "tout en favorisant le transfert des connaissances vers les secteurs socio-économiques et les "
              "politiques publiques.",
-             "https://share.google/BQJbVwSK83PN8kfQV"),
+             "https://share.google/BQJbVwSK83PN8kfQV",
+             "https://scholar.google.com/citations?user=lxHffeYAAAAJ&hl=fr&oi=ao"),
             ("Dr. Souleiman OMAR", "Maître de conférences en Mathématiques fondamentales", "Directeur CEALT", False, team_dyn,
              "", "", "", "member_souleiman_omar.png",
              "Dr Souleiman Omar Hoch est Maître de conférences en mathématiques à l'Université de Djibouti "
@@ -301,7 +302,7 @@ class Command(BaseCommand):
              "participé au développement de nouvelles infrastructures de recherche, notamment dans le "
              "domaine des énergies renouvelables, afin de soutenir la transition énergétique et le "
              "développement durable à Djibouti.",
-             "https://share.google/dDdC9IlhopRoniqup"),
+             "https://share.google/dDdC9IlhopRoniqup", ""),
             ("Dr. Doualeh ABDILLAHI", "Maître de conférences en Statistiques appliquées", "Directeur des études", False, team_sto,
              "", "", "", "member_doualeh_abdillahi.png",
              "Dr Doualeh Abdillahi Ali est Maître de conférences en mathématiques appliquées et Directeur "
@@ -318,15 +319,15 @@ class Command(BaseCommand):
              "séminaires de recherche et de projets collaboratifs. Il a ainsi fait partie de la délégation "
              "de l'Université de Djibouti ayant représenté le LAMO lors de la conférence internationale "
              "DATA-SD 2025 organisée par l'Université d'Amoud (Somalie).",
-             "https://share.google/GY2tiwxpPd9ZnralY"),
+             "https://share.google/GY2tiwxpPd9ZnralY", ""),
         ]
-        for order, (full_name, title, role_tag, is_director, team, email, email_secondary, phone, photo, bio, thesis_link) in enumerate(members, start=1):
+        for order, (full_name, title, role_tag, is_director, team, email, email_secondary, phone, photo, bio, thesis_link, scholar_link) in enumerate(members, start=1):
             member, _ = PermanentMember.objects.update_or_create(
                 full_name=full_name,
                 defaults={
                     "title": title, "role_tag": role_tag, "is_director": is_director, "team": team,
                     "email": email, "email_secondary": email_secondary, "phone": phone,
-                    "bio": bio, "thesis_link": thesis_link, "order": order,
+                    "bio": bio, "thesis_link": thesis_link, "scholar_link": scholar_link, "order": order,
                 },
             )
             attach_image(member, "photo", photo)

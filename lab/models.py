@@ -105,6 +105,7 @@ class PermanentMember(models.Model):
     photo = models.ImageField(upload_to="members/", blank=True, null=True)
     bio = models.TextField(blank=True, help_text="Présentation courte affichée sur la fiche du membre.")
     thesis_link = models.URLField(blank=True, help_text="Lien vers la thèse de doctorat du membre.")
+    scholar_link = models.URLField(blank=True, help_text="Lien vers le profil Google Scholar / liste des articles du membre.")
     order = models.PositiveIntegerField(default=0)
 
     class Meta:
