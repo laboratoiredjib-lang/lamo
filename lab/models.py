@@ -9,7 +9,7 @@ class LabProfile(models.Model):
     acronym = models.CharField(max_length=20, default="LAMO")
     affiliation = models.CharField(
         max_length=500,
-        default="Centre de Recherche en Mathématiques et Numérique (CRMN), Université de Djibouti",
+        default="Laboratoire de Recherche en Mathématiques et Numérique (LRMN), Université de Djibouti",
     )
     mission = models.TextField(
         help_text="Paragraphe de mission (première section de la présentation)."

@@ -60,11 +60,11 @@ class Command(BaseCommand):
         profile.name = "Laboratoire d'Analyse, de Modélisation et d'Optimisation"
         profile.acronym = "LAMO"
         profile.affiliation = (
-            "Centre de Recherche en Mathématiques et Numérique (CRMN), Université de Djibouti"
+            "Laboratoire de Recherche en Mathématiques et Numérique (LRMN), Université de Djibouti"
         )
         profile.mission = (
             "Le Laboratoire d’Analyse, de Modélisation et d’Optimisation (LAMO) est une unité de "
-            "recherche affiliée au Centre de Recherche en Mathématiques et Numérique (CRMN) de "
+            "recherche affiliée au Laboratoire de Recherche en Mathématiques et Numérique (LRMN) de "
             "l’Université de Djibouti. Il a pour mission de développer des approches en mathématiques "
             "appliquées, statistique, optimisation, simulation numérique et science des données pour "
             "répondre à des problématiques scientifiques, technologiques et socio-économiques."
