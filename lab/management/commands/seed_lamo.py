@@ -12,6 +12,7 @@ from lab.models import (
     Habilitation,
     LabProfile,
     MasterCourse,
+    News,
     Partner,
     PermanentMember,
     Publication,
@@ -51,6 +52,7 @@ class Command(BaseCommand):
         self.seed_publications()
         self.seed_research_projects()
         self.seed_habilitations()
+        self.seed_news()
         self.stdout.write(self.style.SUCCESS("Données du LAMO chargées avec succès."))
 
     def seed_profile(self):
@@ -1549,3 +1551,69 @@ class Command(BaseCommand):
                 "order": 1,
             },
         )
+
+    def seed_news(self):
+        rows = [
+            {
+                "title": "2e édition de la conférence internationale M2ISDA — 19–21 janvier 2027",
+                "date": date(2026, 7, 20),
+                "excerpt": (
+                    "Le LAMO et l'Université de Djibouti organisent la 2e édition de la conférence "
+                    "internationale M2ISDA, consacrée à la modélisation mathématique et aux innovations "
+                    "en sciences des données. Soumissions des résumés jusqu'au 5 janvier 2027."
+                ),
+                "content": (
+                    "La 2e conférence internationale M2ISDA — « Mathematical Modeling and Innovations in "
+                    "Advanced Data Science » — se tiendra du 19 au 21 janvier 2027 à l'Université de "
+                    "Djibouti. Organisée par le LAMO, elle réunira chercheurs, doctorants et professionnels "
+                    "autour des avancées récentes en modélisation mathématique, statistique et science des "
+                    "données.\n\n"
+                    "Thèmes abordés : épidémiologie mathématique et santé publique, optimisation et "
+                    "recherche opérationnelle, modélisation des écosystèmes et de l'environnement, "
+                    "modélisation des systèmes portuaires et logistiques, et aide à la décision.\n\n"
+                    "Dates importantes : soumission des résumés avant le 5 janvier 2027, inscription avant "
+                    "le 31 décembre 2026."
+                ),
+                "image": "activity_m2isda_2027_poster.jpg",
+            },
+            {
+                "title": (
+                    "3e édition des Olympiades Nationales de Mathématiques — sur le thème de la Journée "
+                    "internationale des mathématiques 2027"
+                ),
+                "date": date(2026, 7, 28),
+                "excerpt": (
+                    "Le thème choisi pour la Journée internationale des mathématiques (IDM) 2027 est "
+                    "« Mathématiques, IA et notre avenir ». Il servira de fil conducteur à la 3e édition "
+                    "des Olympiades Nationales de Mathématiques organisée par le LAMO."
+                ),
+                "content": (
+                    "Le thème choisi pour la Journée internationale des mathématiques 2027 est : "
+                    "« Mathématiques, IA et notre avenir ».\n\n"
+                    "Chaque année, un thème est choisi pour donner du caractère à la célébration, stimuler "
+                    "la créativité et mettre en lumière les liens entre les mathématiques et toutes sortes "
+                    "de domaines, de concepts et d'idées. Ce thème explore le rôle des mathématiques comme "
+                    "fondement de l'intelligence artificielle et la manière dont les idées mathématiques "
+                    "façonnent l'une des technologies les plus transformatrices d'aujourd'hui.\n\n"
+                    "À mesure que l'IA s'intègre de plus en plus à notre quotidien, la question essentielle "
+                    "n'est plus seulement « Que peut faire l'IA ? » mais aussi « Que devrait-elle faire ? ». "
+                    "Comment pouvons-nous nous fier à la validité de ses résultats ? Quel sera son impact "
+                    "sur l'éducation, la recherche et la société ?\n\n"
+                    "Nous invitons chacun à explorer comment les mathématiques peuvent nous aider à "
+                    "comprendre, à orienter et à développer de manière responsable l'IA, ouvrant ainsi de "
+                    "nouvelles perspectives pour découvrir, créer et façonner le monde qui nous entoure.\n\n"
+                    "Ce thème inspirera la 3e édition des Olympiades Nationales de Mathématiques organisée "
+                    "par le LAMO à Djibouti.\n\n"
+                    "En savoir plus : https://www.idm314.org/"
+                ),
+                "image": "news_idm_2027_olympiades.png",
+            },
+        ]
+        for row in rows:
+            image = row.pop("image", None)
+            news, _ = News.objects.update_or_create(
+                title=row["title"],
+                defaults=row,
+            )
+            if image:
+                attach_image(news, "image", image)

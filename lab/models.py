@@ -342,6 +342,7 @@ class News(models.Model):
     date = models.DateField()
     excerpt = models.CharField(max_length=400, blank=True)
     content = models.TextField(blank=True)
+    image = models.ImageField(upload_to="news/", blank=True, null=True, help_text="Affiche ou visuel associé à l'actualité.")
     is_published = models.BooleanField(default=True)
 
     class Meta:

@@ -148,10 +148,13 @@
     <div class="grid-3 stagger">
       {% for item in news %}
       <div class="news-card">
-        <div class="news-date"><span class="d">{{ item.date|date:"d" }}</span><span class="m">{{ item.date|date:"M Y" }}</span></div>
-        <div>
-          <h3 style="font-size:1rem;">{{ item.title }}</h3>
-          <p style="margin:0;font-size:0.88rem;">{{ item.excerpt }}</p>
+        {% if item.image %}
+        <div class="news-media"><img src="{{ item.image.url }}" alt="{{ item.title }}" loading="lazy"></div>
+        {% endif %}
+        <div class="news-body">
+          <span class="news-date-pill">{{ item.date|date:"d M Y" }}</span>
+          <h3>{{ item.title }}</h3>
+          <p>{{ item.excerpt }}</p>
         </div>
       </div>
       {% endfor %}

@@ -77,7 +77,7 @@ class PartnerAdmin(admin.ModelAdmin):
 
 @admin.register(News)
 class NewsAdmin(admin.ModelAdmin):
-    list_display = ("title", "date", "is_published")
+    list_display = ("title", "date", "image", "is_published")
     list_filter = ("is_published",)
     ordering = ("-date",)
 
