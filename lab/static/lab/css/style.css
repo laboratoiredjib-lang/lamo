@@ -316,6 +316,58 @@ p { margin: 0 0 1em; color: var(--ink); }
 .hero-v2-scroll svg { animation: hero-scroll-bounce 1.8s var(--ease-out) infinite; }
 @keyframes hero-scroll-bounce { 0%,100% { transform: translateY(0); opacity: .55; } 50% { transform: translateY(7px); opacity: 1; } }
 
+/* ---------- Hero v3 (accueil) : texte à gauche, illustration encadrée à droite ---------- */
+.hero-v3 {
+  position: relative; overflow: hidden; padding: 76px 0 44px;
+  background: linear-gradient(125deg, var(--navy-dark) 0%, var(--navy) 62%, var(--navy-2) 100%);
+}
+.hero-v3-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 56px; align-items: center; }
+.hero-v3-text h1 {
+  font-size: clamp(1.85rem, 3vw, 2.65rem); color: #fff; margin-bottom: 18px; line-height: 1.18; max-width: 560px;
+  opacity: 0; animation: member-enter-left .8s var(--ease-out) .1s forwards;
+}
+.hero-v3-text .lede {
+  color: #c7d4e6; font-size: 1.05rem; max-width: 500px; margin-bottom: 30px;
+  opacity: 0; animation: member-enter-left .8s var(--ease-out) .24s forwards;
+}
+.hero-v3-actions {
+  display: flex; gap: 14px; flex-wrap: wrap;
+  opacity: 0; animation: member-enter-left .8s var(--ease-out) .38s forwards;
+}
+.hero-v3-media {
+  position: relative;
+  opacity: 0; animation: member-enter-right .9s var(--ease-out) .2s forwards;
+}
+.hero-v3-media-glow {
+  position: absolute; inset: -18%; z-index: 0;
+  background: radial-gradient(circle at 62% 38%, rgba(28,135,131,.4), transparent 62%);
+  filter: blur(34px); pointer-events: none;
+}
+.hero-v3-media-frame {
+  position: relative; z-index: 1; border-radius: 22px; overflow: hidden;
+  box-shadow: 0 34px 70px -22px rgba(0,0,0,.6), 0 0 0 1px rgba(255,255,255,.08);
+  animation: hero-v3-float 6.5s ease-in-out infinite;
+}
+.hero-v3-media-frame img { width: 100%; height: auto; display: block; }
+@keyframes hero-v3-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+.hero-v3-stats { margin-top: 46px; }
+
+@media (max-width: 980px) {
+  .hero-v3-grid { grid-template-columns: 1fr; gap: 34px; }
+  .hero-v3-text h1, .hero-v3-text .lede { max-width: none; }
+}
+@media (max-width: 520px) {
+  .hero-v3 { padding: 56px 0 36px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-v3-text h1, .hero-v3-text .lede, .hero-v3-actions, .hero-v3-media { opacity: 1; animation: none; }
+  .hero-v3-media-frame { animation: none; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .hero-v2-media img { animation: none; }
   .hero-v2-badge .dot { animation: none; }
