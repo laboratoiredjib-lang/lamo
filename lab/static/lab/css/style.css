@@ -923,13 +923,6 @@ table.data-table { width: 100%; border-collapse: collapse; min-width: 620px; }
   .hero-v2-inner { padding: 56px 0 40px; }
   .hero-v2-actions { margin-bottom: 36px; }
   .hero-v2-scroll { display: none; }
-  /* Sur mobile, le texte recouvre toute la largeur de l'image (plus de colonne dédiée comme
-     en desktop) : un voile beaucoup plus sombre et uniforme garde le fond discret (simple
-     texture) et préserve la lisibilité du texte et des cartes par-dessus. */
-  .hero-v2-media img { object-position: 15% 20%; animation: none; filter: brightness(.75) saturate(.7); }
-  .hero-v2-overlay {
-    background: linear-gradient(180deg, rgba(4,13,26,.97) 0%, rgba(6,17,33,.96) 45%, rgba(6,17,33,.94) 100%);
-  }
   .math-banner-grid {
     display: flex; overflow-x: auto; gap: 10px; padding-bottom: 2px;
     -webkit-overflow-scrolling: touch; scrollbar-width: none; scroll-snap-type: x proximity;
