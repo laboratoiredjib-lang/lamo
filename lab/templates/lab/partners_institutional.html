@@ -1,0 +1,41 @@
+{% extends "lab/base.html" %}
+{% block title %}Partenaires institutionnels — {{ site_profile.acronym }}{% endblock %}
+{% block content %}
+
+<section class="page-header">
+  <div class="container page-header-inner">
+    <div class="page-header-text">
+      <div class="breadcrumb"><a href="{% url 'lab:home' %}">Accueil</a><span class="sep">/</span><a href="{% url 'lab:partners' %}">Partenaires</a><span class="sep">/</span>Partenaires institutionnels</div>
+      <span class="eyebrow">Réseau</span>
+      <h1>Partenaires institutionnels</h1>
+      <p>Organismes publics et partenaires institutionnels &amp; socio-économiques à Djibouti.</p>
+    </div>
+    <div class="page-header-icon">
+      <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="16" y="34" width="48" height="30" rx="2" stroke="var(--navy)" stroke-width="2.5"/>
+        <path d="M16,34 L40,16 L64,34" stroke="var(--teal)" stroke-width="2.5" stroke-linejoin="round"/>
+        <line x1="28" y1="42" x2="28" y2="56" stroke="var(--accent)" stroke-width="2.5"/>
+        <line x1="52" y1="42" x2="52" y2="56" stroke="var(--accent)" stroke-width="2.5"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<section class="section reveal">
+  <div class="container">
+    {% include "lab/_partners_tabs.html" %}
+    <div class="grid-4 stagger">
+      {% for p in institutional_partners %}
+      {% if p.website %}
+      <a href="{{ p.website }}" target="_blank" rel="noopener noreferrer" class="partner-tile partner-tile--link" title="{{ p.name }} — visiter le site ↗"><img src="{{ p.logo.url }}" alt="{{ p.name }}"></a>
+      {% else %}
+      <div class="partner-tile" title="{{ p.name }}"><img src="{{ p.logo.url }}" alt="{{ p.name }}"></div>
+      {% endif %}
+      {% empty %}
+      <p>Aucun partenaire institutionnel renseigné pour le moment.</p>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% endblock %}

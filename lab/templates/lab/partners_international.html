@@ -1,0 +1,66 @@
+{% extends "lab/base.html" %}
+{% load static %}
+{% block title %}Collaborations internationales — {{ site_profile.acronym }}{% endblock %}
+{% block content %}
+
+<section class="page-header">
+  <div class="container page-header-inner">
+    <div class="page-header-text">
+      <div class="breadcrumb"><a href="{% url 'lab:home' %}">Accueil</a><span class="sep">/</span><a href="{% url 'lab:partners' %}">Partenaires</a><span class="sep">/</span>Collaborations internationales</div>
+      <span class="eyebrow">Coopération</span>
+      <h1>Collaborations internationales</h1>
+      <p>Le LAMO s'inscrit dans une dynamique d'ouverture internationale à travers des collaborations académiques structurées avec plusieurs universités et chercheurs de renom, contribuant au renforcement des capacités de recherche et à l'encadrement doctoral.</p>
+    </div>
+    <div class="page-header-icon">
+      <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="40" cy="40" r="26" stroke="var(--navy)" stroke-width="2.5"/>
+        <ellipse cx="40" cy="40" rx="26" ry="11" stroke="var(--teal)" stroke-width="2"/>
+        <line x1="14" y1="40" x2="66" y2="40" stroke="var(--teal)" stroke-width="2"/>
+        <line x1="40" y1="14" x2="40" y2="66" stroke="var(--accent)" stroke-width="1.5" stroke-dasharray="3 3"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<section class="section reveal">
+  <div class="container">
+    {% include "lab/_partners_tabs.html" %}
+
+    <div class="activity-feed stagger">
+      <article class="activity-feed-card">
+        <div class="activity-feed-media"><img src="{% static 'lab/img/collab_clermont.jpeg' %}" alt="Visite académique LAMO – Université Clermont Auvergne" loading="lazy"></div>
+        <div class="activity-feed-body">
+          <h3>Université Clermont Auvergne</h3>
+          <div class="prose">
+            <p>Une collaboration privilégiée lie le LAMO à l'Université Clermont Auvergne, notamment le Laboratoire de Mathématiques Blaise Pascal (LMBP), à travers le Professeur Hacène Djellout, qui a assuré la direction de thèse du Dr Liban Ismail Abdillahi. Une visite académique a été effectuée en novembre 2022 pour renforcer cette coopération.</p>
+            <p>Le Professeur Djellout a également contribué à la création du Master en Data Science (2019) et du Master Intelligence Artificielle et Modélisation des Données — IAMD (2025) à l'Université de Djibouti, consolidant un partenariat stratégique durable.</p>
+          </div>
+        </div>
+      </article>
+
+      <article class="activity-feed-card">
+        <div class="activity-feed-media"><img src="{% static 'lab/img/collab_besancon.jpeg' %}" alt="Visite académique LAMO – Université de Besançon" loading="lazy"></div>
+        <div class="activity-feed-body">
+          <h3>Université de Besançon (Marie et Louis Pasteur)</h3>
+          <div class="prose">
+            <p>Le LAMO entretient une collaboration scientifique avec l'Université de Besançon à travers la Professeure Raluca Eftimie, se traduisant par des projets de recherche conjoints et l'encadrement doctoral de Kadir Ali Moussa, dont la thèse porte sur la modélisation multi-échelle des infections à papillomavirus humain (HPV). Une visite académique a été réalisée en novembre 2024.</p>
+            <p>Une collaboration est également établie avec l'Université Le Havre Normandie, en partenariat avec la Professeure Nathalie Verdière, portant sur l'encadrement de la thèse du doctorant Gouled Souleiman consacrée à la modélisation d'écosystèmes forestiers.</p>
+          </div>
+        </div>
+      </article>
+
+      <article class="activity-feed-card">
+        <div class="activity-feed-media"><img src="{% static 'lab/img/collab_adama.jpeg' %}" alt="Rencontre scientifique LAMO – Université d'Adama et Université d'Amoud" loading="lazy"></div>
+        <div class="activity-feed-body">
+          <h3>Corne de l'Afrique : Adama et Amoud</h3>
+          <div class="prose">
+            <p>Au niveau régional, le LAMO collabore avec l'Université d'Adama (Éthiopie), à travers le Professeur Lemecha Legesse, Directeur de l'École Doctorale, et avec l'Université d'Amoud (Borama, Somalie), représentée par le Professeur Abdisalam Hassan. Ces coopérations se traduisent par la co-signature de plusieurs articles scientifiques et le développement de travaux de recherche conjoints.</p>
+            <p>Une rencontre scientifique a été organisée en novembre 2024 à Djibouti avec les deux professeurs, permettant de consolider les relations de coopération et d'identifier de nouvelles opportunités de collaboration entre le LAMO et les institutions partenaires de la région.</p>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,54 @@
+{% extends "lab/base.html" %}
+{% load static %}
+{% block title %}Collaborations nationales — {{ site_profile.acronym }}{% endblock %}
+{% block content %}
+
+<section class="page-header">
+  <div class="container page-header-inner">
+    <div class="page-header-text">
+      <div class="breadcrumb"><a href="{% url 'lab:home' %}">Accueil</a><span class="sep">/</span><a href="{% url 'lab:partners' %}">Partenaires</a><span class="sep">/</span>Collaborations nationales</div>
+      <span class="eyebrow">Coopération</span>
+      <h1>Collaborations nationales</h1>
+      <p>Le LAMO entretient des relations étroites avec plusieurs institutions nationales, dans une logique de collaboration scientifique, d'appui à la décision et de valorisation des données au service du développement socio-économique de Djibouti.</p>
+    </div>
+    <div class="page-header-icon">
+      <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="40" cy="40" r="26" stroke="var(--navy)" stroke-width="2.5"/>
+        <line x1="14" y1="40" x2="66" y2="40" stroke="var(--teal)" stroke-width="2"/>
+        <path d="M40,14 C48,24 52,32 52,40 C52,48 48,56 40,66 C32,56 28,48 28,40 C28,32 32,24 40,14Z" stroke="var(--teal)" stroke-width="2"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<section class="section reveal">
+  <div class="container">
+    {% include "lab/_partners_tabs.html" %}
+
+    <div class="activity-feed stagger">
+      <article class="activity-feed-card">
+        <div class="activity-feed-media"><img src="{% static 'lab/img/collab_dpcr.jpeg' %}" alt="Collaboration LAMO – DPCR" loading="lazy"></div>
+        <div class="activity-feed-body">
+          <h3>Santé publique, statistique et logistique portuaire</h3>
+          <div class="prose">
+            <p>Dans le domaine de la santé publique, une collaboration active a été établie avec l'Institut National de Santé Publique de Djibouti (INSPD), notamment à travers des sujets de thèse proposés par ses cadres sur l'épidémiologie de la brucellose humaine et sur des problématiques sanitaires connexes, en co-encadrement avec le LAMO.</p>
+            <p>Le LAMO collabore également avec l'Institut National de la Statistique de Djibouti (INSTAD) dans le traitement et l'analyse des données de recensement, ainsi qu'avec l'Hôpital Militaire de Djibouti pour la modélisation appliquée aux maladies neurologiques et aux pathologies ORL.</p>
+            <p>Dans le secteur portuaire et logistique, le laboratoire développe une collaboration avec le Djibouti Ports Corridor Road (DPCR) autour de l'optimisation des flux de transport, ainsi qu'avec le Djibouti Port Community System (DPCS) et la Société de Gestion du Terminal à Conteneurs de Doraleh (SGTD) pour l'analyse des performances portuaires et logistiques.</p>
+          </div>
+        </div>
+      </article>
+
+      <article class="activity-feed-card">
+        <div class="activity-feed-media"><img src="{% static 'lab/img/collab_adammaths.jpeg' %}" alt="Collaboration LAMO – ADAM-Maths" loading="lazy"></div>
+        <div class="activity-feed-body">
+          <h3>ADAM-Maths : culture mathématique et Olympiades</h3>
+          <div class="prose">
+            <p>Le LAMO développe une collaboration avec l'association ADAM-Maths dans le cadre de la promotion de la culture mathématique et du développement des compétences scientifiques chez les jeunes. Cette collaboration s'est notamment concrétisée à travers l'organisation et l'accompagnement des Olympiades Nationales de Mathématiques, favorisant l'excellence, la créativité et l'intérêt des élèves pour les disciplines scientifiques.</p>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

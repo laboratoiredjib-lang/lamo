@@ -1,0 +1,6 @@
+<div class="tab-nav">
+  <a href="{% url 'lab:partners_academic' %}" class="{% if active_partners_tab == 'academiques' %}active{% endif %}">Partenaires académiques</a>
+  <a href="{% url 'lab:partners_institutional' %}" class="{% if active_partners_tab == 'institutionnels' %}active{% endif %}">Partenaires institutionnels</a>
+  <a href="{% url 'lab:partners_national' %}" class="{% if active_partners_tab == 'nationales' %}active{% endif %}">Collaborations nationales</a>
+  <a href="{% url 'lab:partners_international' %}" class="{% if active_partners_tab == 'internationales' %}active{% endif %}">Collaborations internationales</a>
+</div>

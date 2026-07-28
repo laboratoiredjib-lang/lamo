@@ -1,0 +1,39 @@
+{% extends "lab/base.html" %}
+{% block title %}Partenaires académiques — {{ site_profile.acronym }}{% endblock %}
+{% block content %}
+
+<section class="page-header">
+  <div class="container page-header-inner">
+    <div class="page-header-text">
+      <div class="breadcrumb"><a href="{% url 'lab:home' %}">Accueil</a><span class="sep">/</span><a href="{% url 'lab:partners' %}">Partenaires</a><span class="sep">/</span>Partenaires académiques</div>
+      <span class="eyebrow">Réseau</span>
+      <h1>Partenaires académiques</h1>
+      <p>Universités et centres de recherche partenaires du LAMO.</p>
+    </div>
+    <div class="page-header-icon">
+      <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M40,14 L14,28 L40,42 L66,28 L40,14Z" stroke="var(--navy)" stroke-width="2.5" stroke-linejoin="round"/>
+        <path d="M22,34 V50 C22,56 30,60 40,60 C50,60 58,56 58,50 V34" stroke="var(--teal)" stroke-width="2.5" stroke-linejoin="round"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<section class="section reveal">
+  <div class="container">
+    {% include "lab/_partners_tabs.html" %}
+    <div class="grid-4 stagger">
+      {% for p in academic_partners %}
+      {% if p.website %}
+      <a href="{{ p.website }}" target="_blank" rel="noopener noreferrer" class="partner-tile partner-tile--link" title="{{ p.name }}{% if p.country %} — {{ p.country }}{% endif %} — visiter le site ↗"><img src="{{ p.logo.url }}" alt="{{ p.name }}"></a>
+      {% else %}
+      <div class="partner-tile" title="{{ p.name }}{% if p.country %} — {{ p.country }}{% endif %}"><img src="{{ p.logo.url }}" alt="{{ p.name }}"></div>
+      {% endif %}
+      {% empty %}
+      <p>Aucun partenaire académique renseigné pour le moment.</p>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% endblock %}

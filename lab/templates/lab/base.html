@@ -73,7 +73,16 @@
             <a href="{% url 'lab:formations_capacity' %}"><strong>Renforcement de capacités</strong><small>Formations internationales suivies</small></a>
           </div>
         </li>
-        <li><a href="{% url 'lab:partners' %}">Partenaires</a></li>
+        <li class="has-dropdown">
+          <button type="button">Partenaires <span class="caret"></span></button>
+          <div class="dropdown">
+            <a href="{% url 'lab:partners' %}"><strong>Vue d'ensemble</strong><small>Le réseau de partenaires du LAMO</small></a>
+            <a href="{% url 'lab:partners_academic' %}"><strong>Partenaires académiques</strong><small>Universités et centres de recherche</small></a>
+            <a href="{% url 'lab:partners_institutional' %}"><strong>Partenaires institutionnels</strong><small>Organismes publics à Djibouti</small></a>
+            <a href="{% url 'lab:partners_national' %}"><strong>Collaborations nationales</strong><small>Santé, statistique, logistique portuaire</small></a>
+            <a href="{% url 'lab:partners_international' %}"><strong>Collaborations internationales</strong><small>France, Éthiopie, Somalie</small></a>
+          </div>
+        </li>
         <li><a href="{% url 'lab:news_list' %}">Actualités</a></li>
       </ul>
     </nav>

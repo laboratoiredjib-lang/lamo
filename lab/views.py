@@ -109,10 +109,46 @@ def member_associate_detail(request, pk):
 def partners(request):
     context = {
         "profile": LabProfile.load(),
-        "academic_partners": Partner.objects.filter(category=Partner.Category.ACADEMIC),
-        "institutional_partners": Partner.objects.filter(category=Partner.Category.INSTITUTIONAL),
+        "counts": {
+            "academic": Partner.objects.filter(category=Partner.Category.ACADEMIC).count(),
+            "institutional": Partner.objects.filter(category=Partner.Category.INSTITUTIONAL).count(),
+        },
     }
     return render(request, "lab/partners.html", context)
+
+
+def partners_academic(request):
+    context = {
+        "profile": LabProfile.load(),
+        "academic_partners": Partner.objects.filter(category=Partner.Category.ACADEMIC),
+        "active_partners_tab": "academiques",
+    }
+    return render(request, "lab/partners_academic.html", context)
+
+
+def partners_institutional(request):
+    context = {
+        "profile": LabProfile.load(),
+        "institutional_partners": Partner.objects.filter(category=Partner.Category.INSTITUTIONAL),
+        "active_partners_tab": "institutionnels",
+    }
+    return render(request, "lab/partners_institutional.html", context)
+
+
+def partners_national(request):
+    context = {
+        "profile": LabProfile.load(),
+        "active_partners_tab": "nationales",
+    }
+    return render(request, "lab/partners_national.html", context)
+
+
+def partners_international(request):
+    context = {
+        "profile": LabProfile.load(),
+        "active_partners_tab": "internationales",
+    }
+    return render(request, "lab/partners_international.html", context)
 
 
 def news_list(request):

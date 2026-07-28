@@ -33,6 +33,10 @@ urlpatterns = [
     path("formations/offres-de-stage/", views.formations_stage, name="formations_stage"),
     path("formations/renforcement-de-capacites/", views.formations_capacity, name="formations_capacity"),
     path("partenaires/", views.partners, name="partners"),
+    path("partenaires/academiques/", views.partners_academic, name="partners_academic"),
+    path("partenaires/institutionnels/", views.partners_institutional, name="partners_institutional"),
+    path("partenaires/collaborations-nationales/", views.partners_national, name="partners_national"),
+    path("partenaires/collaborations-internationales/", views.partners_international, name="partners_international"),
     path("actualites/", views.news_list, name="news_list"),
     path("contact/", views.contact, name="contact"),
 ]
