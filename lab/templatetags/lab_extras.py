@@ -18,17 +18,35 @@ FIELD_LABELS = [
 FIELD_LABEL_RE = re.compile(
     r"(?<![\wÀ-ÿ])(" + "|".join(re.escape(l) for l in sorted(FIELD_LABELS, key=len, reverse=True)) + r")\s*:\s*"
 )
+SEPARATOR_TAIL_RE = re.compile(r"[\s—–-]+$")
 
 
 @register.filter
 def field_labels(text):
     """Comme linebreaks, mais met en valeur (gras, couleur) les libellés de champ connus
-    ("École doctorale :", "Titre de la thèse :", ...) rencontrés dans un texte libre (jurys de thèse)."""
+    ("École doctorale :", "Titre de la thèse :", ...) rencontrés dans un texte libre (jurys de
+    thèse), chacun démarrant sa propre ligne même si plusieurs libellés partagent un paragraphe."""
     if not text:
         return ""
-    highlighted = FIELD_LABEL_RE.sub(r'<strong class="field-label">\1 :</strong> ', escape(text))
-    paragraphs = [p for p in highlighted.split("\n\n") if p.strip()]
-    html = "".join("<p>" + p.replace("\n", "<br>") + "</p>" for p in paragraphs)
+    paragraphs = [p for p in text.split("\n\n") if p.strip()]
+    out_paragraphs = []
+    for para in paragraphs:
+        pieces = []
+        last_end = 0
+        first = True
+        for m in FIELD_LABEL_RE.finditer(para):
+            before = escape(para[last_end:m.start()])
+            if first:
+                pieces.append(before)
+            else:
+                pieces.append(SEPARATOR_TAIL_RE.sub("", before))
+                pieces.append("<br>")
+            pieces.append(f'<strong class="field-label">{escape(m.group(1))} :</strong> ')
+            last_end = m.end()
+            first = False
+        pieces.append(escape(para[last_end:]))
+        out_paragraphs.append("".join(pieces).replace("\n", "<br>"))
+    html = "".join("<p>" + p + "</p>" for p in out_paragraphs)
     return mark_safe(html)
 
 
