@@ -51,25 +51,6 @@
         </div>
         {% endif %}
 
-        {% if members %}
-        <h2 style="margin-top:32px;">Membres de l'équipe</h2>
-        <div class="table-wrap">
-          <table class="data-table">
-            <thead><tr><th>Nom</th><th>Grade / Spécialité</th></tr></thead>
-            <tbody>
-              {% for m in members %}
-              <tr>
-                <td class="name-cell">
-                  <span class="avatar-chip">{{ m.full_name|initials }}</span>
-                  <a href="{{ m.get_absolute_url }}" style="color:inherit;font-weight:inherit;">{{ m.full_name }}</a>{% if m.is_director %}<span class="director-tag">Directeur</span>{% endif %}
-                </td>
-                <td>{{ m.title }}</td>
-              </tr>
-              {% endfor %}
-            </tbody>
-          </table>
-        </div>
-        {% endif %}
       </div>
 
       <div class="side-panel">
