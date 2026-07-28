@@ -272,7 +272,7 @@ class Command(BaseCommand):
              "tout en favorisant le transfert des connaissances vers les secteurs socio-économiques et les "
              "politiques publiques.",
              "https://share.google/BQJbVwSK83PN8kfQV"),
-            ("Dr. Souleiman OMAR", "Maître de conférences en Mathématiques fondamentales", "", False, team_dyn,
+            ("Dr. Souleiman OMAR", "Maître de conférences en Mathématiques fondamentales", "Directeur CEALT", False, team_dyn,
              "", "", "", "member_souleiman_omar.png",
              "Dr Souleiman Omar Hoch est Maître de conférences en mathématiques à l'Université de Djibouti "
              "et une figure importante de la recherche scientifique et de l'enseignement supérieur à "
@@ -292,7 +292,7 @@ class Command(BaseCommand):
              "domaine des énergies renouvelables, afin de soutenir la transition énergétique et le "
              "développement durable à Djibouti.",
              "https://share.google/dDdC9IlhopRoniqup"),
-            ("Dr. Doualeh ABDILLAHI", "Maître de conférences en Statistiques appliquées", "", False, team_sto,
+            ("Dr. Doualeh ABDILLAHI", "Maître de conférences en Statistiques appliquées", "Directeur des études", False, team_sto,
              "", "", "", "member_doualeh_abdillahi.png",
              "Dr Doualeh Abdillahi Ali est Maître de conférences en mathématiques appliquées et Directeur "
              "des études à la Faculté de Droit, Économie et Gestion de l'Université de Djibouti. Il est "
