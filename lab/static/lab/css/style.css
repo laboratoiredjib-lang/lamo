@@ -287,7 +287,7 @@ p { margin: 0 0 1em; color: var(--ink); }
   overflow: hidden; max-width: 780px;
 }
 .hero-v2-stat {
-  background: rgba(6,17,33,.6); padding: 20px 18px; transition: background .25s var(--ease), transform .25s var(--ease);
+  background: rgba(8,26,52,.32); padding: 20px 18px; transition: background .25s var(--ease), transform .25s var(--ease);
   display: flex; align-items: center; gap: 14px;
 }
 .hero-v2-stat:hover { background: rgba(28,135,131,.22); transform: translateY(-2px); }
@@ -326,7 +326,7 @@ p { margin: 0 0 1em; color: var(--ink); }
 /* ---------- Hero v3 (accueil) : texte à gauche, illustration encadrée à droite ---------- */
 .hero-v3 {
   position: relative; overflow: hidden; padding: 76px 0 44px;
-  background: linear-gradient(125deg, var(--navy-dark) 0%, var(--navy) 62%, var(--navy-2) 100%);
+  background: linear-gradient(125deg, #123566 0%, #1e5c9e 55%, #2f72bb 100%);
 }
 .hero-v3-title {
   font-size: clamp(1.5rem, 2.65vw, 2.3rem); color: #fff; margin: 0 0 32px; line-height: 1.15;
