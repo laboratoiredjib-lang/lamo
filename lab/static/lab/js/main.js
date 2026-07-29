@@ -157,21 +157,39 @@
     }
   }
 
-  /* Carrousel photo des activités : met à jour le compteur "n / total" au défilement. */
+  /* Carrousel photo des activités : compteur "n / total", boutons précédent/suivant et défilement à la molette. */
   document.querySelectorAll(".activity-feed-media--carousel").forEach(function (carousel) {
-    var counter = carousel.parentElement.querySelector(".activity-feed-count");
+    var wrap = carousel.parentElement;
+    var counter = wrap.querySelector(".activity-feed-count");
+    var prevBtn = wrap.querySelector(".activity-feed-nav--prev");
+    var nextBtn = wrap.querySelector(".activity-feed-nav--next");
     var total = carousel.querySelectorAll("img").length;
-    if (!counter || !total) return;
+    if (!total) return;
+
+    var updateUI = function () {
+      var index = Math.round(carousel.scrollLeft / carousel.clientWidth) + 1;
+      index = Math.max(1, Math.min(total, index));
+      if (counter) counter.textContent = index + " / " + total;
+      if (prevBtn) prevBtn.disabled = index <= 1;
+      if (nextBtn) nextBtn.disabled = index >= total;
+    };
+
     var updating = false;
     carousel.addEventListener("scroll", function () {
       if (updating) return;
       updating = true;
       requestAnimationFrame(function () {
-        var index = Math.round(carousel.scrollLeft / carousel.clientWidth) + 1;
-        index = Math.max(1, Math.min(total, index));
-        counter.textContent = index + " / " + total;
+        updateUI();
         updating = false;
       });
     });
+
+    var goTo = function (delta) {
+      carousel.scrollBy({ left: delta * carousel.clientWidth, behavior: "smooth" });
+    };
+    if (prevBtn) prevBtn.addEventListener("click", function () { goTo(-1); });
+    if (nextBtn) nextBtn.addEventListener("click", function () { goTo(1); });
+
+    updateUI();
   });
 })();

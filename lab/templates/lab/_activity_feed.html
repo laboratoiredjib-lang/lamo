@@ -4,11 +4,21 @@
   {% with imgs=a.all_images %}
   <article class="activity-feed-card{% if not imgs %} activity-feed-card--no-media{% endif %}">
     {% if imgs %}
-    <div class="activity-feed-media{% if imgs|length > 1 %} activity-feed-media--carousel{% endif %}{% if a.image_fit_contain %} activity-feed-media--contain{% endif %}">
-      {% for img in imgs %}
-      <img src="{{ img.url }}" alt="{{ a.title }}" loading="lazy">
-      {% endfor %}
-      {% if imgs|length > 1 %}<span class="activity-feed-count">1 / {{ imgs|length }}</span>{% endif %}
+    <div class="activity-feed-media{% if a.image_fit_contain %} activity-feed-media--contain{% endif %}">
+      <div class="activity-feed-media-scroll{% if imgs|length > 1 %} activity-feed-media--carousel{% endif %}">
+        {% for img in imgs %}
+        <img src="{{ img.url }}" alt="{{ a.title }}" loading="lazy">
+        {% endfor %}
+      </div>
+      {% if imgs|length > 1 %}
+      <span class="activity-feed-count">1 / {{ imgs|length }}</span>
+      <button type="button" class="activity-feed-nav activity-feed-nav--prev" aria-label="Image précédente" disabled>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+      </button>
+      <button type="button" class="activity-feed-nav activity-feed-nav--next" aria-label="Image suivante">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+      </button>
+      {% endif %}
     </div>
     {% endif %}
     <div class="activity-feed-body">
