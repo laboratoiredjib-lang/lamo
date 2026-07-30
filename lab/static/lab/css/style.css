@@ -761,7 +761,7 @@ table.data-table { width: 100%; border-collapse: collapse; min-width: 620px; }
 }
 .news-card:hover { box-shadow: var(--shadow-lg); transform: translateY(-4px); }
 .news-media { background: var(--bg-alt); aspect-ratio: 4 / 3; display: flex; align-items: center; justify-content: center; overflow: hidden; }
-.news-media img { width: 100%; height: 100%; object-fit: contain; padding: 12px; transition: transform .5s var(--ease); }
+.news-media img { width: 100%; height: 100%; object-fit: contain; padding: 12px; transition: transform .5s var(--ease); cursor: zoom-in; }
 .news-card:hover .news-media img { transform: scale(1.04); }
 .news-body { padding: 16px 18px 18px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
 .news-date-pill {
@@ -822,7 +822,7 @@ table.data-table { width: 100%; border-collapse: collapse; min-width: 620px; }
 .activity-feed-card--no-media { grid-template-columns: 1fr; }
 .activity-feed-media { background: var(--bg-alt); aspect-ratio: 3 / 2; position: relative; overflow: hidden; }
 .activity-feed-media-scroll { width: 100%; height: 100%; display: flex; }
-.activity-feed-media img { width: 100%; height: 100%; object-fit: cover; display: block; flex: 0 0 100%; }
+.activity-feed-media img { width: 100%; height: 100%; object-fit: contain; padding: 14px; display: block; flex: 0 0 100%; cursor: zoom-in; }
 .activity-feed-media--carousel {
   overflow-x: auto; scroll-snap-type: x mandatory;
   -webkit-overflow-scrolling: touch; scrollbar-width: none;
@@ -1072,4 +1072,53 @@ table.data-table { width: 100%; border-collapse: collapse; min-width: 620px; }
   .page-header-icon svg circle, .page-header-icon svg ellipse, .page-header-icon svg polyline {
     stroke-dashoffset: 0 !important; transition: none !important;
   }
+}
+
+/* ---------- Lightbox : agrandissement et zoom des images (activités, actualités, partenaires...) ---------- */
+body.lightbox-locked { overflow: hidden; }
+.lightbox {
+  position: fixed; inset: 0; z-index: 500; display: flex; align-items: center; justify-content: center;
+  background: rgba(6,10,18,.94); opacity: 0; visibility: hidden; transition: opacity .3s var(--ease);
+}
+.lightbox.is-open { opacity: 1; visibility: visible; }
+.lightbox-stage {
+  max-width: 92vw; max-height: 84vh; overflow: auto; display: flex; align-items: center; justify-content: center;
+  scrollbar-width: thin;
+}
+.lightbox-img {
+  max-width: 92vw; max-height: 84vh; object-fit: contain; cursor: zoom-in; display: block; border-radius: 6px;
+  opacity: 0; transform: scale(.97); transition: opacity .25s var(--ease-out), transform .25s var(--ease-out);
+}
+.lightbox.is-open .lightbox-img.is-loaded { opacity: 1; transform: scale(1); }
+.lightbox-img.is-zoomed { max-width: none; max-height: none; cursor: zoom-out; }
+.lightbox-close, .lightbox-nav {
+  position: absolute; z-index: 2; background: rgba(255,255,255,.12); color: #fff; border: none; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center; cursor: pointer; transition: background .2s var(--ease), transform .2s var(--ease);
+}
+.lightbox-close:hover, .lightbox-nav:hover { background: var(--accent); }
+.lightbox-close { top: 22px; right: 22px; width: 42px; height: 42px; }
+.lightbox-close svg { width: 18px; height: 18px; }
+.lightbox-nav { top: 50%; transform: translateY(-50%); width: 48px; height: 48px; }
+.lightbox-nav[hidden], .lightbox-counter[hidden] { display: none; }
+.lightbox-nav:hover { transform: translateY(-50%) scale(1.06); }
+.lightbox-nav svg { width: 22px; height: 22px; }
+.lightbox-nav--prev { left: 18px; }
+.lightbox-nav--next { right: 18px; }
+.lightbox-counter {
+  position: absolute; bottom: 22px; left: 50%; transform: translateX(-50%);
+  background: rgba(255,255,255,.12); color: #fff; font-size: .78rem; font-weight: 700; padding: 5px 14px; border-radius: 100px;
+}
+.lightbox-hint {
+  position: absolute; bottom: 24px; right: 24px; color: rgba(255,255,255,.5); font-size: .72rem; letter-spacing: .01em;
+}
+@media (max-width: 640px) {
+  .lightbox-hint { display: none; }
+  .lightbox-nav { width: 40px; height: 40px; }
+  .lightbox-nav--prev { left: 8px; }
+  .lightbox-nav--next { right: 8px; }
+  .lightbox-close { top: 12px; right: 12px; }
+  .lightbox-counter { bottom: 14px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .lightbox, .lightbox-img { transition: none; }
 }

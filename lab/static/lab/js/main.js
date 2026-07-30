@@ -192,4 +192,105 @@
 
     updateUI();
   });
+
+  /* Lightbox : agrandissement et zoom des images (activités, formations, partenaires, actualités...). */
+  var lightboxTriggers = document.querySelectorAll(".activity-feed-media img, .news-media img");
+  if (lightboxTriggers.length) {
+    var lb = document.createElement("div");
+    lb.className = "lightbox";
+    lb.setAttribute("role", "dialog");
+    lb.setAttribute("aria-modal", "true");
+    lb.setAttribute("aria-label", "Aperçu de l'image");
+    lb.innerHTML =
+      '<button type="button" class="lightbox-close" aria-label="Fermer">' +
+        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>' +
+      '</button>' +
+      '<button type="button" class="lightbox-nav lightbox-nav--prev" aria-label="Image précédente">' +
+        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>' +
+      '</button>' +
+      '<button type="button" class="lightbox-nav lightbox-nav--next" aria-label="Image suivante">' +
+        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>' +
+      '</button>' +
+      '<div class="lightbox-stage"><img class="lightbox-img" src="" alt=""></div>' +
+      '<div class="lightbox-counter"></div>' +
+      '<div class="lightbox-hint">Cliquer sur l’image pour zoomer</div>';
+    document.body.appendChild(lb);
+
+    var lbStage = lb.querySelector(".lightbox-stage");
+    var lbImg = lb.querySelector(".lightbox-img");
+    var lbClose = lb.querySelector(".lightbox-close");
+    var lbPrev = lb.querySelector(".lightbox-nav--prev");
+    var lbNext = lb.querySelector(".lightbox-nav--next");
+    var lbCounter = lb.querySelector(".lightbox-counter");
+    var lbGroup = [];
+    var lbIndex = 0;
+
+    var resetZoom = function () {
+      lbImg.classList.remove("is-zoomed");
+      lbImg.style.width = "";
+      lbImg.style.maxWidth = "";
+    };
+
+    var showImage = function (index) {
+      lbIndex = (index + lbGroup.length) % lbGroup.length;
+      resetZoom();
+      lbImg.classList.remove("is-loaded");
+      lbImg.src = lbGroup[lbIndex].src;
+      lbImg.alt = lbGroup[lbIndex].alt || "";
+      var multi = lbGroup.length > 1;
+      lbPrev.hidden = !multi;
+      lbNext.hidden = !multi;
+      lbCounter.hidden = !multi;
+      if (multi) lbCounter.textContent = (lbIndex + 1) + " / " + lbGroup.length;
+    };
+    lbImg.addEventListener("load", function () { lbImg.classList.add("is-loaded"); });
+
+    var openLightbox = function (group, index) {
+      lbGroup = group;
+      showImage(index);
+      lb.classList.add("is-open");
+      document.body.classList.add("lightbox-locked");
+    };
+    var closeLightbox = function () {
+      lb.classList.remove("is-open");
+      document.body.classList.remove("lightbox-locked");
+      resetZoom();
+    };
+
+    lbClose.addEventListener("click", closeLightbox);
+    lb.addEventListener("click", function (e) {
+      if (e.target === lb || e.target === lbStage) closeLightbox();
+    });
+    lbPrev.addEventListener("click", function () { showImage(lbIndex - 1); });
+    lbNext.addEventListener("click", function () { showImage(lbIndex + 1); });
+    lbImg.addEventListener("click", function (e) {
+      e.stopPropagation();
+      if (lbImg.classList.contains("is-zoomed")) {
+        resetZoom();
+      } else {
+        lbImg.classList.add("is-zoomed");
+        lbImg.style.maxWidth = "none";
+        lbImg.style.width = Math.round((lbImg.naturalWidth || 1200) * 1.7) + "px";
+      }
+    });
+    document.addEventListener("keydown", function (e) {
+      if (!lb.classList.contains("is-open")) return;
+      if (e.key === "Escape") closeLightbox();
+      if (e.key === "ArrowLeft") showImage(lbIndex - 1);
+      if (e.key === "ArrowRight") showImage(lbIndex + 1);
+    });
+
+    lightboxTriggers.forEach(function (image) {
+      image.addEventListener("click", function () {
+        var mediaWrap = image.closest(".activity-feed-media, .news-media");
+        var scrollWrap = mediaWrap ? mediaWrap.querySelector(".activity-feed-media--carousel") : null;
+        var groupEls = scrollWrap ? scrollWrap.querySelectorAll("img") : [image];
+        var group = Array.prototype.map.call(groupEls, function (el) {
+          return { src: el.currentSrc || el.src, alt: el.alt };
+        });
+        var idx = Array.prototype.indexOf.call(groupEls, image);
+        openLightbox(group, idx < 0 ? 0 : idx);
+      });
+    });
+  }
 })();
