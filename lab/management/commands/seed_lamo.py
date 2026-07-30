@@ -498,6 +498,9 @@ class Command(BaseCommand):
             "M. Gouled SOULEIMAN": "member_gouled_souleiman.jpg",
             "M. Said ISMAIL": "member_said_ismail.jpg",
             "Mme. Saida BALLAH": "member_saida_ballah.jpg",
+            "M. Kadir ALI": "member_kadir_ali.jpg",
+            "M. Abdourahman Djama GUEDI": "member_abdourahman_djama.jpg",
+            "M. Mohamed Ismael DINI": "member_mohamed_ismael_dini.png",
         }
         for order, (full_name, start_year, partner_university, thesis_director, co_supervisor, bio) in enumerate(rows, start=1):
             doctorant, _ = Doctorant.objects.update_or_create(
