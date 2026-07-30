@@ -497,6 +497,7 @@ class Command(BaseCommand):
         doctorant_photos = {
             "M. Gouled SOULEIMAN": "member_gouled_souleiman.jpg",
             "M. Said ISMAIL": "member_said_ismail.jpg",
+            "Mme. Saida BALLAH": "member_saida_ballah.jpg",
         }
         for order, (full_name, start_year, partner_university, thesis_director, co_supervisor, bio) in enumerate(rows, start=1):
             doctorant, _ = Doctorant.objects.update_or_create(
