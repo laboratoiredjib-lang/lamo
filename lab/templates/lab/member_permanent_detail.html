@@ -52,7 +52,7 @@
         {% if member.email %}<div class="row"><strong>Email</strong><a href="mailto:{{ member.email }}">{{ member.email }}</a></div>{% endif %}
         {% if member.email_secondary %}<div class="row"><strong>Email (2)</strong><a href="mailto:{{ member.email_secondary }}">{{ member.email_secondary }}</a></div>{% endif %}
         {% if member.phone %}<div class="row"><strong>Téléphone</strong><span>{{ member.phone }}</span></div>{% endif %}
-        <div class="row"><strong>Institution</strong><span>{{ profile.acronym }} — {{ profile.affiliation }}</span></div>
+        <div class="row"><strong>Institution</strong><span>{{ profile.name }} ({{ profile.acronym }})</span></div>
       </div>
     </div>
 

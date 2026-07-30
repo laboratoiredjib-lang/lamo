@@ -494,6 +494,10 @@ class Command(BaseCommand):
              "essentielles pour l'amélioration des stratégies de surveillance et de prévention de la "
              "brucellose à Djibouti."),
         ]
+        doctorant_photos = {
+            "M. Gouled SOULEIMAN": "member_gouled_souleiman.jpg",
+            "M. Said ISMAIL": "member_said_ismail.jpg",
+        }
         for order, (full_name, start_year, partner_university, thesis_director, co_supervisor, bio) in enumerate(rows, start=1):
             doctorant, _ = Doctorant.objects.update_or_create(
                 full_name=full_name,
@@ -507,8 +511,8 @@ class Command(BaseCommand):
                     "order": order,
                 },
             )
-            if full_name == "M. Gouled SOULEIMAN":
-                attach_image(doctorant, "photo", "member_gouled_souleiman.jpg")
+            if full_name in doctorant_photos:
+                attach_image(doctorant, "photo", doctorant_photos[full_name])
 
     def seed_associates(self):
         rows = [
