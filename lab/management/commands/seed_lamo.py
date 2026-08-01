@@ -1528,8 +1528,8 @@ class Command(BaseCommand):
             full_name="Yahyeh SOULEIMAN",
             defaults={
                 "title": (
-                    "Contribution à la modélisation, à l'analyse et au contrôle des systèmes complexes : "
-                    "applications à la santé, à l'environnement et à l'aide à la décision"
+                    "Contribution à la modélisation, à l'analyse et au contrôle des systèmes complexes "
+                    "pour l'aide à la décision"
                 ),
                 "period_label": "2027–2028",
                 "garant": "Pr Raluca Eftimie",
@@ -1539,34 +1539,30 @@ class Command(BaseCommand):
                     "aide à la décision."
                 ),
                 "description": (
-                    "Cette Habilitation à Diriger des Recherches (HDR), actuellement en cours de "
-                    "réalisation, a pour objectif de présenter une synthèse des contributions "
-                    "scientifiques développées au cours des dernières années dans le domaine de la "
-                    "modélisation mathématique des systèmes complexes. Les travaux s'inscrivent à "
-                    "l'interface des mathématiques appliquées, de la santé publique, des sciences de "
-                    "l'environnement et de l'aide à la décision, en mobilisant des approches théoriques, "
-                    "numériques et computationnelles.\n\n"
-                    "Les recherches portent principalement sur la modélisation des maladies infectieuses, "
-                    "la modélisation des systèmes écologiques et environnementaux, l'analyse qualitative "
-                    "des systèmes dynamiques, la modélisation d'ordre fractionnaire, l'optimisation et le "
-                    "contrôle optimal. Elles visent à développer des modèles mathématiques robustes, à "
-                    "analyser leurs propriétés dynamiques, à identifier les paramètres influents, à "
-                    "évaluer l'impact des stratégies d'intervention et à proposer des outils d'aide à la "
-                    "décision destinés aux acteurs publics et aux décideurs.\n\n"
-                    "Cette HDR est réalisée sous la responsabilité scientifique du Pr Raluca Eftimie, "
+                    "Cette Habilitation à Diriger des Recherches, actuellement en préparation, a pour "
+                    "objectif de présenter une synthèse des contributions scientifiques développées ces "
+                    "dernières années dans le domaine de la modélisation mathématique des systèmes "
+                    "complexes pour l'aide à la décision.\n\n"
+                    "Ces travaux s'inscrivent dans le champ des mathématiques appliquées et mobilisent des "
+                    "approches théoriques, numériques et computationnelles. Ils portent principalement sur "
+                    "l'analyse qualitative des systèmes dynamiques, la modélisation d'ordre fractionnaire, "
+                    "l'optimisation et le contrôle optimal.\n\n"
+                    "L'objectif est de développer des cadres de modélisation robustes, d'étudier les "
+                    "propriétés dynamiques des systèmes, d'identifier les paramètres influents et de "
+                    "proposer des méthodologies et des outils pour l'analyse, la prédiction et l'aide à la "
+                    "décision.\n\n"
+                    "Cette HDR sera réalisée sous la responsabilité scientifique de la Pr Raluca Eftimie, "
                     "Professeure à l'Université Marie et Louis Pasteur (France), dans le cadre d'une "
-                    "collaboration scientifique entre l'Université de Djibouti et l'Université Marie et "
-                    "Louis Pasteur. Elle contribue au renforcement des coopérations internationales en "
-                    "recherche, au développement des activités scientifiques du Laboratoire d'Analyse, de "
-                    "Modélisation et d'Optimisation (LAMO) et à la consolidation de la formation doctorale "
-                    "au sein de l'Université de Djibouti.\n\n"
+                    "collaboration entre l'Université de Djibouti et l'Université Marie et Louis Pasteur. "
+                    "Elle contribue au renforcement des coopérations internationales en recherche, au "
+                    "développement des activités du Laboratoire d'Analyse, de Modélisation et "
+                    "d'Optimisation (LAMO) et à la consolidation de la formation doctorale au sein de "
+                    "l'Université de Djibouti.\n\n"
                     "L'objectif de cette habilitation est de démontrer la capacité du candidat à conduire "
                     "des recherches de manière autonome, à définir de nouveaux axes scientifiques, à "
                     "piloter des projets de recherche et à encadrer des doctorants. À plus long terme, "
-                    "elle ouvrira de nouvelles perspectives de recherche dans les domaines de la "
-                    "modélisation mathématique, de l'intelligence artificielle, de la science des données "
-                    "et des systèmes complexes, tout en contribuant au rayonnement scientifique de "
-                    "l'Université de Djibouti sur les plans régional et international."
+                    "elle vise à ouvrir de nouvelles perspectives dans les domaines de la modélisation "
+                    "mathématique, de l'intelligence artificielle et des systèmes complexes."
                 ),
                 "order": 1,
             },
