@@ -221,6 +221,14 @@ class Activity(models.Model):
         max_length=100, blank=True, default="Télécharger le livret",
         help_text="Texte du bouton de téléchargement.",
     )
+    video = models.FileField(
+        upload_to="activities/videos/", blank=True, null=True,
+        help_text="Vidéo à regarder directement sur la page (mp4).",
+    )
+    video_label = models.CharField(
+        max_length=100, blank=True, default="Vidéo",
+        help_text="Légende affichée au-dessus du lecteur vidéo.",
+    )
     sort_date = models.DateField(
         null=True, blank=True,
         help_text="Date utilisée uniquement pour classer l'activité de la plus récente à la plus ancienne.",

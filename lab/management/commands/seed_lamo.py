@@ -855,6 +855,8 @@ class Command(BaseCommand):
                         "leur engagement et leurs performances remarquables."
                     ),
                     "image": "activity_jim2025_remise_prix.jpeg",
+                    "video_label": "Vidéo — Journée Internationale des Mathématiques 2025",
+                    "document_label": "Télécharger le programme JIM 2025",
                 },
             },
             {
@@ -957,6 +959,8 @@ class Command(BaseCommand):
                         "activity_onm2026_nationale_laureats.jpeg",
                         "activity_onm2026_nationale_laureats_2.jpeg",
                     ],
+                    "video_label": "Vidéo — Olympiades Nationales de Mathématiques 2026",
+                    "document_label": "Télécharger les activités ONM 2026",
                 },
             },
             {
@@ -1000,6 +1004,20 @@ class Command(BaseCommand):
             },
         ]
         self._seed_activity_rows(olympiades)
+
+        jim_2025 = Activity.objects.get(
+            category=Activity.Category.OLYMPIADES,
+            title="Cérémonie de remise des prix — Journée Internationale des Mathématiques 2025",
+        )
+        attach_image(jim_2025, "video", "activity_olympiades_2025_video.mp4")
+        attach_image(jim_2025, "document", "activity_olympiades_2025_programme.pdf")
+
+        onm_2026 = Activity.objects.get(
+            category=Activity.Category.OLYMPIADES,
+            title="Cérémonie de remise des prix — phase nationale ONM 2026",
+        )
+        attach_image(onm_2026, "video", "activity_olympiades_2026_video.mp4")
+        attach_image(onm_2026, "document", "activity_olympiades_2026_activites.docx")
 
         participations = [
             {

@@ -30,6 +30,14 @@
         {% if a.people %}<span><strong>Représentation :</strong> {{ a.people }}</span>{% endif %}
       </div>
       {% if a.description %}<div class="prose">{% if a.category == "jury" %}{{ a.description|field_labels }}{% else %}{{ a.description|linebreaks }}{% endif %}</div>{% endif %}
+      {% if a.video %}
+      <div class="activity-feed-video">
+        {% if a.video_label %}<span class="activity-feed-video-label">{{ a.video_label }}</span>{% endif %}
+        <video controls preload="metadata" playsinline>
+          <source src="{{ a.video.url }}" type="video/mp4">
+        </video>
+      </div>
+      {% endif %}
       <div class="activity-feed-actions">
         {% if a.link %}<a href="{{ a.link }}" target="_blank" rel="noopener noreferrer" class="pub-link">{% if a.category == "jury" %}Voir la thèse{% else %}En savoir plus{% endif %} ↗</a>{% endif %}
         {% if a.document %}<a href="{{ a.document.url }}" download class="pub-link pub-link--download">{{ a.document_label }} ↓</a>{% endif %}

@@ -873,6 +873,9 @@ table.data-table { width: 100%; border-collapse: collapse; min-width: 620px; }
 .activity-feed-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 16px; }
 .pub-link--download { background: var(--teal-dark); }
 .pub-link--download:hover { background: var(--accent); }
+.activity-feed-video { margin-top: 18px; }
+.activity-feed-video-label { display: block; font-size: 0.78rem; font-weight: 700; color: var(--teal-dark); text-transform: uppercase; letter-spacing: 0.03em; margin-bottom: 8px; }
+.activity-feed-video video { width: 100%; max-height: 420px; display: block; border-radius: var(--radius-lg); background: #000; }
 .activity-feed-meta strong { color: var(--teal-dark); font-weight: 700; }
 .prose .field-label { color: var(--teal-dark); font-weight: 700; }
 
