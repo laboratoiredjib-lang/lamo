@@ -692,6 +692,23 @@ table.data-table { width: 100%; border-collapse: collapse; min-width: 620px; }
 .category-head h2 { font-size: 1.15rem; margin: 0; }
 .category-head .cat-count { font-size: 0.78rem; color: var(--muted); }
 
+/* Sous-sections repliables (ex : Olympiades — Édition 2026 / 2025) */
+.accordion-toggle {
+  width: 100%; background: var(--bg-alt); border: 1px solid var(--line); border-radius: var(--radius-lg);
+  padding: 16px 20px; margin-bottom: 0; cursor: pointer; text-align: left; font-family: inherit;
+  transition: background .15s var(--ease), border-color .15s var(--ease);
+}
+.accordion-toggle:hover { background: var(--teal-tint); border-color: var(--teal-dark); }
+.accordion-toggle h2 { flex: 1; }
+.accordion-toggle .cat-count { flex-shrink: 0; }
+.accordion-caret {
+  width: 9px; height: 9px; flex-shrink: 0; border-right: 2px solid var(--teal-dark); border-bottom: 2px solid var(--teal-dark);
+  transform: rotate(45deg); margin-top: -4px; transition: transform .2s var(--ease);
+}
+.accordion-toggle[aria-expanded="true"] .accordion-caret { transform: rotate(-135deg); margin-top: 4px; }
+.accordion-panel { padding-top: 20px; }
+.accordion-panel[hidden] { display: none; }
+
 /* ---------- Pages Production scientifique / Formations ---------- */
 .info-card-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
 .info-card {

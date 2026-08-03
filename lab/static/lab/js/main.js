@@ -48,6 +48,15 @@
     }
   });
 
+  document.querySelectorAll(".accordion-toggle").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      var isOpen = btn.getAttribute("aria-expanded") === "true";
+      var panel = btn.nextElementSibling;
+      btn.setAttribute("aria-expanded", isOpen ? "false" : "true");
+      if (panel) panel.hidden = isOpen;
+    });
+  });
+
   /* Scroll reveal: fade-up for .reveal, cascading fade-up for children of .stagger */
   document.querySelectorAll(".stagger").forEach(function (group) {
     Array.prototype.forEach.call(group.children, function (child, i) {

@@ -24,12 +24,15 @@
 
     {% regroup activities by edition_label as edition_list %}
     {% for edition in edition_list %}
-    <div class="category-block">
-      <div class="category-head">
+    <div class="category-block accordion-block">
+      <button type="button" class="category-head accordion-toggle" aria-expanded="{% if forloop.first %}true{% else %}false{% endif %}">
         <h2>{{ edition.grouper }}</h2>
         <span class="cat-count">{{ edition.list|length }} étape{{ edition.list|length|pluralize }}</span>
+        <span class="accordion-caret"></span>
+      </button>
+      <div class="accordion-panel"{% if not forloop.first %} hidden{% endif %}>
+        {% include "lab/_activity_feed.html" with activities=edition.list %}
       </div>
-      {% include "lab/_activity_feed.html" with activities=edition.list %}
     </div>
     {% endfor %}
   </div>
