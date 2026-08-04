@@ -144,6 +144,9 @@
 </section>
 
 <section class="section section--alt reveal">
+  <div class="section-wave-top" aria-hidden="true">
+    <svg viewBox="0 0 1440 40" preserveAspectRatio="none"><path d="M0,0 L1440,0 L1440,18 C1200,36 960,4 720,20 C480,36 240,4 0,20 Z"/></svg>
+  </div>
   <div class="container">
     <div class="section-head centered">
       <span class="eyebrow">Organisation scientifique</span>
@@ -178,7 +181,7 @@
     </div>
     <div class="grid-3 stagger">
       {% for theme in themes %}
-      <div class="theme-card">
+      <div class="theme-card" data-num="0{{ forloop.counter }}">
         <div class="num">0{{ forloop.counter }}</div>
         <h3>{{ theme.title }}</h3>
         {% if theme.team %}<span class="team-tag">{{ theme.team.name }}</span>{% endif %}
@@ -191,6 +194,9 @@
 
 {% if news %}
 <section class="section section--alt reveal">
+  <div class="section-wave-top" aria-hidden="true">
+    <svg viewBox="0 0 1440 40" preserveAspectRatio="none"><path d="M0,0 L1440,0 L1440,20 C1200,4 960,36 720,18 C480,0 240,32 0,14 Z"/></svg>
+  </div>
   <div class="container">
     <div class="section-head">
       <span class="eyebrow">Vie du laboratoire</span>
@@ -220,10 +226,15 @@
       <span class="eyebrow">Réseau</span>
       <h2>Ils collaborent avec le LAMO</h2>
     </div>
-    <div class="grid-4 stagger">
-      {% for p in partners %}
-      <div class="partner-tile"><img src="{{ p.logo.url }}" alt="{{ p.name }}" title="{{ p.name }}"></div>
-      {% endfor %}
+    <div class="partner-marquee">
+      <div class="partner-marquee-track">
+        {% for p in partners %}
+        <div class="partner-tile"><img src="{{ p.logo.url }}" alt="{{ p.name }}" title="{{ p.name }}"></div>
+        {% endfor %}
+        {% for p in partners %}
+        <div class="partner-tile" aria-hidden="true"><img src="{{ p.logo.url }}" alt="" title="{{ p.name }}"></div>
+        {% endfor %}
+      </div>
     </div>
   </div>
 </section>
