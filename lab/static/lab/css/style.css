@@ -491,9 +491,20 @@ p { margin: 0 0 1em; color: var(--ink); }
 .domain-chip .domain-icon svg { width: 18px; height: 18px; }
 
 .col-main h2 { font-size: 1.2rem; }
+.eyebrow--title {
+  font-size: 0.98rem; letter-spacing: 0.08em; margin-bottom: 16px;
+  background: linear-gradient(100deg, var(--navy) 30%, var(--teal-dark) 100%);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.eyebrow--title::before { height: 3px; width: 34px; }
 .intro-lede {
   font-family: var(--font-math); font-style: italic; font-weight: 600;
   font-size: 1.08rem; line-height: 1.55; color: var(--navy); margin: 0 0 16px;
+}
+.intro-lede--dropcap::first-letter {
+  font-family: var(--font-math); font-style: normal; font-weight: 700;
+  font-size: 3.1rem; line-height: 0.78; color: var(--teal-dark);
+  float: left; padding: 4px 8px 0 0;
 }
 .prose { font-size: 0.92rem; }
 .prose p { color: var(--ink); margin-bottom: 0.7em; }
