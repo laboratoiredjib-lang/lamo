@@ -672,11 +672,15 @@ class Command(BaseCommand):
                 "link": "https://urls.fr/SHONvz",
                 "sort_date": date(2027, 1, 19),
                 "document_label": "Télécharger l'atelier M2ISDA",
+                "document_pending": True,
                 "order": 2,
             },
         )
         attach_image(conference, "image", "activity_m2isda_2027_poster.jpg")
-        attach_image(conference, "document", "atelier_m2isda_2027.pdf")
+        # Document pas encore prêt : on retire celui précédemment attaché, le badge "bientôt disponible" prend le relais.
+        if conference.document:
+            conference.document.delete(save=False)
+            conference.save()
 
         conference_2024, _ = Activity.objects.update_or_create(
             category=Activity.Category.CONFERENCE,

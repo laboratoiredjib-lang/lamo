@@ -221,6 +221,10 @@ class Activity(models.Model):
         max_length=100, blank=True, default="Télécharger le livret",
         help_text="Texte du bouton de téléchargement.",
     )
+    document_pending = models.BooleanField(
+        default=False,
+        help_text="Affiche « Document bientôt disponible » tant qu'aucun fichier n'est attaché.",
+    )
     video = models.FileField(
         upload_to="activities/videos/", blank=True, null=True,
         help_text="Vidéo à regarder directement sur la page (mp4).",
