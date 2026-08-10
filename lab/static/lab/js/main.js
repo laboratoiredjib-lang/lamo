@@ -1,4 +1,13 @@
 (function () {
+  var header = document.querySelector(".site-header");
+  if (header) {
+    var onHeaderScroll = function () {
+      header.classList.toggle("is-scrolled", window.scrollY > 8);
+    };
+    onHeaderScroll();
+    window.addEventListener("scroll", onHeaderScroll, { passive: true });
+  }
+
   var toggle = document.getElementById("nav-toggle");
   var nav = document.getElementById("main-nav");
   var backdrop = document.getElementById("nav-backdrop");

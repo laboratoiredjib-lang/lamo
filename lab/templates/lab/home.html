@@ -108,7 +108,11 @@
           </h4>
           <div class="partner-mini-grid">
             {% for p in partners|slice:":6" %}
+            {% if p.website %}
+            <a href="{{ p.website }}" target="_blank" rel="noopener noreferrer" class="tile" title="{{ p.name }} — visiter le site ↗"><img src="{{ p.logo.url }}" alt="{{ p.name }}"></a>
+            {% else %}
             <div class="tile"><img src="{{ p.logo.url }}" alt="{{ p.name }}" title="{{ p.name }}"></div>
+            {% endif %}
             {% endfor %}
           </div>
           <p style="margin-top:14px;font-size:0.86rem;"><a href="{% url 'lab:partners' %}">Voir tous les partenaires</a></p>
@@ -239,10 +243,18 @@
     <div class="partner-marquee">
       <div class="partner-marquee-track">
         {% for p in partners %}
+        {% if p.website %}
+        <a href="{{ p.website }}" target="_blank" rel="noopener noreferrer" class="partner-tile partner-tile--link" title="{{ p.name }} — visiter le site ↗"><img src="{{ p.logo.url }}" alt="{{ p.name }}"></a>
+        {% else %}
         <div class="partner-tile"><img src="{{ p.logo.url }}" alt="{{ p.name }}" title="{{ p.name }}"></div>
+        {% endif %}
         {% endfor %}
         {% for p in partners %}
+        {% if p.website %}
+        <a href="{{ p.website }}" target="_blank" rel="noopener noreferrer" class="partner-tile partner-tile--link" aria-hidden="true" tabindex="-1"><img src="{{ p.logo.url }}" alt=""></a>
+        {% else %}
         <div class="partner-tile" aria-hidden="true"><img src="{{ p.logo.url }}" alt="" title="{{ p.name }}"></div>
+        {% endif %}
         {% endfor %}
       </div>
     </div>

@@ -161,33 +161,39 @@ p { margin: 0 0 1em; color: var(--ink); }
 }
 
 /* ---------- Header / Nav : LAMO à gauche, Université à droite ---------- */
-.site-header { background: #fff; border-bottom: 1px solid var(--line); position: sticky; top: 0; z-index: 60; }
+.site-header {
+  background: #fff;
+  border-bottom: 1px solid var(--line); position: sticky; top: 0; z-index: 60;
+  transition: box-shadow .3s var(--ease), border-color .3s var(--ease);
+  animation: header-drop .7s var(--ease-out) both;
+}
+/* Note : ne jamais utiliser transform/filter/backdrop-filter sur .site-header ou .header-row —
+   cela créerait un containing block pour #main-nav (position:fixed) et casserait le panneau mobile. */
+@keyframes header-drop { from { opacity: 0; margin-top: -16px; } to { opacity: 1; margin-top: 0; } }
+.site-header.is-scrolled { box-shadow: 0 8px 28px rgba(15,42,68,.1); border-bottom-color: transparent; }
+@media (prefers-reduced-motion: reduce) { .site-header { animation: none; } }
 .header-row { display: flex; align-items: center; justify-content: space-between; padding: 10px 0; gap: 20px; }
 
 .brand-univ, .brand-lamo { display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
+.brand-univ img, .brand-lamo img { transition: transform .3s var(--ease); }
+.brand-univ:hover img, .brand-lamo:hover img { transform: scale(1.05); }
 .brand-univ img { height: 68px; width: auto; }
 .brand-lamo img { height: 56px; width: auto; }
 .brand-lamo .brand-text .name { font-weight: 800; font-size: 0.98rem; color: var(--navy); display: block; }
 .brand-lamo .brand-text .sub { font-size: 0.7rem; color: var(--muted); display: block; margin-top: 1px; }
 
 .main-nav { display: flex; align-items: center; }
-.main-nav ul { display: flex; align-items: stretch; gap: 2px; }
+.main-nav ul { display: flex; align-items: center; gap: 2px; }
 .main-nav > ul > li { position: relative; }
 .main-nav > ul > li > a, .main-nav > ul > li > button {
-  display: flex; align-items: center; gap: 5px; height: 100%;
-  padding: 12px 10px; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.02em; text-transform: uppercase;
-  color: var(--navy); background: none; border: none; font-family: var(--font);
-  cursor: pointer; transition: color 0.15s ease; white-space: nowrap; position: relative;
-}
-.main-nav > ul > li > a::after, .main-nav > ul > li > button::after {
-  content: ""; position: absolute; left: 14px; right: 14px; bottom: 6px; height: 2px;
-  background: var(--accent); transform: scaleX(0); transform-origin: left; transition: transform .2s var(--ease);
+  display: flex; align-items: center; gap: 5px;
+  padding: 10px 15px; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.02em; text-transform: uppercase;
+  color: var(--navy); background: transparent; border: none; border-radius: 100px; font-family: var(--font);
+  cursor: pointer; transition: color .2s var(--ease), background .2s var(--ease); white-space: nowrap; position: relative;
 }
 .main-nav > ul > li > a:hover,
 .main-nav > ul > li > button:hover,
-.main-nav > ul > li.is-open > button { color: var(--accent); }
-.main-nav > ul > li > a:hover::after,
-.main-nav > ul > li.is-open > button::after { transform: scaleX(1); }
+.main-nav > ul > li.is-open > button { color: var(--accent-dark); background: var(--accent-tint); }
 .main-nav .caret { width: 7px; height: 7px; border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor; transform: rotate(45deg); margin-top: -3px; transition: transform .15s ease; }
 .main-nav li.is-open .caret { transform: rotate(-135deg); margin-top: 3px; }
 
@@ -195,11 +201,26 @@ p { margin: 0 0 1em; color: var(--ink); }
   position: absolute; top: 100%; left: 50%; transform: translateX(-50%) translateY(6px) scale(.97); min-width: 280px;
   background: #fff; border: 1px solid var(--line); border-radius: var(--radius-lg);
   box-shadow: var(--shadow-lg);
-  padding: 8px; opacity: 0; visibility: hidden; transform-origin: top center;
+  padding: 10px 8px 8px; opacity: 0; visibility: hidden; transform-origin: top center; overflow: hidden;
   transition: opacity .2s var(--ease-out), transform .22s var(--ease-out), visibility .2s var(--ease-out);
 }
+.dropdown::before {
+  content: ""; position: absolute; top: 0; left: 14px; right: 14px; height: 3px;
+  background: linear-gradient(90deg, var(--teal), var(--navy)); border-radius: 0 0 3px 3px;
+}
 .main-nav li.is-open .dropdown, .main-nav li:hover .dropdown { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0) scale(1); }
-.dropdown a { display: block; padding: 10px 12px; border-radius: 4px; font-size: 0.86rem; font-weight: 600; color: var(--ink); text-transform: none; letter-spacing: normal; transition: background .15s var(--ease), color .15s var(--ease), padding-left .15s var(--ease); }
+.dropdown a {
+  display: block; padding: 10px 12px; border-radius: 6px; font-size: 0.86rem; font-weight: 600; color: var(--ink);
+  text-transform: none; letter-spacing: normal; opacity: 0; transform: translateY(5px);
+  transition: background .15s var(--ease), color .15s var(--ease), padding-left .15s var(--ease),
+    opacity .28s var(--ease-out), transform .28s var(--ease-out);
+}
+.main-nav li.is-open .dropdown a, .main-nav li:hover .dropdown a { opacity: 1; transform: translateY(0); }
+.dropdown a:nth-child(2) { transition-delay: .03s; }
+.dropdown a:nth-child(3) { transition-delay: .06s; }
+.dropdown a:nth-child(4) { transition-delay: .09s; }
+.dropdown a:nth-child(5) { transition-delay: .12s; }
+.dropdown a:nth-child(6) { transition-delay: .15s; }
 .dropdown a:hover { background: var(--teal-tint); color: var(--teal-dark); text-decoration: none; padding-left: 16px; }
 .dropdown a small { display: block; color: var(--muted); font-weight: 400; margin-top: 2px; }
 
@@ -1105,8 +1126,7 @@ table.data-table { width: 100%; border-collapse: collapse; min-width: 620px; }
   }
   .main-nav.is-open { transform: translateX(0); }
   .main-nav ul { flex-direction: column; align-items: stretch; gap: 0; }
-  .main-nav > ul > li > a, .main-nav > ul > li > button { width: 100%; height: auto; justify-content: space-between; padding: 13px 8px; color: var(--ink); }
-  .main-nav > ul > li > a::after, .main-nav > ul > li > button::after { display: none; }
+  .main-nav > ul > li > a, .main-nav > ul > li > button { width: 100%; height: auto; justify-content: space-between; padding: 13px 8px; color: var(--ink); border-radius: 8px; }
   .dropdown, .main-nav li.is-open .dropdown, .main-nav li:hover .dropdown {
     position: static; box-shadow: none; border: none; opacity: 1; visibility: visible;
     transform: none; min-width: 0; width: 100%;
@@ -1118,7 +1138,7 @@ table.data-table { width: 100%; border-collapse: collapse; min-width: 620px; }
   .main-nav li.is-open .dropdown { display: block; }
   .main-nav > ul > li { border-bottom: 1px solid var(--line); }
   .main-nav > ul > li:last-child { border-bottom: none; }
-  .main-nav li.is-open > button { color: var(--accent); }
+  .main-nav li.is-open > button { color: var(--accent-dark); background: var(--accent-tint); }
   .brand-univ .brand-text, .brand-lamo .brand-text { display: none; }
   .brand-univ img, .brand-lamo img { height: 40px; }
 
