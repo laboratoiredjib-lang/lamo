@@ -551,10 +551,10 @@ p { margin: 0 0 1em; color: var(--ink); }
 .info-panel-section--institution .caption { font-size: 0.78rem; color: var(--muted); font-weight: 600; }
 
 .partner-mini-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-.partner-mini-grid img { max-height: 28px; width: auto; max-width: 100%; margin: 0 auto; filter: grayscale(1) opacity(.7); transition: filter .25s var(--ease); }
-.partner-mini-grid .tile { border: 1px solid var(--line); border-radius: var(--radius); padding: 6px; display: flex; align-items: center; justify-content: center; height: 44px; transition: border-color .15s ease, transform .15s ease; }
-.partner-mini-grid .tile:hover { border-color: var(--teal); transform: translateY(-2px); }
-.partner-mini-grid .tile:hover img { filter: grayscale(0) opacity(1); }
+.partner-mini-grid img { max-height: 28px; width: auto; max-width: 100%; margin: 0 auto; transition: transform .3s var(--ease); }
+.partner-mini-grid .tile { border: 1px solid var(--line); border-radius: var(--radius); padding: 6px; display: flex; align-items: center; justify-content: center; height: 44px; transition: border-color .2s var(--ease), transform .2s var(--ease), box-shadow .2s var(--ease); }
+.partner-mini-grid .tile:hover { border-color: var(--teal); transform: translateY(-3px); box-shadow: 0 10px 20px -6px rgba(28,135,131,.35); }
+.partner-mini-grid .tile:hover img { transform: scale(1.1); }
 
 /* ---------- Domaines d'application (grille d'icônes, page d'accueil) ---------- */
 .domain-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 14px 0 0; }
@@ -974,9 +974,9 @@ table.data-table { width: 100%; border-collapse: collapse; min-width: 620px; }
   height: 78px; display: flex; align-items: center; justify-content: center; padding: 12px;
   transition: border-color .2s var(--ease), box-shadow .2s var(--ease), transform .2s var(--ease);
 }
-.partner-tile:hover { border-color: transparent; box-shadow: var(--shadow); transform: translateY(-3px); }
-.partner-tile img { max-height: 42px; width: auto; filter: grayscale(1) opacity(.75); transition: filter .3s var(--ease); }
-.partner-tile:hover img { filter: grayscale(0) opacity(1); }
+.partner-tile:hover { border-color: transparent; box-shadow: 0 16px 32px -10px rgba(28,135,131,.4), var(--shadow); transform: translateY(-4px); }
+.partner-tile img { max-height: 42px; width: auto; transition: transform .3s var(--ease); }
+.partner-tile:hover img { transform: scale(1.1); }
 .partner-tile--link { text-decoration: none !important; cursor: pointer; }
 .partner-tile--link:hover { border-color: var(--teal); }
 
