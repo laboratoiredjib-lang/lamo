@@ -1,11 +1,18 @@
 (function () {
   var header = document.querySelector(".site-header");
-  if (header) {
+  var progress = document.getElementById("scroll-progress");
+  if (header || progress) {
     var onHeaderScroll = function () {
-      header.classList.toggle("is-scrolled", window.scrollY > 8);
+      if (header) header.classList.toggle("is-scrolled", window.scrollY > 8);
+      if (progress) {
+        var max = document.documentElement.scrollHeight - window.innerHeight;
+        var pct = max > 0 ? Math.min(100, Math.max(0, (window.scrollY / max) * 100)) : 0;
+        progress.style.width = pct + "%";
+      }
     };
     onHeaderScroll();
     window.addEventListener("scroll", onHeaderScroll, { passive: true });
+    window.addEventListener("resize", onHeaderScroll, { passive: true });
   }
 
   var toggle = document.getElementById("nav-toggle");
