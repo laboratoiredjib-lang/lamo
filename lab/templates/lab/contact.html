@@ -24,23 +24,38 @@
   <div class="container">
     <div class="contact-grid">
       <div class="info-box">
-        <h4>Coordonnées</h4>
-        <div class="field">
-          <strong>Laboratoire</strong>
-          <span>{{ profile.name }} ({{ profile.acronym }})</span>
+        <h4>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5.5h16v13H4z"/><path d="M4 6l8 6.5L20 6"/></svg>
+          Coordonnées
+        </h4>
+        <div class="field field--icon">
+          <span class="field-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 5l9 5.5-9 5.5-9-5.5Z"/><path d="M7 12.6V17c0 1.4 2.2 2.5 5 2.5s5-1.1 5-2.5v-4.4"/></svg></span>
+          <span>
+            <strong>Laboratoire</strong>
+            <span>{{ profile.name }} ({{ profile.acronym }})</span>
+          </span>
         </div>
-        <div class="field">
-          <strong>Adresse</strong>
-          <span>{{ profile.address }}</span>
+        <div class="field field--icon">
+          <span class="field-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-6.5-5.4-6.5-11a6.5 6.5 0 1 1 13 0c0 5.6-6.5 11-6.5 11Z"/><circle cx="12" cy="10" r="2.3"/></svg></span>
+          <span>
+            <strong>Adresse</strong>
+            <span>{{ profile.address }}</span>
+          </span>
         </div>
-        <div class="field">
-          <strong>Direction</strong>
-          <span>{{ profile.director_name }}</span>
+        <div class="field field--icon">
+          <span class="field-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.4"/><path d="M4.5 20c0-3.6 3.4-6.5 7.5-6.5s7.5 2.9 7.5 6.5"/></svg></span>
+          <span>
+            <strong>Direction</strong>
+            <span>{{ profile.director_name }}</span>
+          </span>
         </div>
-        <div class="field">
-          <strong>Emails</strong>
-          {% if profile.email_primary %}<a href="mailto:{{ profile.email_primary }}">{{ profile.email_primary }}</a><br>{% endif %}
-          {% if profile.email_secondary %}<a href="mailto:{{ profile.email_secondary }}">{{ profile.email_secondary }}</a>{% endif %}
+        <div class="field field--icon">
+          <span class="field-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5.5" width="18" height="13" rx="2.2"/><path d="M4 7l8 6 8-6"/></svg></span>
+          <span>
+            <strong>Emails</strong>
+            {% if profile.email_primary %}<a href="mailto:{{ profile.email_primary }}">{{ profile.email_primary }}</a><br>{% endif %}
+            {% if profile.email_secondary %}<a href="mailto:{{ profile.email_secondary }}">{{ profile.email_secondary }}</a>{% endif %}
+          </span>
         </div>
         <div style="margin-top:20px;">
           <a href="mailto:{{ profile.email_primary }}" class="btn btn-primary">Écrire au laboratoire</a>
