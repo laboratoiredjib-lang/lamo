@@ -363,7 +363,7 @@ class Command(BaseCommand):
              "Les premiers résultats ont conduit à une publication dans les actes de la conférence IFAC "
              "ainsi qu'à plusieurs communications scientifiques internationales. Les travaux se "
              "poursuivent vers l'extension des méthodes proposées à des modèles multidimensionnels et à "
-             "d'autres classes d'équations d'évolution aux équations aux dérivées partielles."),
+             "d'autres classes d'équations d'évolution."),
             ("M. Gouled SOULEIMAN", "2024", "Université Le Havre (LMAH)", "N. Verdière & A. Berred", "Yahyeh Souleiman",
              "Cette thèse de doctorat s'inscrit dans le domaine des mathématiques appliquées et des "
              "sciences de l'environnement. Elle porte sur la modélisation des écosystèmes forestiers et "
