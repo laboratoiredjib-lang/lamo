@@ -319,3 +319,169 @@
     });
   }
 })();
+
+/* ---------- Réseau animé du héros (canvas) ---------- */
+(function () {
+  var hero = document.querySelector(".hero-v3");
+  var canvas = document.getElementById("hero-network");
+  if (!hero || !canvas || !canvas.getContext) return;
+  if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+  var ctx = canvas.getContext("2d");
+  var particles = [];
+  var mouse = { x: null, y: null };
+  var width = 0, height = 0, dpr = 1, raf = null, running = false;
+
+  function resize() {
+    var rect = hero.getBoundingClientRect();
+    width = rect.width;
+    height = rect.height;
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    canvas.width = Math.round(width * dpr);
+    canvas.height = Math.round(height * dpr);
+    canvas.style.width = width + "px";
+    canvas.style.height = height + "px";
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+
+  function initParticles() {
+    var count = Math.max(24, Math.min(70, Math.floor((width * height) / 19000)));
+    particles = [];
+    for (var i = 0; i < count; i++) {
+      particles.push({
+        x: Math.random() * width,
+        y: Math.random() * height,
+        vx: (Math.random() - 0.5) * 0.3,
+        vy: (Math.random() - 0.5) * 0.3,
+        r: Math.random() * 1.4 + 1
+      });
+    }
+  }
+
+  function step() {
+    ctx.clearRect(0, 0, width, height);
+    var i, j, p, a, b, dx, dy, dist;
+
+    for (i = 0; i < particles.length; i++) {
+      p = particles[i];
+      p.x += p.vx;
+      p.y += p.vy;
+      if (p.x < 0 || p.x > width) p.vx *= -1;
+      if (p.y < 0 || p.y > height) p.vy *= -1;
+      if (mouse.x !== null) {
+        dx = p.x - mouse.x;
+        dy = p.y - mouse.y;
+        dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < 120 && dist > 0.01) {
+          var force = (120 - dist) / 120;
+          p.x += (dx / dist) * force * 1.1;
+          p.y += (dy / dist) * force * 1.1;
+        }
+      }
+    }
+
+    for (i = 0; i < particles.length; i++) {
+      for (j = i + 1; j < particles.length; j++) {
+        a = particles[i];
+        b = particles[j];
+        dx = a.x - b.x;
+        dy = a.y - b.y;
+        dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < 128) {
+          ctx.strokeStyle = "rgba(130, 224, 210," + (0.18 * (1 - dist / 128)) + ")";
+          ctx.lineWidth = 1;
+          ctx.beginPath();
+          ctx.moveTo(a.x, a.y);
+          ctx.lineTo(b.x, b.y);
+          ctx.stroke();
+        }
+      }
+    }
+    for (i = 0; i < particles.length; i++) {
+      ctx.fillStyle = "rgba(255,255,255,.6)";
+      ctx.beginPath();
+      ctx.arc(particles[i].x, particles[i].y, particles[i].r, 0, Math.PI * 2);
+      ctx.fill();
+    }
+    if (running) raf = requestAnimationFrame(step);
+  }
+
+  function start() {
+    if (running) return;
+    running = true;
+    raf = requestAnimationFrame(step);
+  }
+  function stop() {
+    running = false;
+    if (raf) cancelAnimationFrame(raf);
+  }
+
+  resize();
+  initParticles();
+  start();
+
+  var resizeTimer;
+  window.addEventListener("resize", function () {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(function () { resize(); initParticles(); }, 150);
+  }, { passive: true });
+
+  hero.addEventListener("mousemove", function (e) {
+    var rect = hero.getBoundingClientRect();
+    mouse.x = e.clientX - rect.left;
+    mouse.y = e.clientY - rect.top;
+  });
+  hero.addEventListener("mouseleave", function () {
+    mouse.x = null;
+    mouse.y = null;
+  });
+
+  if ("IntersectionObserver" in window) {
+    new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) start(); else stop();
+      });
+    }, { threshold: 0 }).observe(hero);
+  }
+})();
+
+/* ---------- Boutons magnétiques (héros) ---------- */
+(function () {
+  if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  if (window.matchMedia && !window.matchMedia("(hover: hover)").matches) return;
+  document.querySelectorAll(".btn-hero-primary, .btn-hero-line").forEach(function (btn) {
+    btn.addEventListener("mousemove", function (e) {
+      var rect = btn.getBoundingClientRect();
+      var x = e.clientX - rect.left - rect.width / 2;
+      var y = e.clientY - rect.top - rect.height / 2;
+      btn.style.transform = "translate(" + (x * 0.28).toFixed(1) + "px, " + (y * 0.4).toFixed(1) + "px)";
+    });
+    btn.addEventListener("mouseleave", function () {
+      btn.style.transform = "";
+    });
+  });
+})();
+
+/* ---------- Inclinaison 3D au survol (cartes) ---------- */
+(function () {
+  if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  if (window.matchMedia && !window.matchMedia("(hover: hover)").matches) return;
+
+  function addTilt(el, intensity, lift) {
+    el.addEventListener("mousemove", function (e) {
+      var rect = el.getBoundingClientRect();
+      var px = (e.clientX - rect.left) / rect.width - 0.5;
+      var py = (e.clientY - rect.top) / rect.height - 0.5;
+      el.style.transform =
+        "perspective(900px) rotateY(" + (px * intensity).toFixed(2) + "deg) " +
+        "rotateX(" + (-py * intensity).toFixed(2) + "deg) " +
+        "translateY(" + lift + "px)";
+    });
+    el.addEventListener("mouseleave", function () {
+      el.style.transform = "";
+    });
+  }
+
+  document.querySelectorAll(".theme-card").forEach(function (el) { addTilt(el, 7, -4); });
+  document.querySelectorAll(".team-feature").forEach(function (el) { addTilt(el, 2.5, -3); });
+})();
