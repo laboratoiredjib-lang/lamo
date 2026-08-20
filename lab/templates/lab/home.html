@@ -4,6 +4,12 @@
 
 <section class="hero-v3">
   <canvas id="hero-network" class="hero-v3-canvas" aria-hidden="true"></canvas>
+  <div class="hero-eq-field" aria-hidden="true">
+    <span class="hero-eq hero-eq-1">∇·E = ρ/ε₀</span>
+    <span class="hero-eq hero-eq-2">∑ xᵢ²</span>
+    <span class="hero-eq hero-eq-3">∂u/∂t = α∇²u</span>
+    <span class="hero-eq hero-eq-4">lim<sub>n→∞</sub></span>
+  </div>
   <div class="container">
     <h1 class="hero-v3-title"><span class="hero-v3-title-reveal">{{ profile.name }} ({{ profile.acronym }})</span></h1>
   </div>
@@ -280,8 +286,13 @@
   <div class="container">
     <div class="join-box">
       <div class="join-box-text">
-        <span class="join-box-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 12h8"/><path d="M12 8v8"/><circle cx="12" cy="12" r="9"/></svg>
+        <span class="join-box-icon join-box-target">
+          <span class="ring r1" aria-hidden="true"></span>
+          <span class="ring r2" aria-hidden="true"></span>
+          <span class="ring r3" aria-hidden="true"></span>
+          <span class="core">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 12h8"/><path d="M12 8v8"/><circle cx="12" cy="12" r="9"/></svg>
+          </span>
         </span>
         <div>
           <h3>Rejoindre le LAMO</h3>

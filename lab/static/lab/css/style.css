@@ -437,6 +437,22 @@ p { margin: 0 0 1em; color: var(--ink); }
 .hero-v3-scroll svg { animation: hero-scroll-bounce 1.8s var(--ease-out) infinite; }
 @media (max-width: 980px) { .hero-v3-scroll { display: none; } }
 
+/* ---------- Motifs mathématiques flottants (hero) ---------- */
+.hero-eq-field { position: absolute; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+.hero-eq {
+  position: absolute; font-family: var(--font-math); font-style: italic; color: rgba(255,255,255,.16);
+  white-space: nowrap; animation: hero-eq-drift ease-in-out infinite;
+}
+.hero-eq-1 { top: 14%; left: 5%; font-size: 1.7rem; animation-duration: 16s; }
+.hero-eq-2 { top: 70%; left: 9%; font-size: 2.1rem; animation-duration: 19s; animation-delay: -4s; }
+.hero-eq-3 { top: 20%; right: 7%; font-size: 1.9rem; animation-duration: 17s; animation-delay: -8s; }
+.hero-eq-4 { top: 76%; right: 11%; font-size: 1.6rem; animation-duration: 15s; animation-delay: -2s; }
+@keyframes hero-eq-drift {
+  0%, 100% { transform: translate(0,0) rotate(0deg); }
+  50% { transform: translate(14px,-16px) rotate(2deg); }
+}
+@media (max-width: 980px) { .hero-eq-field { display: none; } }
+
 @media (max-width: 980px) {
   .hero-v3-grid {
     grid-template-columns: 1fr; row-gap: 34px;
@@ -467,9 +483,9 @@ p { margin: 0 0 1em; color: var(--ink); }
 .breadcrumb .sep { margin: 0 8px; }
 
 /* Bannière des pages internes : claire, avec liseré et icône contextuelle */
-.page-header { background: var(--bg-alt); border-bottom: 1px solid var(--line); padding: 44px 0; position: relative; }
+.page-header { background: var(--bg-alt); border-bottom: 1px solid var(--line); padding: 44px 0; position: relative; overflow: hidden; }
 .page-header::before {
-  content: ""; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  content: ""; position: absolute; top: 0; left: 0; right: 0; height: 3px; z-index: 2;
   background: linear-gradient(90deg, var(--teal), var(--accent), var(--teal));
   background-size: 200% 100%; animation: page-header-shimmer 7s ease-in-out infinite;
 }
@@ -477,6 +493,20 @@ p { margin: 0 0 1em; color: var(--ink); }
   0% { background-position: 0% 0; }
   100% { background-position: 200% 0; }
 }
+/* Fond animé en dégradés doux (mêmes teintes que le logo), présent sur chaque bannière de page */
+.page-header::after {
+  content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none;
+  background:
+    radial-gradient(340px 220px at 88% -10%, rgba(63,174,110,.16), transparent 70%),
+    radial-gradient(300px 240px at 8% 120%, rgba(232,161,58,.13), transparent 70%),
+    radial-gradient(260px 200px at 55% 40%, rgba(28,135,131,.08), transparent 70%);
+  animation: page-header-drift 16s ease-in-out infinite alternate;
+}
+@keyframes page-header-drift {
+  from { transform: translate3d(0,0,0) scale(1); }
+  to   { transform: translate3d(-1.5%, 1.5%, 0) scale(1.04); }
+}
+.page-header-inner { position: relative; z-index: 1; }
 .page-header-inner { display: flex; align-items: center; gap: 20px; justify-content: space-between; flex-wrap: wrap; }
 .page-header-text { flex: 1; min-width: 240px; }
 .page-header .breadcrumb, .page-header .breadcrumb a { color: var(--muted); }
@@ -1040,6 +1070,18 @@ table.data-table { width: 100%; border-collapse: collapse; min-width: 620px; }
   display: flex; align-items: center; justify-content: center;
 }
 .join-box-icon svg { width: 26px; height: 26px; }
+.join-box-target { overflow: visible; }
+.join-box-target .ring {
+  position: absolute; inset: 0; border-radius: 50%; border: 1.5px solid var(--accent);
+  opacity: 0; animation: join-target-pulse 3.2s ease-out infinite;
+}
+.join-box-target .ring.r2 { animation-delay: 1.05s; }
+.join-box-target .ring.r3 { animation-delay: 2.1s; }
+.join-box-target .core { position: relative; z-index: 1; display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; }
+@keyframes join-target-pulse {
+  0% { transform: scale(1); opacity: .6; }
+  100% { transform: scale(2.1); opacity: 0; }
+}
 .join-box h3 { margin-bottom: 8px; font-size: 1.55rem; color: #fff; }
 .join-box p { margin: 0; color: rgba(255,255,255,0.82); max-width: 520px; }
 
@@ -1066,6 +1108,25 @@ table.data-table { width: 100%; border-collapse: collapse; min-width: 620px; }
 .partner-strip img { max-height: 18px; width: auto; }
 
 .footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); padding: 12px 0; display: flex; justify-content: space-between; align-items: center; font-size: 0.76rem; color: rgba(255,255,255,0.48); flex-wrap: wrap; gap: 8px; }
+
+/* ---------- Retour en haut ---------- */
+.to-top {
+  position: fixed; right: 20px; bottom: 20px; z-index: 55; width: 50px; height: 50px; border-radius: 50%;
+  border: none; cursor: pointer; background: linear-gradient(135deg, var(--accent), var(--accent-dark)); color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 14px 32px -10px rgba(193,83,31,.55);
+  opacity: 0; transform: translateY(16px) scale(.85); pointer-events: none;
+  transition: opacity .35s var(--ease-out), transform .35s var(--ease-out), background .2s var(--ease);
+}
+.to-top.is-visible { opacity: 1; transform: translateY(0) scale(1); pointer-events: auto; }
+.to-top:hover { background: linear-gradient(135deg, var(--accent-dark), var(--navy)); transform: translateY(-3px) scale(1.05); }
+.to-top svg { width: 20px; height: 20px; }
+.to-top::before {
+  content: ""; position: absolute; inset: -6px; border-radius: 50%; border: 1.5px solid rgba(193,83,31,.45);
+  animation: to-top-pulse 2.6s ease-out infinite;
+}
+@keyframes to-top-pulse { 0% { transform: scale(.9); opacity: .7; } 100% { transform: scale(1.35); opacity: 0; } }
+@media (max-width: 640px) { .to-top { right: 14px; bottom: 14px; width: 44px; height: 44px; } }
 
 /* ---------- Activités / Formations : flux détaillé (conférences, séminaires, participations...) ---------- */
 .activity-feed { display: flex; flex-direction: column; gap: 24px; }
@@ -1334,6 +1395,8 @@ table.data-table { width: 100%; border-collapse: collapse; min-width: 620px; }
   .page-header-icon svg circle, .page-header-icon svg ellipse, .page-header-icon svg polyline {
     stroke-dashoffset: 0 !important; transition: none !important;
   }
+  .page-header::after, .join-box-target .ring, .join-box-target .core,
+  .hero-eq, .to-top::before { animation: none !important; }
 }
 
 /* ---------- Lightbox : agrandissement et zoom des images (activités, actualités, partenaires...) ---------- */

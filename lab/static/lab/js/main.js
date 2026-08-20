@@ -485,3 +485,20 @@
   document.querySelectorAll(".theme-card").forEach(function (el) { addTilt(el, 7, -4); });
   document.querySelectorAll(".team-feature").forEach(function (el) { addTilt(el, 2.5, -3); });
 })();
+
+/* ---------- Bouton retour en haut ---------- */
+(function () {
+  var btn = document.getElementById("to-top");
+  if (!btn) return;
+  var reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  var onScroll = function () {
+    btn.classList.toggle("is-visible", window.scrollY > 480);
+  };
+  onScroll();
+  window.addEventListener("scroll", onScroll, { passive: true });
+
+  btn.addEventListener("click", function () {
+    window.scrollTo({ top: 0, behavior: reduceMotion ? "auto" : "smooth" });
+  });
+})();
