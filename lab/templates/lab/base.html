@@ -5,7 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{% block title %}{{ site_profile.acronym }} — {{ site_profile.name }}{% endblock %}</title>
 <meta name="description" content="{% block meta_description %}Le {{ site_profile.acronym }} est une unité de recherche du Laboratoire de Recherche en Mathématiques et Numérique de l'Université de Djibouti, spécialisée en mathématiques appliquées, statistique et optimisation.{% endblock %}">
+<meta name="theme-color" content="#061530">
 <link rel="icon" type="image/png" href="{% static 'lab/img/logo_lamo.png' %}">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="{% static 'lab/css/style.css' %}?v={% now 'U' %}">
 </head>
 <body>
@@ -14,78 +17,202 @@
 
 <header class="site-header">
   <div class="container header-row">
-    <a href="{% url 'lab:home' %}" class="brand-lamo">
+
+    <a href="{% url 'lab:home' %}" class="brand-lamo" aria-label="Accueil {{ site_profile.acronym }}">
       {% if site_profile.logo %}<img src="{{ site_profile.logo.url }}" alt="Logo {{ site_profile.acronym }}">{% else %}<img src="{% static 'lab/img/logo_lamo.png' %}" alt="Logo {{ site_profile.acronym }}">{% endif %}
     </a>
 
-    <nav class="main-nav" id="main-nav">
+    <nav class="main-nav" id="main-nav" aria-label="Navigation principale">
       <ul>
-        <li><a href="{% url 'lab:home' %}">Accueil</a></li>
+        <li style="--mi:0"><a href="{% url 'lab:home' %}" class="{% if request.resolver_match.url_name == 'home' %}is-active{% endif %}">Accueil</a></li>
 
-        <li class="has-dropdown">
-          <button type="button">Équipes <span class="caret"></span></button>
+        <li class="has-dropdown" style="--mi:1">
+          <button type="button" aria-expanded="false">Équipes <span class="caret"></span></button>
           <div class="dropdown">
-            <a href="{% url 'lab:team_list' %}"><strong>Vue d'ensemble</strong><small>Les deux équipes du laboratoire</small></a>
+            <span class="dd-head">Équipes</span>
+            <a href="{% url 'lab:team_list' %}" style="--i:0">
+              <span class="dd-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="3.5" width="7.5" height="7.5" rx="1.6"/><rect x="13" y="3.5" width="7.5" height="7.5" rx="1.6"/><rect x="3.5" y="13" width="7.5" height="7.5" rx="1.6"/><rect x="13" y="13" width="7.5" height="7.5" rx="1.6"/></svg></span>
+              <span class="dd-txt"><strong>Vue d'ensemble</strong><small>Les deux équipes du laboratoire</small></span>
+              <svg class="dd-go" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </a>
             {% for team in nav_teams %}
-            <a href="{{ team.get_absolute_url }}">{{ team.name }}<small>{{ team.short_description|truncatechars:60 }}</small></a>
+            <a href="{{ team.get_absolute_url }}" style="--i:{{ forloop.counter }}">
+              <span class="dd-ic">
+                {% if forloop.first %}
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17C6 6 10 6 12 12s6 6 9-5"/><circle cx="12" cy="12" r="1.4" fill="currentColor"/></svg>
+                {% else %}
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V5M4 19h16M7 15l3.5-4 2.5 2.5L18 8"/><circle cx="18" cy="8" r="1.3" fill="currentColor"/></svg>
+                {% endif %}
+              </span>
+              <span class="dd-txt"><strong>{{ team.name }}</strong><small>{{ team.short_description|truncatechars:56 }}</small></span>
+              <svg class="dd-go" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </a>
             {% endfor %}
           </div>
         </li>
 
-        <li class="has-dropdown">
-          <button type="button">Membres <span class="caret"></span></button>
+        <li class="has-dropdown" style="--mi:2">
+          <button type="button" aria-expanded="false">Membres <span class="caret"></span></button>
           <div class="dropdown">
-            <a href="{% url 'lab:members_permanent' %}"><strong>Membres permanents</strong><small>Enseignants-chercheurs</small></a>
-            <a href="{% url 'lab:members_doctorants' %}"><strong>Doctorants</strong><small>Thèses en cours</small></a>
-            <a href="{% url 'lab:members_associates' %}"><strong>Chercheurs associés</strong><small>Partenaires internationaux</small></a>
+            <span class="dd-head">Membres</span>
+            <a href="{% url 'lab:members_permanent' %}" style="--i:0">
+              <span class="dd-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.2"/><circle cx="17" cy="8" r="2.4"/><path d="M3.5 19c0-3 2.5-5.3 5.5-5.3s5.5 2.3 5.5 5.3"/><path d="M15 14.3c2.4.3 4 2.3 4 4.7"/></svg></span>
+              <span class="dd-txt"><strong>Membres permanents</strong><small>Enseignants-chercheurs</small></span>
+              <svg class="dd-go" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </a>
+            <a href="{% url 'lab:members_doctorants' %}" style="--i:1">
+              <span class="dd-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4 2 8.5 12 13l10-4.5L12 4Z"/><path d="M6 10.8v4.7c0 1.6 2.7 3 6 3s6-1.4 6-3v-4.7"/><path d="M21 9v6"/></svg></span>
+              <span class="dd-txt"><strong>Doctorants</strong><small>Thèses en cours</small></span>
+              <svg class="dd-go" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </a>
+            <a href="{% url 'lab:members_associates' %}" style="--i:2">
+              <span class="dd-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17"/><path d="M12 3.5c2.4 2.4 3.7 5.4 3.7 8.5s-1.3 6.1-3.7 8.5c-2.4-2.4-3.7-5.4-3.7-8.5S9.6 5.9 12 3.5Z"/></svg></span>
+              <span class="dd-txt"><strong>Chercheurs associés</strong><small>Partenaires internationaux</small></span>
+              <svg class="dd-go" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </a>
           </div>
         </li>
 
-        <li class="has-dropdown">
-          <button type="button">Activités <span class="caret"></span></button>
+        <li class="has-dropdown" style="--mi:3">
+          <button type="button" aria-expanded="false">Activités <span class="caret"></span></button>
           <div class="dropdown">
-            <a href="{% url 'lab:activities' %}"><strong>Vue d'ensemble</strong><small>Toute la vie scientifique du LAMO</small></a>
-            <a href="{% url 'lab:activities_conferences' %}"><strong>Conférences</strong><small>M2ISDA et ateliers scientifiques</small></a>
-            <a href="{% url 'lab:activities_seminaires' %}"><strong>Séminaires</strong><small>Exposés et rencontres scientifiques</small></a>
-            <a href="{% url 'lab:activities_olympiades' %}"><strong>Olympiades</strong><small>Olympiades Nationales de Mathématiques</small></a>
-            <a href="{% url 'lab:activities_participations' %}"><strong>Participations</strong><small>Conférences et colloques internationaux</small></a>
-            <a href="{% url 'lab:activities_editorial' %}"><strong>Responsabilités éditoriales</strong><small>Comités éditoriaux et expertise</small></a>
+            <span class="dd-head">Activités</span>
+            <a href="{% url 'lab:activities' %}" style="--i:0">
+              <span class="dd-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="3.5" width="7.5" height="7.5" rx="1.6"/><rect x="13" y="3.5" width="7.5" height="7.5" rx="1.6"/><rect x="3.5" y="13" width="7.5" height="7.5" rx="1.6"/><rect x="13" y="13" width="7.5" height="7.5" rx="1.6"/></svg></span>
+              <span class="dd-txt"><strong>Vue d'ensemble</strong><small>Toute la vie scientifique du LAMO</small></span>
+              <svg class="dd-go" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </a>
+            <a href="{% url 'lab:activities_conferences' %}" style="--i:1">
+              <span class="dd-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0"/><path d="M12 18v3"/></svg></span>
+              <span class="dd-txt"><strong>Conférences</strong><small>M2ISDA et ateliers scientifiques</small></span>
+              <svg class="dd-go" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </a>
+            <a href="{% url 'lab:activities_seminaires' %}" style="--i:2">
+              <span class="dd-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12a8 8 0 1 0-3.1 6.3L21 20l-1.2-3.6A7.9 7.9 0 0 0 20 12Z"/><path d="M8.5 11h7M8.5 14h4.5"/></svg></span>
+              <span class="dd-txt"><strong>Séminaires</strong><small>Exposés et rencontres scientifiques</small></span>
+              <svg class="dd-go" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </a>
+            <a href="{% url 'lab:activities_olympiades' %}" style="--i:3">
+              <span class="dd-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 4h8v5a4 4 0 0 1-8 0V4Z"/><path d="M8 6H5a3 3 0 0 0 3 4M16 6h3a3 3 0 0 1-3 4"/><path d="M12 13v3M8.5 20h7M12 16c-1.2 0-2 .8-2 2v2h4v-2c0-1.2-.8-2-2-2Z"/></svg></span>
+              <span class="dd-txt"><strong>Olympiades</strong><small>Olympiades Nationales de Mathématiques</small></span>
+              <svg class="dd-go" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </a>
+            <a href="{% url 'lab:activities_participations' %}" style="--i:4">
+              <span class="dd-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17"/><path d="M12 3.5c2.4 2.4 3.7 5.4 3.7 8.5s-1.3 6.1-3.7 8.5c-2.4-2.4-3.7-5.4-3.7-8.5S9.6 5.9 12 3.5Z"/></svg></span>
+              <span class="dd-txt"><strong>Participations</strong><small>Conférences et colloques internationaux</small></span>
+              <svg class="dd-go" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </a>
+            <a href="{% url 'lab:activities_editorial' %}" style="--i:5">
+              <span class="dd-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 5l6 6L8.5 21.5 3 22l.5-5.5L13 5Z"/><path d="M11 7l6 6"/></svg></span>
+              <span class="dd-txt"><strong>Responsabilités éditoriales</strong><small>Comités éditoriaux et expertise</small></span>
+              <svg class="dd-go" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </a>
           </div>
         </li>
 
-        <li class="has-dropdown">
-          <button type="button">Production <span class="caret"></span></button>
+        <li class="has-dropdown" style="--mi:4">
+          <button type="button" aria-expanded="false">Production <span class="caret"></span></button>
           <div class="dropdown">
-            <a href="{% url 'lab:production' %}"><strong>Vue d'ensemble</strong><small>Publications, thèses, HDR et projets</small></a>
-            <a href="{% url 'lab:production_articles' %}"><strong>Articles</strong><small>Publications dans des revues scientifiques</small></a>
-            <a href="{% url 'lab:production_theses' %}"><strong>Thèses</strong><small>Thèses en cours au LAMO</small></a>
-            <a href="{% url 'lab:production_hdr' %}"><strong>HDR</strong><small>Habilitations à Diriger des Recherches</small></a>
-            <a href="{% url 'lab:production_projets' %}"><strong>Projets de recherche</strong><small>Projets financés et partenariats</small></a>
+            <span class="dd-head">Production scientifique</span>
+            <a href="{% url 'lab:production' %}" style="--i:0">
+              <span class="dd-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="3.5" width="7.5" height="7.5" rx="1.6"/><rect x="13" y="3.5" width="7.5" height="7.5" rx="1.6"/><rect x="3.5" y="13" width="7.5" height="7.5" rx="1.6"/><rect x="13" y="13" width="7.5" height="7.5" rx="1.6"/></svg></span>
+              <span class="dd-txt"><strong>Vue d'ensemble</strong><small>Publications, thèses, HDR et projets</small></span>
+              <svg class="dd-go" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </a>
+            <a href="{% url 'lab:production_articles' %}" style="--i:1">
+              <span class="dd-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h9l4 4v14H6V3Z"/><path d="M15 3v4h4"/><path d="M9 12h7M9 15.5h7M9 8.5h3"/></svg></span>
+              <span class="dd-txt"><strong>Articles</strong><small>Publications dans des revues scientifiques</small></span>
+              <svg class="dd-go" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </a>
+            <a href="{% url 'lab:production_theses' %}" style="--i:2">
+              <span class="dd-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2Zm0 0a2 2 0 0 0 2 2h13"/></svg></span>
+              <span class="dd-txt"><strong>Thèses</strong><small>Thèses en cours au LAMO</small></span>
+              <svg class="dd-go" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </a>
+            <a href="{% url 'lab:production_hdr' %}" style="--i:3">
+              <span class="dd-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="9" r="5.5"/><path d="M9.5 13.5 8 21l4-2.2L16 21l-1.5-7.5"/></svg></span>
+              <span class="dd-txt"><strong>HDR</strong><small>Habilitations à Diriger des Recherches</small></span>
+              <svg class="dd-go" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </a>
+            <a href="{% url 'lab:production_projets' %}" style="--i:4">
+              <span class="dd-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7.5" width="18" height="12" rx="2"/><path d="M9 7.5V6a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v1.5"/><path d="M3 12.5h18"/></svg></span>
+              <span class="dd-txt"><strong>Projets de recherche</strong><small>Projets financés et partenariats</small></span>
+              <svg class="dd-go" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </a>
           </div>
         </li>
 
-        <li class="has-dropdown">
-          <button type="button">Formations <span class="caret"></span></button>
+        <li class="has-dropdown" style="--mi:5">
+          <button type="button" aria-expanded="false">Formations <span class="caret"></span></button>
           <div class="dropdown">
-            <a href="{% url 'lab:formations' %}"><strong>Vue d'ensemble</strong><small>Du Master à la formation doctorale</small></a>
-            <a href="{% url 'lab:formations_masters' %}"><strong>Masters</strong><small>Enseignements IAMD et MPM</small></a>
-            <a href="{% url 'lab:formations_doctoral' %}"><strong>Encadrement doctoral</strong><small>Thèses encadrées par le LAMO</small></a>
-            <a href="{% url 'lab:formations_jury' %}"><strong>Jurys de thèse</strong><small>Participations à des soutenances</small></a>
-            <a href="{% url 'lab:formations_stage' %}"><strong>Offres de stage</strong><small>Stages de fin d'études encadrés</small></a>
-            <a href="{% url 'lab:formations_capacity' %}"><strong>Renforcement de capacités</strong><small>Formations internationales suivies</small></a>
+            <span class="dd-head">Formations</span>
+            <a href="{% url 'lab:formations' %}" style="--i:0">
+              <span class="dd-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="3.5" width="7.5" height="7.5" rx="1.6"/><rect x="13" y="3.5" width="7.5" height="7.5" rx="1.6"/><rect x="3.5" y="13" width="7.5" height="7.5" rx="1.6"/><rect x="13" y="13" width="7.5" height="7.5" rx="1.6"/></svg></span>
+              <span class="dd-txt"><strong>Vue d'ensemble</strong><small>Du Master à la formation doctorale</small></span>
+              <svg class="dd-go" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </a>
+            <a href="{% url 'lab:formations_masters' %}" style="--i:1">
+              <span class="dd-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4 2 8.5 12 13l10-4.5L12 4Z"/><path d="M6 10.8v4.7c0 1.6 2.7 3 6 3s6-1.4 6-3v-4.7"/></svg></span>
+              <span class="dd-txt"><strong>Masters</strong><small>Enseignements IAMD et MPM</small></span>
+              <svg class="dd-go" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </a>
+            <a href="{% url 'lab:formations_doctoral' %}" style="--i:2">
+              <span class="dd-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="m15.5 8.5-2 5-5 2 2-5 5-2Z"/></svg></span>
+              <span class="dd-txt"><strong>Encadrement doctoral</strong><small>Thèses encadrées par le LAMO</small></span>
+              <svg class="dd-go" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </a>
+            <a href="{% url 'lab:formations_jury' %}" style="--i:3">
+              <span class="dd-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18M7 21h10"/><path d="M5 7l7-4 7 4"/><path d="M5 7l-2.5 6a3.5 3.5 0 0 0 7 0L7 7M19 7l-2.5 6a3.5 3.5 0 0 0 7 0L21 7"/></svg></span>
+              <span class="dd-txt"><strong>Jurys de thèse</strong><small>Participations à des soutenances</small></span>
+              <svg class="dd-go" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </a>
+            <a href="{% url 'lab:formations_stage' %}" style="--i:4">
+              <span class="dd-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4.5V3h6v1.5"/><path d="M9 10.5l2 2 4-4.5"/></svg></span>
+              <span class="dd-txt"><strong>Offres de stage</strong><small>Stages de fin d'études encadrés</small></span>
+              <svg class="dd-go" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </a>
+            <a href="{% url 'lab:formations_capacity' %}" style="--i:5">
+              <span class="dd-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19h16"/><path d="M6 16l4.5-5 3 3L19 8"/><path d="M15 8h4v4"/></svg></span>
+              <span class="dd-txt"><strong>Renforcement de capacités</strong><small>Formations internationales suivies</small></span>
+              <svg class="dd-go" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </a>
           </div>
         </li>
-        <li class="has-dropdown">
-          <button type="button">Partenaires <span class="caret"></span></button>
+
+        <li class="has-dropdown" style="--mi:6">
+          <button type="button" aria-expanded="false">Partenaires <span class="caret"></span></button>
           <div class="dropdown">
-            <a href="{% url 'lab:partners' %}"><strong>Vue d'ensemble</strong><small>Le réseau de partenaires du LAMO</small></a>
-            <a href="{% url 'lab:partners_academic' %}"><strong>Partenaires académiques</strong><small>Universités et centres de recherche</small></a>
-            <a href="{% url 'lab:partners_institutional' %}"><strong>Partenaires institutionnels</strong><small>Organismes publics à Djibouti</small></a>
-            <a href="{% url 'lab:partners_national' %}"><strong>Collaborations nationales</strong><small>Santé, statistique, logistique portuaire</small></a>
-            <a href="{% url 'lab:partners_international' %}"><strong>Collaborations internationales</strong><small>France, Éthiopie, Somalie</small></a>
+            <span class="dd-head">Partenaires</span>
+            <a href="{% url 'lab:partners' %}" style="--i:0">
+              <span class="dd-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="3.5" width="7.5" height="7.5" rx="1.6"/><rect x="13" y="3.5" width="7.5" height="7.5" rx="1.6"/><rect x="3.5" y="13" width="7.5" height="7.5" rx="1.6"/><rect x="13" y="13" width="7.5" height="7.5" rx="1.6"/></svg></span>
+              <span class="dd-txt"><strong>Vue d'ensemble</strong><small>Le réseau de partenaires du LAMO</small></span>
+              <svg class="dd-go" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </a>
+            <a href="{% url 'lab:partners_academic' %}" style="--i:1">
+              <span class="dd-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 5l9 5.5"/><path d="M5 10.5V19M9.5 10.5V19M14.5 10.5V19M19 10.5V19"/><path d="M3 19h18"/></svg></span>
+              <span class="dd-txt"><strong>Partenaires académiques</strong><small>Universités et centres de recherche</small></span>
+              <svg class="dd-go" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </a>
+            <a href="{% url 'lab:partners_institutional' %}" style="--i:2">
+              <span class="dd-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="9" width="16" height="11" rx="1.5"/><path d="M4 13h16M9 9V6.5A3 3 0 0 1 15 6.5V9"/></svg></span>
+              <span class="dd-txt"><strong>Partenaires institutionnels</strong><small>Organismes publics à Djibouti</small></span>
+              <svg class="dd-go" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </a>
+            <a href="{% url 'lab:partners_national' %}" style="--i:3">
+              <span class="dd-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-6.5-5.4-6.5-11a6.5 6.5 0 1 1 13 0c0 5.6-6.5 11-6.5 11Z"/><circle cx="12" cy="10" r="2.3"/></svg></span>
+              <span class="dd-txt"><strong>Collaborations nationales</strong><small>Santé, statistique, logistique portuaire</small></span>
+              <svg class="dd-go" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </a>
+            <a href="{% url 'lab:partners_international' %}" style="--i:4">
+              <span class="dd-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17"/><path d="M12 3.5c2.4 2.4 3.7 5.4 3.7 8.5s-1.3 6.1-3.7 8.5c-2.4-2.4-3.7-5.4-3.7-8.5S9.6 5.9 12 3.5Z"/></svg></span>
+              <span class="dd-txt"><strong>Collaborations internationales</strong><small>France, Éthiopie, Somalie</small></span>
+              <svg class="dd-go" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </a>
           </div>
         </li>
-        <li><a href="{% url 'lab:news_list' %}">Actualités</a></li>
+
+        <li style="--mi:7"><a href="{% url 'lab:news_list' %}" class="{% if request.resolver_match.url_name == 'news_list' %}is-active{% endif %}">Actualités</a></li>
+        <li style="--mi:8" class="mobile-only-cta"><a href="{% url 'lab:contact' %}">Contact</a></li>
       </ul>
     </nav>
 
@@ -93,7 +220,7 @@
       {% if site_profile.university_logo %}<img src="{{ site_profile.university_logo.url }}" alt="Université de Djibouti">{% else %}<img src="{% static 'lab/img/logo_universite_djibouti.png' %}" alt="Université de Djibouti">{% endif %}
     </a>
 
-    <button class="nav-toggle" id="nav-toggle" aria-label="Ouvrir le menu" aria-expanded="false">
+    <button class="nav-toggle" id="nav-toggle" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="main-nav">
       <span></span><span></span><span></span>
     </button>
   </div>
@@ -109,9 +236,9 @@
     <div class="footer-grid">
       <div>
         <div class="footer-brand">
-          {% if site_profile.logo %}<img src="{{ site_profile.logo.url }}" alt="Logo {{ site_profile.acronym }}">{% endif %}
+          {% if site_profile.logo %}<img src="{{ site_profile.logo.url }}" alt="Logo {{ site_profile.acronym }}">{% else %}<img src="{% static 'lab/img/logo_lamo.png' %}" alt="Logo {{ site_profile.acronym }}">{% endif %}
           <span class="sep"></span>
-          {% if site_profile.university_logo %}<img src="{{ site_profile.university_logo.url }}" alt="Université de Djibouti">{% endif %}
+          {% if site_profile.university_logo %}<img src="{{ site_profile.university_logo.url }}" alt="Université de Djibouti">{% else %}<img src="{% static 'lab/img/logo_universite_djibouti.png' %}" alt="Université de Djibouti">{% endif %}
         </div>
         <p class="footer-desc">{{ site_profile.name }} — unité de recherche du {{ site_profile.affiliation }}, dédiée aux mathématiques appliquées, à la statistique, à l'optimisation, à la simulation numérique et à la science des données.</p>
       </div>
@@ -153,7 +280,7 @@
     <div class="label">Nos partenaires académiques &amp; institutionnels</div>
     <div class="partner-strip">
       {% for p in footer_partners %}
-      <span class="chip">{% if p.logo %}<img src="{{ p.logo.url }}" alt="{{ p.name }}">{% endif %}</span>
+      <span class="chip">{% if p.logo %}<img src="{{ p.logo.url }}" alt="{{ p.name }}" loading="lazy">{% endif %}</span>
       {% endfor %}
     </div>
   </div>
@@ -165,7 +292,7 @@
   </div>
 </footer>
 
-<button type="button" class="to-top" id="to-top" aria-label="Revenir en haut">
+<button class="to-top" id="to-top" aria-label="Revenir en haut">
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M6 11l6-6 6 6"/></svg>
 </button>
 

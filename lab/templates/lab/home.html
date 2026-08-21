@@ -1,305 +1,307 @@
 {% extends "lab/base.html" %}
 {% load static %}
+{% block title %}{{ profile.acronym }} — {{ profile.name }}{% endblock %}
 {% block content %}
 
+<!-- ==================== HÉROS ==================== -->
 <section class="hero-v3">
-  <canvas id="hero-network" class="hero-v3-canvas" aria-hidden="true"></canvas>
-  <div class="hero-eq-field" aria-hidden="true">
-    <span class="hero-eq hero-eq-1">∇·E = ρ/ε₀</span>
-    <span class="hero-eq hero-eq-2">∑ xᵢ²</span>
-    <span class="hero-eq hero-eq-3">∂u/∂t = α∇²u</span>
-    <span class="hero-eq hero-eq-4">lim<sub>n→∞</sub></span>
-  </div>
-  <div class="container">
-    <h1 class="hero-v3-title"><span class="hero-v3-title-reveal">{{ profile.name }} ({{ profile.acronym }})</span></h1>
-  </div>
+  <canvas class="hero-v3-canvas" id="hero-network" aria-hidden="true"></canvas>
+
+  <span class="hero-eq" style="top:15%;left:5%;animation-delay:0s">dx/dt = f(x(t), u(t), &theta;)</span>
+  <span class="hero-eq" style="top:30%;right:4%;animation-delay:3s">dX<sub>t</sub> = &mu;(X<sub>t</sub>,t)dt + &sigma;(X<sub>t</sub>,t)dW<sub>t</sub></span>
+  <span class="hero-eq" style="bottom:30%;left:3%;animation-delay:6s">min &frac12;x&#7511;Qx + c&#7511;x&nbsp;&nbsp;s.c. Ax &le; b</span>
+  <span class="hero-eq" style="bottom:13%;right:10%;animation-delay:9s">&nabla;<sub>x</sub>&#8466;(x*, &lambda;*) = 0</span>
+
   <div class="container hero-v3-grid">
     <div class="hero-v3-text">
+      <h1 class="hero-v3-title">
+        <span class="w" style="--i:0">Laboratoire</span>
+        <span class="w" style="--i:1">d'Analyse,</span>
+        <span class="w" style="--i:2">de&nbsp;Modélisation</span>
+        <span class="w" style="--i:3">et</span>
+        <span class="w" style="--i:4">d'Optimisation</span>
+        <span class="w acro" style="--i:5">({{ profile.acronym }})</span>
+      </h1>
       <p class="lede">Mathématiques appliquées, statistique, optimisation, simulation numérique et science des données au service de Djibouti et de la région.</p>
       <div class="hero-v3-actions">
-        <a href="{% url 'lab:team_list' %}" class="btn btn-hero-primary">Découvrir nos équipes</a>
+        <a href="{% url 'lab:team_list' %}" class="btn btn-hero-primary">Découvrir nos équipes
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
         <a href="{% url 'lab:contact' %}" class="btn btn-hero-line">Nous contacter</a>
       </div>
     </div>
+
     <div class="hero-v3-media">
-      <div class="hero-v3-media-glow"></div>
+      <div class="hero-v3-media-glow" aria-hidden="true"></div>
       <div class="hero-v3-media-frame">
-        <img src="{% static 'lab/img/hero_math_banner.jpg' %}" alt="Mathématiques appliquées — LAMO" loading="eager">
-      </div>
-    </div>
-    <div class="hero-v2-stats hero-v3-stats">
-      <div class="hero-v2-stat">
-        <span class="hero-v2-stat-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.2"/><circle cx="17" cy="8" r="2.4"/><path d="M3.5 19c0-3 2.5-5.3 5.5-5.3s5.5 2.3 5.5 5.3"/><path d="M15 14.3c2.4.3 4 2.3 4 4.7"/></svg>
-        </span>
-        <div class="hero-v2-stat-text"><div class="num" data-count="{{ stats.teams }}">0</div><div class="lbl">Équipes de recherche</div></div>
-      </div>
-      <div class="hero-v2-stat">
-        <span class="hero-v2-stat-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><circle cx="10" cy="8" r="3.5"/><path d="M17 8.3c1.4.4 2.5 1.7 2.5 3.2"/><path d="M18.5 14.4c1.8.6 3 2.4 3 4.4"/></svg>
-        </span>
-        <div class="hero-v2-stat-text"><div class="num" data-count="{{ stats.permanents }}">0</div><div class="lbl">Membres permanents</div></div>
-      </div>
-      <div class="hero-v2-stat">
-        <span class="hero-v2-stat-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4 2 8.5 12 13l10-4.5L12 4Z"/><path d="M6 10.8v4.7c0 1.6 2.7 3 6 3s6-1.4 6-3v-4.7"/><path d="M21 9v6"/></svg>
-        </span>
-        <div class="hero-v2-stat-text"><div class="num" data-count="{{ stats.doctorants }}">0</div><div class="lbl">Doctorants</div></div>
-      </div>
-      <div class="hero-v2-stat">
-        <span class="hero-v2-stat-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17"/><path d="M12 3.5c2.4 2.4 3.7 5.4 3.7 8.5s-1.3 6.1-3.7 8.5c-2.4-2.4-3.7-5.4-3.7-8.5S9.6 5.9 12 3.5Z"/></svg>
-        </span>
-        <div class="hero-v2-stat-text"><div class="num" data-count="{{ stats.associates }}">0</div><div class="lbl">Chercheurs associés</div></div>
+        <img src="{% static 'lab/img/affiche_lamo.jpg' %}" alt="Affiche du {{ profile.acronym }} — Modéliser, Analyser, Optimiser, Décider">
+        <span class="hero-frame-tag">Modéliser · Analyser · Optimiser · Décider</span>
       </div>
     </div>
   </div>
-  <div class="hero-v3-scroll" aria-hidden="true">
-    <span>Découvrir</span>
-    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+
+  <div class="container hero-v2-stats">
+    <div class="hero-v2-stat">
+      <span class="hero-v2-stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.2"/><circle cx="17" cy="8" r="2.4"/><path d="M3.5 19c0-3 2.5-5.3 5.5-5.3s5.5 2.3 5.5 5.3"/><path d="M15 14.3c2.4.3 4 2.3 4 4.7"/></svg></span>
+      <span class="hero-v2-stat-text"><span class="num" data-count="{{ stats.teams }}">0</span><span class="lbl">Équipes de recherche</span></span>
+    </div>
+    <div class="hero-v2-stat">
+      <span class="hero-v2-stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><circle cx="10" cy="8" r="3.5"/><path d="M17 8.3c1.4.4 2.5 1.7 2.5 3.2"/><path d="M18.5 14.4c1.8.6 3 2.4 3 4.4"/></svg></span>
+      <span class="hero-v2-stat-text"><span class="num" data-count="{{ stats.permanents }}">0</span><span class="lbl">Membres permanents</span></span>
+    </div>
+    <div class="hero-v2-stat">
+      <span class="hero-v2-stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4 2 8.5 12 13l10-4.5L12 4Z"/><path d="M6 10.8v4.7c0 1.6 2.7 3 6 3s6-1.4 6-3v-4.7"/><path d="M21 9v6"/></svg></span>
+      <span class="hero-v2-stat-text"><span class="num" data-count="{{ stats.doctorants }}">0</span><span class="lbl">Doctorants</span></span>
+    </div>
+    <div class="hero-v2-stat">
+      <span class="hero-v2-stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17"/><path d="M12 3.5c2.4 2.4 3.7 5.4 3.7 8.5s-1.3 6.1-3.7 8.5c-2.4-2.4-3.7-5.4-3.7-8.5S9.6 5.9 12 3.5Z"/></svg></span>
+      <span class="hero-v2-stat-text"><span class="num" data-count="{{ stats.associates }}">0</span><span class="lbl">Chercheurs associés</span></span>
+    </div>
+  </div>
+
+  <div class="hero-v3-scroll" aria-hidden="true"><span>Découvrir</span>
+    <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
   </div>
   <div class="hero-v3-wave" aria-hidden="true">
-    <svg viewBox="0 0 1440 60" preserveAspectRatio="none"><path d="M0,32 C240,60 480,0 720,18 C960,36 1200,58 1440,24 L1440,60 L0,60 Z"/></svg>
+    <svg viewBox="0 0 1440 64" preserveAspectRatio="none"><path d="M0,34 C240,64 480,0 720,20 C960,40 1200,62 1440,26 L1440,64 L0,64 Z"/></svg>
   </div>
 </section>
 
-<section class="section reveal apropos-section" id="apropos">
-  <div class="apropos-decor" aria-hidden="true"></div>
+<!-- ==================== PIPELINE ==================== -->
+<section class="pipeline grid-paper">
   <div class="container">
-    <div class="layout stagger">
+    <div class="pipe-track">
+      <div class="pipe-line"><i></i></div>
+      <div class="pipe-step"><div class="pipe-dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="6" rx="7.5" ry="3"/><path d="M4.5 6v6c0 1.7 3.4 3 7.5 3s7.5-1.3 7.5-3V6"/><path d="M4.5 12v6c0 1.7 3.4 3 7.5 3s7.5-1.3 7.5-3v-6"/></svg></div><b>Données</b></div>
+      <div class="pipe-step"><div class="pipe-dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 20C6 8 10 8 12 13s6 7 9-7"/><path d="M3 4v16h18"/></svg></div><b>Modélisation</b></div>
+      <div class="pipe-step"><div class="pipe-dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5 21 21"/><path d="M7.5 11.5l2-2.4 1.8 1.8 2.2-3"/></svg></div><b>Analyse</b></div>
+      <div class="pipe-step"><div class="pipe-dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4.7"/><circle cx="12" cy="12" r="1.2" fill="currentColor"/><path d="M12 12l6-6"/></svg></div><b>Optimisation</b></div>
+      <div class="pipe-step"><div class="pipe-dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="M8 12.5l2.8 2.8L16.5 9"/></svg></div><b>Décision</b></div>
+    </div>
+  </div>
+</section>
 
-      <aside class="col-side">
+<!-- ==================== PRÉSENTATION ==================== -->
+<section class="section grid-paper apropos-section">
+  <span class="apropos-decor" aria-hidden="true"></span>
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">Présentation</span>
+      <h2>Les mathématiques au service des grands défis de Djibouti</h2>
+    </div>
+
+    <div class="layout">
+      <!-- panneau d'informations -->
+      <aside class="col-side reveal">
         <div class="info-panel">
           <div class="info-panel-section">
-            <h4>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5"/><circle cx="12" cy="7.8" r="0.6" fill="currentColor" stroke="none"/></svg>
-              Informations
-            </h4>
+            <h4><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5"/><circle cx="12" cy="7.8" r=".7" fill="currentColor" stroke="none"/></svg>Informations</h4>
+
+            {% if profile.director_name %}
             <div class="field field--icon">
-              <span class="field-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.4"/><path d="M4.5 20c0-3.6 3.4-6.5 7.5-6.5s7.5 2.9 7.5 6.5"/></svg></span>
-              <span>
-                <strong>Directeur</strong>
-                <span>{{ profile.director_name }}</span>
-              </span>
+              <span class="field-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8" r="3.4"/><path d="M4.5 20c0-3.6 3.4-6.5 7.5-6.5s7.5 2.9 7.5 6.5"/></svg></span>
+              <span><strong>Directeur</strong>{{ profile.director_name }}</span>
             </div>
+            {% endif %}
+
             {% if profile.email_primary %}
             <div class="field field--icon">
               <span class="field-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5.5" width="18" height="13" rx="2.2"/><path d="M4 7l8 6 8-6"/></svg></span>
-              <span>
-                <strong>Email</strong>
-                <a href="mailto:{{ profile.email_primary }}">{{ profile.email_primary }}</a>
-              </span>
+              <span><strong>Email</strong><a href="mailto:{{ profile.email_primary }}">{{ profile.email_primary }}</a></span>
             </div>
             {% endif %}
+
+            {% if profile.address %}
             <div class="field field--icon">
               <span class="field-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-6.5-5.4-6.5-11a6.5 6.5 0 1 1 13 0c0 5.6-6.5 11-6.5 11Z"/><circle cx="12" cy="10" r="2.3"/></svg></span>
-              <span>
-                <strong>Adresse</strong>
-                <span>{{ profile.address }}</span>
-              </span>
+              <span><strong>Adresse</strong>{{ profile.address }}</span>
             </div>
+            {% endif %}
           </div>
 
           <div class="info-panel-divider"></div>
 
           <div class="info-panel-section info-panel-section--institution">
-            <h4>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 5l9 5.5-9 5.5-9-5.5Z"/><path d="M7 12.6V17c0 1.4 2.2 2.5 5 2.5s5-1.1 5-2.5v-4.4"/></svg>
-              Établissement de rattachement
-            </h4>
-            {% if profile.university_logo %}
-            <img src="{{ profile.university_logo.url }}" alt="Université de Djibouti">
-            {% else %}
-            <img src="{% static 'lab/img/logo_universite_djibouti.png' %}" alt="Université de Djibouti">
-            {% endif %}
-            <div class="caption">Université de Djibouti</div>
+            <h4><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 5l9 5.5-9 5.5-9-5.5Z"/><path d="M7 12.6V17c0 1.4 2.2 2.5 5 2.5s5-1.1 5-2.5v-4.4"/></svg>Établissement de rattachement</h4>
+            <div class="field">
+              {% if profile.university_logo %}<img src="{{ profile.university_logo.url }}" alt="Université de Djibouti">{% else %}<img src="{% static 'lab/img/logo_universite_djibouti.png' %}" alt="Université de Djibouti">{% endif %}
+              <span style="align-self:center;font-weight:600;color:var(--ink)">Université de Djibouti</span>
+            </div>
           </div>
 
+          {% if partners %}
           <div class="info-panel-divider"></div>
-
           <div class="info-panel-section">
-            <h4>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="7.5" r="2.6"/><circle cx="18" cy="7.5" r="2.6"/><path d="M2.5 18c0-2.8 1.6-5 3.5-5s3.5 2.2 3.5 5"/><path d="M14.5 18c0-2.8 1.6-5 3.5-5s3.5 2.2 3.5 5"/></svg>
-              Nos partenaires
-            </h4>
+            <h4><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="6" cy="7.5" r="2.6"/><circle cx="18" cy="7.5" r="2.6"/><path d="M2.5 18c0-2.8 1.6-5 3.5-5s3.5 2.2 3.5 5"/><path d="M14.5 18c0-2.8 1.6-5 3.5-5s3.5 2.2 3.5 5"/></svg>Nos partenaires</h4>
             <div class="partner-mini-grid">
               {% for p in partners|slice:":6" %}
-              {% if p.website %}
-              <a href="{{ p.website }}" target="_blank" rel="noopener noreferrer" class="tile" title="{{ p.name }} — visiter le site ↗"><img src="{{ p.logo.url }}" alt="{{ p.name }}"></a>
-              {% else %}
-              <div class="tile"><img src="{{ p.logo.url }}" alt="{{ p.name }}" title="{{ p.name }}"></div>
-              {% endif %}
+              <a href="{{ p.website|default:'#' }}" title="{{ p.name }}" {% if p.website %}target="_blank" rel="noopener"{% endif %}>
+                {% if p.logo %}<img src="{{ p.logo.url }}" alt="{{ p.name }}" loading="lazy">{% else %}<span class="label">{{ p.name|truncatechars:14 }}</span>{% endif %}
+              </a>
               {% endfor %}
             </div>
-            <p style="margin-top:14px;font-size:0.86rem;"><a href="{% url 'lab:partners' %}">Voir tous les partenaires</a></p>
+            <a class="team-link" style="margin-top:1rem;color:var(--target)" href="{% url 'lab:partners' %}">Voir tous les partenaires
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
           </div>
+          {% endif %}
         </div>
       </aside>
 
-      <div class="col-main">
-        <span class="eyebrow eyebrow--title">Présentation</span>
-        <p class="intro-lede intro-lede--dropcap">{{ profile.mission }}</p>
+      <!-- texte de présentation -->
+      <div class="col-main reveal">
         <div class="prose">
+          <p class="intro-lede intro-lede--dropcap">{{ profile.mission }}</p>
           {% for para in profile.presentation_extra.splitlines %}
-            {% if para %}<p>{{ para }}</p>{% endif %}
+            {% if para|length > 1 %}
+              {% if forloop.counter == 2 %}
+              <div class="quote">{{ para }}</div>
+              {% else %}
+              <p>{{ para }}</p>
+              {% endif %}
+            {% endif %}
           {% endfor %}
+          {% if profile.teams_intro %}<p>{{ profile.teams_intro }}</p>{% endif %}
         </div>
 
-        <div class="axis-block">
-          <p>{{ profile.teams_intro }}</p>
-        </div>
-
-        <p><strong>Domaines d'application :</strong></p>
-        <div class="domain-grid">
-          <div class="domain-chip">
-            <span class="domain-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7.5-4.6-10-9.3C.4 8.2 2.2 4.5 5.8 4c2.2-.3 4.2.8 6.2 3 2-2.2 4-3.3 6.2-3 3.6.5 5.4 4.2 3.8 7.7C19.5 16.4 12 21 12 21Z"/></svg></span>
-            <span>Santé publique et épidémiologie</span>
-          </div>
-          <div class="domain-chip">
-            <span class="domain-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v9"/><circle cx="12" cy="14.5" r="2.2"/><path d="M5 13c0 4 3 7.5 7 8 4-.5 7-4 7-8"/><path d="M8.5 6.2 12 3l3.5 3.2"/></svg></span>
-            <span>Transports et logistique portuaire</span>
-          </div>
-          <div class="domain-chip">
-            <span class="domain-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 4c0 9-5 14-14 14 0-9 5-14 14-14Z"/><path d="M6 20c0-3.5 1.3-6.3 4-9"/></svg></span>
-            <span>Environnement, énergie et gestion des risques</span>
-          </div>
-          <div class="domain-chip">
-            <span class="domain-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10"/><path d="M10 20V4"/><path d="M16 20v-7"/><path d="M20.5 20H3.5"/></svg></span>
-            <span>Économie</span>
+        <div style="margin-top:1.8rem">
+          <h3 style="font-family:var(--ff-mono);font-size:.8rem;letter-spacing:.18em;text-transform:uppercase;color:var(--blue);margin-bottom:1rem">Domaines d'application</h3>
+          <div class="domain-grid">
+            <span class="domain-chip"><span class="domain-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 12h4l2.2-5.5 3.6 11L15.6 12h4.9"/></svg></span>Santé publique et épidémiologie</span>
+            <span class="domain-chip"><span class="domain-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 16V9a2 2 0 0 1 2-2h9l5 4v5"/><circle cx="7.5" cy="17.5" r="1.8"/><circle cx="16.5" cy="17.5" r="1.8"/></svg></span>Transports et logistique portuaire</span>
+            <span class="domain-chip"><span class="domain-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c3.5 3.7 5.5 7 5.5 10a5.5 5.5 0 0 1-11 0c0-3 2-6.3 5.5-10Z"/></svg></span>Environnement, énergie et gestion des risques</span>
+            <span class="domain-chip"><span class="domain-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V5M4 19h16M7 15l4-4 3 3 6-7"/></svg></span>Économie</span>
           </div>
         </div>
       </div>
-
     </div>
   </div>
 </section>
 
-<section class="section section--alt reveal">
-  <div class="section-wave-top" aria-hidden="true">
-    <svg viewBox="0 0 1440 40" preserveAspectRatio="none"><path d="M0,0 L1440,0 L1440,18 C1200,36 960,4 720,20 C480,36 240,4 0,20 Z"/></svg>
-  </div>
+<!-- ==================== ÉQUIPES ==================== -->
+<section class="section section--alt">
   <div class="container">
-    <div class="section-head centered">
+    <div class="section-head reveal">
       <span class="eyebrow">Organisation scientifique</span>
       <h2>Nos équipes de recherche</h2>
     </div>
-    <div class="team-feature-list stagger">
+    <div class="grid-2 stagger">
       {% for team in teams %}
-      <div class="team-feature{% if forloop.counter == 2 %} team-feature--reverse{% endif %}">
-        <div class="team-feature-visual" aria-hidden="true">
-          <span class="team-feature-icon">
-            {% if forloop.counter == 1 %}
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c-1.2 1.6-1.8 3.3-1.8 5 0 2.5 2 4.5 4.5 4.5s4.5-2 4.5-4.5c0-1-.3-1.9-.9-2.7"/><path d="M12 21c1.2-1.6 1.8-3.3 1.8-5 0-2.5-2-4.5-4.5-4.5S4.8 8.5 4.8 11c0 1 .3 1.9.9 2.7"/></svg>
-            {% else %}
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18c2-.2 3-2 4-5s2.5-6 5-6 3.5 3.5 4.5 6 2 4.8 4 5"/><circle cx="6" cy="15.5" r="0.9" fill="currentColor" stroke="none"/><circle cx="12" cy="8.5" r="0.9" fill="currentColor" stroke="none"/><circle cx="18" cy="15.5" r="0.9" fill="currentColor" stroke="none"/></svg>
-            {% endif %}
-          </span>
-        </div>
-        <div class="team-feature-body">
-          <div class="index">Équipe {{ forloop.counter }}</div>
-          <h3>{{ team.name }}</h3>
-          <p>{{ team.description }}</p>
-          <a href="{{ team.get_absolute_url }}" class="team-link">Découvrir l'équipe →</a>
-        </div>
-      </div>
+      <article class="team-card">
+        <span class="team-icon">
+          {% if forloop.first %}
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17C6 6 10 6 12 12s6 6 9-5"/><circle cx="12" cy="12" r="1.4" fill="currentColor"/></svg>
+          {% else %}
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V5M4 19h16M7 15l3.5-4 2.5 2.5L18 8"/><circle cx="18" cy="8" r="1.3" fill="currentColor"/></svg>
+          {% endif %}
+        </span>
+        <span class="index">Équipe {{ forloop.counter }}</span>
+        <h3>{{ team.name }}</h3>
+        <p>{{ team.description|default:team.short_description }}</p>
+        <a href="{{ team.get_absolute_url }}" class="team-link">Découvrir l'équipe
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </article>
       {% endfor %}
     </div>
   </div>
 </section>
 
-<section class="section reveal">
+<!-- ==================== AXES DE RECHERCHE ==================== -->
+{% if themes %}
+<section class="section grid-paper">
   <div class="container">
-    <div class="section-head">
+    <div class="section-head reveal">
       <span class="eyebrow">Recherche</span>
       <h2>Axes de recherche</h2>
-      <p class="lede">Six axes structurent les travaux menés au LAMO, répartis entre ses deux équipes, à l'intersection de l'analyse mathématique, de la statistique et de l'aide à la décision.</p>
+      <p>Les axes qui structurent les travaux menés au {{ profile.acronym }}, répartis entre ses deux équipes, à l'intersection de l'analyse mathématique, de la statistique et de l'aide à la décision.</p>
     </div>
     <div class="grid-3 stagger">
       {% for theme in themes %}
-      <div class="theme-card" data-num="0{{ forloop.counter }}">
-        <div class="num">0{{ forloop.counter }}</div>
+      <article class="axis-item" style="display:block">
+        <span class="axis-num">{{ forloop.counter|stringformat:"02d" }}</span>
         <h3>{{ theme.title }}</h3>
-        {% if theme.team %}<span class="team-tag">{{ theme.team.name }}</span>{% endif %}
-      </div>
+        {% if theme.team %}<span class="axis-team" style="font-family:var(--ff-mono);font-size:.7rem;color:var(--txt-soft)">{{ theme.team.name }}</span>{% endif %}
+      </article>
       {% endfor %}
     </div>
-    <p style="margin-top:30px;"><a href="{% url 'lab:team_list' %}" class="btn btn-navy">Découvrir nos équipes</a></p>
+    <div class="centered" style="margin-top:2.4rem">
+      <a href="{% url 'lab:team_list' %}" class="btn btn-navy">Découvrir nos équipes
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+    </div>
   </div>
 </section>
+{% endif %}
 
+<!-- ==================== ACTUALITÉS ==================== -->
 {% if news %}
-<section class="section section--alt reveal">
-  <div class="section-wave-top" aria-hidden="true">
-    <svg viewBox="0 0 1440 40" preserveAspectRatio="none"><path d="M0,0 L1440,0 L1440,20 C1200,4 960,36 720,18 C480,0 240,32 0,14 Z"/></svg>
-  </div>
+<section class="section section--alt">
   <div class="container">
-    <div class="section-head">
-      <span class="eyebrow">Vie du laboratoire</span>
-      <h2>Actualités</h2>
+    <div class="section-head reveal" style="display:flex;justify-content:space-between;align-items:flex-end;gap:1.2rem;flex-wrap:wrap;max-width:none">
+      <div>
+        <span class="eyebrow">Vie du laboratoire</span>
+        <h2 style="margin-bottom:0">Actualités</h2>
+      </div>
+      <a class="team-link" href="{% url 'lab:news_list' %}">Toutes les actualités
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
     </div>
-    <div class="grid-3 stagger">
-      {% for item in news %}
-      <div class="news-card">
-        {% if item.image %}
-        <div class="news-media"><img src="{{ item.image.url }}" alt="{{ item.title }}" loading="lazy"></div>
+    <div class="grid-2 stagger">
+      {% for n in news %}
+      <article class="news-card">
+        {% if n.image %}
+        <div class="news-media">
+          <span class="news-date-pill">{{ n.date|date:"d M Y" }}</span>
+          <img src="{{ n.image.url }}" alt="{{ n.title }}" loading="lazy">
+        </div>
         {% endif %}
         <div class="news-body">
-          <span class="news-date-pill">{{ item.date|date:"d M Y" }}</span>
-          <h3>{{ item.title }}</h3>
-          <p>{{ item.excerpt }}</p>
+          {% if not n.image %}<span class="tag tag--accent">{{ n.date|date:"d M Y" }}</span>{% endif %}
+          <h3>{{ n.title }}</h3>
+          <p>{{ n.excerpt|default:n.content|truncatechars:210 }}</p>
+          <a class="team-link" style="color:var(--target)" href="{% url 'lab:news_list' %}">Lire la suite
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
         </div>
-      </div>
+      </article>
       {% endfor %}
     </div>
   </div>
 </section>
 {% endif %}
 
-<section class="section reveal">
+<!-- ==================== PARTENAIRES ==================== -->
+{% if partners %}
+<section class="section grid-paper" style="padding-bottom:3rem">
   <div class="container">
-    <div class="section-head centered">
-      <span class="eyebrow">Réseau</span>
-      <h2>Ils collaborent avec le LAMO</h2>
-    </div>
-    <div class="partner-marquee">
-      <div class="partner-marquee-track">
-        {% for p in partners %}
-        {% if p.website %}
-        <a href="{{ p.website }}" target="_blank" rel="noopener noreferrer" class="partner-tile partner-tile--link" title="{{ p.name }} — visiter le site ↗"><img src="{{ p.logo.url }}" alt="{{ p.name }}"></a>
-        {% else %}
-        <div class="partner-tile"><img src="{{ p.logo.url }}" alt="{{ p.name }}" title="{{ p.name }}"></div>
-        {% endif %}
-        {% endfor %}
-        {% for p in partners %}
-        {% if p.website %}
-        <a href="{{ p.website }}" target="_blank" rel="noopener noreferrer" class="partner-tile partner-tile--link" aria-hidden="true" tabindex="-1"><img src="{{ p.logo.url }}" alt=""></a>
-        {% else %}
-        <div class="partner-tile" aria-hidden="true"><img src="{{ p.logo.url }}" alt="" title="{{ p.name }}"></div>
-        {% endif %}
-        {% endfor %}
-      </div>
+    <div class="section-head reveal centered">
+      <span class="eyebrow" style="justify-content:center">Réseau</span>
+      <h2>Ils collaborent avec le {{ profile.acronym }}</h2>
     </div>
   </div>
+  <div class="partner-marquee reveal">
+    <div class="partner-marquee-track">
+      {% for p in partners %}
+      <a href="{{ p.website|default:'#' }}" title="{{ p.name }}" {% if p.website %}target="_blank" rel="noopener"{% endif %}>
+        {% if p.logo %}<img src="{{ p.logo.url }}" alt="{{ p.name }}" loading="lazy">{% else %}<span class="label">{{ p.name }}</span>{% endif %}
+      </a>
+      {% endfor %}
+    </div>
+  </div>
+  <div class="container centered" style="margin-top:1.6rem">
+    <a href="{% url 'lab:partners' %}" class="team-link">Voir tous les partenaires
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+  </div>
 </section>
+{% endif %}
 
-<section class="section reveal">
+<!-- ==================== REJOINDRE ==================== -->
+<section class="section" style="padding-top:2.5rem">
   <div class="container">
-    <div class="join-box">
+    <div class="join-box reveal">
       <div class="join-box-text">
-        <span class="join-box-icon join-box-target">
-          <span class="ring r1" aria-hidden="true"></span>
-          <span class="ring r2" aria-hidden="true"></span>
-          <span class="ring r3" aria-hidden="true"></span>
-          <span class="core">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 12h8"/><path d="M12 8v8"/><circle cx="12" cy="12" r="9"/></svg>
-          </span>
-        </span>
-        <div>
-          <h3>Rejoindre le LAMO</h3>
-          <p>Doctorants, chercheurs associés et partenaires institutionnels sont invités à contacter le laboratoire pour construire une collaboration scientifique.</p>
-        </div>
+        <span class="eyebrow" style="color:var(--mesh-2)">Rejoindre le {{ profile.acronym }}</span>
+        <h2>Construisons ensemble une collaboration scientifique</h2>
+        <p>Doctorants, chercheurs associés et partenaires institutionnels sont invités à contacter le laboratoire pour construire une collaboration scientifique.</p>
+        <a href="{% url 'lab:contact' %}" class="btn btn-primary">Prendre contact
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
       </div>
-      <a href="{% url 'lab:contact' %}" class="btn btn-primary">Prendre contact</a>
+      <div class="join-box-icon" aria-hidden="true"><i></i></div>
     </div>
   </div>
 </section>
