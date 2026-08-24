@@ -350,11 +350,11 @@ h4{font-size:1rem;font-weight:700}
   .brand-univ{margin-left:auto}
   .dropdown{
     position:static;transform:none;opacity:1;visibility:visible;
-    min-width:0;padding:0 0 .8rem;background:none;border:0;box-shadow:none;backdrop-filter:none;
-    max-height:0;overflow:hidden;transition:max-height .5s var(--ease);
+    min-width:0;padding:0;background:none;border:0;box-shadow:none;backdrop-filter:none;
+    max-height:0;overflow:hidden;transition:max-height .5s var(--ease),padding .5s var(--ease);
   }
   .dropdown::before,.dropdown::after,.dd-head{display:none}
-  .main-nav>ul>li.is-open>.dropdown{max-height:640px}
+  .main-nav>ul>li.is-open>.dropdown{max-height:640px;padding:0 0 .8rem;transform:none}
   .dropdown a{
     opacity:1;transform:none;border-radius:0;padding:.55rem 0 .55rem 1rem;
     border-left:2px solid rgba(94,214,168,.35);margin-bottom:.15rem;
