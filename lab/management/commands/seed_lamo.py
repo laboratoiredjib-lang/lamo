@@ -613,6 +613,23 @@ class Command(BaseCommand):
              "recherche conjoints. Il a également participé à l'atelier scientifique organisé par le "
              "laboratoire en 2024 et à une rencontre scientifique à Djibouti en novembre 2024, "
              "contribuant activement au renforcement des liens académiques entre les deux institutions."),
+            ("M. Abdoulrahim IBRAHIM", "Enseignant-chercheur", "Université Sorbonne Paris Nord", "France", "associate_abdoulrahim_ibrahim.jpg",
+             "Abdoulrahim Ibrahim est enseignant-chercheur en mathématiques à l'Université Sorbonne Paris "
+             "Nord, où il assure la responsabilité pédagogique et de la formation de la Licence 2 "
+             "Économie-Gestion. Parallèlement à ses responsabilités universitaires, il enseigne dans "
+             "plusieurs écoles d'ingénieurs parisiennes les mathématiques discrètes, la théorie de "
+             "l'information (entropie, codes correcteurs) et la cryptographie (RSA, Diffie-Hellman, "
+             "ElGamal, courbes elliptiques, cryptographie post-quantique).\n\n"
+             "Ses travaux de recherche s'inscrivent au cœur de la topologie de basse dimension et de la "
+             "combinatoire algébrique. Il étudie les groupes de type tresse, leurs invariants, leurs "
+             "propriétés de linéarité et leurs représentations au sein des algèbres d'Iwahori-Hecke et de "
+             "Temperley-Lieb.\n\n"
+             "Mais ce qui rend sa démarche scientifique véritablement singulière, c'est le pont qu'il "
+             "s'attache à construire entre mathématiques fondamentales et applications concrètes. Il "
+             "travaille à l'extraction de groupes finis à partir de ces groupes de tresses généralisées "
+             "issus de la topologie, ouvrant la voie à des applications directes en chiffrement sécurisé "
+             "et en cryptographie post-quantique, domaine où l'analyse structurelle et l'optimisation "
+             "algorithmique jouent un rôle central."),
         ]
         for order, (full_name, grade, institution, country, photo, bio) in enumerate(rows, start=1):
             associate, _ = AssociateResearcher.objects.update_or_create(
