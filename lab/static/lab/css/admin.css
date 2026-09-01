@@ -212,9 +212,10 @@ div:has(> #nav-sidebar),
 body.login #page {
   background-color: oklch(13.0% 0.045 260.5) !important;
   background-image:
-    radial-gradient(1100px 700px at 10% -10%, oklch(30% 0.075 260.5), transparent 60%),
-    radial-gradient(800px 600px at -5% 105%, oklch(24% 0.08 165), transparent 55%),
-    radial-gradient(600px 500px at 60% 40%, oklch(22% 0.06 80 / .5), transparent 60%);
+    radial-gradient(1200px 800px at 12% -10%, oklch(30% 0.075 260.5), transparent 60%),
+    radial-gradient(900px 700px at 100% 10%, oklch(24% 0.08 165 / .6), transparent 55%),
+    radial-gradient(1000px 700px at 0% 110%, oklch(22% 0.07 80 / .5), transparent 55%),
+    radial-gradient(700px 600px at 85% 100%, oklch(24% 0.08 255 / .5), transparent 55%);
 }
 body.login #page > div:first-child {
   overflow: hidden;
@@ -232,18 +233,12 @@ body.login #page > div:first-child {
   pointer-events: none;
   opacity: .9;
 }
-@media (min-width: 1280px) {
-  .lamo-login-canvas { width: 50%; }
-}
 .lamo-login-eq-field {
   position: fixed;
   inset: 0;
   z-index: 0;
   overflow: hidden;
   pointer-events: none;
-}
-@media (min-width: 1280px) {
-  .lamo-login-eq-field { right: 50%; }
 }
 .lamo-login-eq {
   position: absolute;

@@ -203,9 +203,6 @@ UNFOLD = {
             '950': 'oklch(19.0% 0.052 255.3)',
         },
     },
-    'LOGIN': {
-        'image': lambda request: static('lab/img/affiche_lamo.jpg'),
-    },
     'DASHBOARD_CALLBACK': 'lab.admin.dashboard_callback',
     'SIDEBAR': {
         'show_search': True,
