@@ -21,7 +21,7 @@
     {% for stat in dashboard_stats %}
     {% component "unfold/components/card.html" with href=stat.href icon=stat.icon class="lamo-kpi-card" %}
         {% component "unfold/components/text.html" %}{{ stat.label }}{% endcomponent %}
-        <div class="font-semibold text-3xl text-base-900 mt-1 dark:text-base-100">{{ stat.value }}</div>
+        <div class="lamo-kpi-value font-semibold text-3xl text-base-900 mt-1 dark:text-base-100" data-count="{{ stat.value }}">0</div>
     {% endcomponent %}
     {% endfor %}
 </div>

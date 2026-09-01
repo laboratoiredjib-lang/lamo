@@ -146,11 +146,61 @@ div:has(> #nav-sidebar),
   background: linear-gradient(90deg, oklch(72% 0.16 149), oklch(70% 0.19 220), oklch(58% 0.14 255.3), oklch(75% 0.18 80), oklch(65% 0.2 38));
   opacity: 0;
   transition: opacity .35s;
+  z-index: 1;
+}
+/* Lueur qui suit le curseur, comme les cartes du site (--mx/--my posés en JS) */
+.lamo-kpi-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(280px circle at var(--mx, 50%) var(--my, 0%), oklch(72% 0.16 255.3 / .1), transparent 70%);
+  opacity: 0;
+  transition: opacity .45s;
 }
 .lamo-kpi-card:hover {
   transform: translateY(-4px);
   box-shadow: 0 20px 40px -20px rgba(10, 31, 66, .35) !important;
 }
-.lamo-kpi-card:hover::before {
+.lamo-kpi-card:hover::before,
+.lamo-kpi-card:hover::after {
   opacity: 1;
+}
+
+/* ---------------------------------------------------------------- Boutons */
+/* Bouton principal (Connexion, Enregistrer...) en dégradé feu, comme les CTA du site */
+.bg-primary-600 {
+  background: linear-gradient(96deg, oklch(80.6% 0.161 80.1), oklch(65.6% 0.193 38.5) 55%, oklch(56% 0.19 25)) !important;
+  border-color: transparent !important;
+  transition: filter .3s, transform .2s !important;
+}
+.bg-primary-600:hover {
+  filter: brightness(1.08);
+  transform: translateY(-1px);
+}
+.bg-primary-600:active {
+  transform: translateY(0);
+  filter: brightness(0.97);
+}
+
+/* ---------------------------------------------------------------- En-tête de page */
+/* Liseré arc-en-ciel animé, comme le haut des bannières .page-header du site */
+#main > div:first-child {
+  position: relative;
+}
+#main > div:first-child::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, oklch(72% 0.16 149), oklch(70% 0.19 220), oklch(58% 0.14 255.3), oklch(78% 0.15 80), oklch(65% 0.2 38), oklch(72% 0.16 149));
+  background-size: 200% 100%;
+  animation: lamo-header-shimmer 7s ease-in-out infinite;
+}
+@keyframes lamo-header-shimmer {
+  0% { background-position: 0% 0; }
+  100% { background-position: 200% 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  #main > div:first-child::before { animation: none; }
 }

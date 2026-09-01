@@ -185,6 +185,9 @@ UNFOLD = {
     'STYLES': [
         lambda request: static('lab/css/admin.css'),
     ],
+    'SCRIPTS': [
+        lambda request: static('lab/js/admin.js'),
+    ],
     'COLORS': {
         'primary': {
             '50': 'oklch(97.0% 0.018 255.3)',
