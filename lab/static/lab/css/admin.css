@@ -207,56 +207,79 @@ div:has(> #nav-sidebar),
 
 /* ---------------------------------------------------------------- Connexion
    Reprend le canvas maillé, les équations flottantes et le dégradé marine
-   du hero du site pour la page de connexion. */
+   du hero du site pour la page de connexion, avec une carte vitrée pour le
+   formulaire — traitement "produit premium" cohérent avec le reste du site. */
 body.login #page {
-  background-color: oklch(15.0% 0.050 260.5) !important;
+  background-color: oklch(13.0% 0.045 260.5) !important;
   background-image:
-    radial-gradient(900px 600px at 15% 0%, oklch(27% 0.06 260.5), transparent 60%),
-    radial-gradient(700px 500px at 0% 100%, oklch(20% 0.07 165), transparent 55%);
+    radial-gradient(1100px 700px at 10% -10%, oklch(30% 0.075 260.5), transparent 60%),
+    radial-gradient(800px 600px at -5% 105%, oklch(24% 0.08 165), transparent 55%),
+    radial-gradient(600px 500px at 60% 40%, oklch(22% 0.06 80 / .5), transparent 60%);
 }
 body.login #page > div:first-child {
   overflow: hidden;
 }
+
+/* Le <canvas> est un élément remplacé : position+inset seuls ne l'étirent
+   pas (il garde sa taille intrinsèque 300×150) — largeur/hauteur explicites
+   obligatoires pour qu'il couvre réellement le panneau. */
 .lamo-login-canvas {
   position: fixed;
-  inset: 0 50% 0 0;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
   z-index: 0;
   pointer-events: none;
+  opacity: .9;
+}
+@media (min-width: 1280px) {
+  .lamo-login-canvas { width: 50%; }
 }
 .lamo-login-eq-field {
   position: fixed;
-  inset: 0 50% 0 0;
+  inset: 0;
   z-index: 0;
   overflow: hidden;
   pointer-events: none;
 }
-@media (max-width: 1279px) {
-  .lamo-login-canvas,
-  .lamo-login-eq-field {
-    inset: 0;
-  }
+@media (min-width: 1280px) {
+  .lamo-login-eq-field { right: 50%; }
 }
 .lamo-login-eq {
   position: absolute;
   font-family: "STIX Two Text", Georgia, serif;
   font-style: italic;
-  font-size: 1.05rem;
-  color: oklch(78% 0.06 230 / .3);
+  font-size: 1.15rem;
+  color: oklch(80% 0.08 200 / .4);
   white-space: nowrap;
   animation: lamo-eq-float 14s ease-in-out infinite;
 }
 @keyframes lamo-eq-float {
-  0%, 100% { transform: translateY(0); opacity: .28; }
-  50% { transform: translateY(-22px); opacity: .55; }
+  0%, 100% { transform: translateY(0); opacity: .32; }
+  50% { transform: translateY(-22px); opacity: .62; }
 }
 @media (max-width: 640px) {
   .lamo-login-eq-field { display: none; }
 }
 
+/* Carte vitrée portant le formulaire, posée au-dessus du canvas animé.
+   Pas de backdrop-filter ici : sur un ancêtre, il créerait un containing
+   block CSS pour le <canvas> et le bouton retour en position:fixed,
+   les enfermant dans cette petite carte au lieu de couvrir tout l'écran
+   (même piège que .site-header sur le site public — voir sa note dédiée). */
 body.login .w-full.sm\:w-96 {
   position: relative;
   z-index: 1;
+  background: oklch(19% 0.045 260.5 / .92);
+  border: 1px solid oklch(50% 0.05 260.5 / .35);
+  border-radius: 20px;
+  padding: 2.5rem 2.25rem;
+  box-shadow: 0 30px 70px -25px oklch(0% 0 0 / .6), 0 0 0 1px oklch(100% 0 0 / .04) inset;
 }
+@media (max-width: 480px) {
+  body.login .w-full.sm\:w-96 { padding: 1.75rem 1.5rem; }
+}
+
 .lamo-login-logo {
   margin-bottom: 1.5rem;
 }
@@ -282,28 +305,28 @@ body.login h1 span:last-child {
   background-clip: text;
   color: transparent !important;
 }
-body.login #unauthenticated-title {
-  border-color: oklch(28% 0.05 260.5) !important;
+body.login h1 {
+  border-color: oklch(45% 0.05 260.5 / .4) !important;
 }
 
 /* Champs du formulaire de connexion, mêmes tons que la sidebar */
 body.login input[type="text"],
 body.login input[type="password"],
 body.login input[type="email"] {
-  background-color: oklch(19.0% 0.055 260.5) !important;
-  border-color: oklch(30% 0.06 260.5) !important;
-  color: oklch(94% 0.008 260.5) !important;
+  background-color: oklch(24% 0.045 260.5 / .7) !important;
+  border-color: oklch(40% 0.06 260.5 / .6) !important;
+  color: oklch(96% 0.008 260.5) !important;
 }
 body.login input::placeholder {
-  color: oklch(55% 0.03 260.5) !important;
+  color: oklch(60% 0.03 260.5) !important;
 }
 body.login input[type="text"]:focus,
 body.login input[type="password"]:focus {
   border-color: oklch(78% 0.15 80) !important;
-  box-shadow: 0 0 0 3px oklch(78% 0.15 80 / .18) !important;
+  box-shadow: 0 0 0 3px oklch(78% 0.15 80 / .22) !important;
 }
 body.login label {
-  color: oklch(70% 0.03 260.5) !important;
+  color: oklch(72% 0.03 260.5) !important;
 }
 body.login .password-reset-link {
   color: oklch(78% 0.02 260.5) !important;
