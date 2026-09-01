@@ -172,6 +172,13 @@ UNFOLD = {
     'SITE_FAVICONS': [
         {'rel': 'icon', 'type': 'image/png', 'href': lambda request: static('lab/img/logo_lamo.png')},
     ],
+    'SITE_DROPDOWN': [
+        {
+            'icon': 'open_in_new',
+            'title': _('Voir le site LAMO'),
+            'link': reverse_lazy('lab:home'),
+        },
+    ],
     'SHOW_HISTORY': True,
     'SHOW_VIEW_ON_SITE': True,
     'BORDER_RADIUS': '10px',
