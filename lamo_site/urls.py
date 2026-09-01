@@ -21,7 +21,7 @@ from django.conf.urls.static import static
 from django.views.static import serve as serve_static
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('gestion/', admin.site.urls),
     path('', include('lab.urls')),
 ]
 

@@ -1,0 +1,6 @@
+/* Espace de gestion LAMO — ajustements légers par-dessus le thème Unfold */
+@import url("https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&display=swap");
+
+html, body {
+  font-family: "Public Sans", system-ui, -apple-system, "Segoe UI", sans-serif !important;
+}

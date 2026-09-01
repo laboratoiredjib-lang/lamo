@@ -14,6 +14,9 @@ import os
 from pathlib import Path
 
 import dj_database_url
+from django.templatetags.static import static
+from django.urls import reverse_lazy
+from django.utils.translation import gettext_lazy as _
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -49,6 +52,7 @@ if not DEBUG:
 # Application definition
 
 INSTALLED_APPS = [
+    'unfold',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -74,7 +78,7 @@ ROOT_URLCONF = 'lamo_site.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -153,3 +157,178 @@ STORAGES = {
 }
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+# Administration (django-unfold) — habillage aux couleurs du LAMO
+# https://unfoldadmin.com/docs/configuration/settings/
+
+UNFOLD = {
+    'SITE_TITLE': 'Espace de gestion LAMO',
+    'SITE_HEADER': 'LAMO',
+    'SITE_SUBHEADER': 'Espace de gestion',
+    'SITE_SYMBOL': 'functions',
+    'SITE_LOGO': lambda request: static('lab/img/logo_lamo.png'),
+    'SITE_ICON': lambda request: static('lab/img/logo_lamo.png'),
+    'SITE_FAVICONS': [
+        {'rel': 'icon', 'type': 'image/png', 'href': lambda request: static('lab/img/logo_lamo.png')},
+    ],
+    'SHOW_HISTORY': True,
+    'SHOW_VIEW_ON_SITE': True,
+    'BORDER_RADIUS': '10px',
+    'STYLES': [
+        lambda request: static('lab/css/admin.css'),
+    ],
+    'COLORS': {
+        'primary': {
+            '50': 'oklch(97.0% 0.018 255.3)',
+            '100': 'oklch(93.0% 0.035 255.3)',
+            '200': 'oklch(86.0% 0.062 255.3)',
+            '300': 'oklch(77.0% 0.092 255.3)',
+            '400': 'oklch(68.0% 0.118 255.3)',
+            '500': 'oklch(58.0% 0.136 255.3)',
+            '600': 'oklch(50.2% 0.145 255.3)',
+            '700': 'oklch(42.0% 0.128 255.3)',
+            '800': 'oklch(34.0% 0.108 255.3)',
+            '900': 'oklch(27.0% 0.082 255.3)',
+            '950': 'oklch(19.0% 0.052 255.3)',
+        },
+    },
+    'LOGIN': {
+        'image': lambda request: static('lab/img/affiche_lamo.jpg'),
+    },
+    'DASHBOARD_CALLBACK': 'lab.admin.dashboard_callback',
+    'SIDEBAR': {
+        'show_search': True,
+        'show_all_applications': False,
+        'navigation': [
+            {
+                'title': _('Aperçu'),
+                'separator': False,
+                'items': [
+                    {
+                        'title': _('Tableau de bord'),
+                        'icon': 'dashboard',
+                        'link': reverse_lazy('admin:index'),
+                    },
+                ],
+            },
+            {
+                'title': _('Laboratoire'),
+                'separator': True,
+                'collapsible': False,
+                'items': [
+                    {
+                        'title': _('Profil du laboratoire'),
+                        'icon': 'account_balance',
+                        'link': reverse_lazy('admin:lab_labprofile_changelist'),
+                    },
+                    {
+                        'title': _('Équipes de recherche'),
+                        'icon': 'diversity_3',
+                        'link': reverse_lazy('admin:lab_researchteam_changelist'),
+                    },
+                    {
+                        'title': _('Axes de recherche'),
+                        'icon': 'hub',
+                        'link': reverse_lazy('admin:lab_researchtheme_changelist'),
+                    },
+                ],
+            },
+            {
+                'title': _('Membres'),
+                'separator': True,
+                'collapsible': True,
+                'items': [
+                    {
+                        'title': _('Membres permanents'),
+                        'icon': 'school',
+                        'link': reverse_lazy('admin:lab_permanentmember_changelist'),
+                    },
+                    {
+                        'title': _('Doctorants'),
+                        'icon': 'cast_for_education',
+                        'link': reverse_lazy('admin:lab_doctorant_changelist'),
+                    },
+                    {
+                        'title': _('Chercheurs associés'),
+                        'icon': 'public',
+                        'link': reverse_lazy('admin:lab_associateresearcher_changelist'),
+                    },
+                ],
+            },
+            {
+                'title': _('Vie scientifique'),
+                'separator': True,
+                'collapsible': True,
+                'items': [
+                    {
+                        'title': _('Activités'),
+                        'icon': 'event',
+                        'link': reverse_lazy('admin:lab_activity_changelist'),
+                    },
+                    {
+                        'title': _('Actualités'),
+                        'icon': 'campaign',
+                        'link': reverse_lazy('admin:lab_news_changelist'),
+                    },
+                ],
+            },
+            {
+                'title': _('Production scientifique'),
+                'separator': True,
+                'collapsible': True,
+                'items': [
+                    {
+                        'title': _('Publications'),
+                        'icon': 'article',
+                        'link': reverse_lazy('admin:lab_publication_changelist'),
+                    },
+                    {
+                        'title': _('Projets de recherche'),
+                        'icon': 'science',
+                        'link': reverse_lazy('admin:lab_researchproject_changelist'),
+                    },
+                    {
+                        'title': _('HDR'),
+                        'icon': 'workspace_premium',
+                        'link': reverse_lazy('admin:lab_habilitation_changelist'),
+                    },
+                ],
+            },
+            {
+                'title': _('Formations & partenaires'),
+                'separator': True,
+                'collapsible': True,
+                'items': [
+                    {
+                        'title': _('Enseignements de Master'),
+                        'icon': 'menu_book',
+                        'link': reverse_lazy('admin:lab_mastercourse_changelist'),
+                    },
+                    {
+                        'title': _('Partenaires'),
+                        'icon': 'handshake',
+                        'link': reverse_lazy('admin:lab_partner_changelist'),
+                    },
+                ],
+            },
+            {
+                'title': _('Accès & sécurité'),
+                'separator': True,
+                'collapsible': True,
+                'items': [
+                    {
+                        'title': _('Comptes utilisateurs'),
+                        'icon': 'manage_accounts',
+                        'link': reverse_lazy('admin:auth_user_changelist'),
+                    },
+                    {
+                        'title': _('Groupes'),
+                        'icon': 'groups',
+                        'link': reverse_lazy('admin:auth_group_changelist'),
+                    },
+                ],
+            },
+        ],
+    },
+}
