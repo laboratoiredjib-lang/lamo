@@ -1,6 +1,156 @@
-/* Espace de gestion LAMO — ajustements légers par-dessus le thème Unfold */
-@import url("https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&display=swap");
+/* Espace de gestion LAMO — habillage aligné sur l'identité visuelle du site */
+@import url("https://fonts.googleapis.com/css2?family=STIX+Two+Text:ital,wght@0,600;0,700;1,600&family=Public+Sans:wght@400;500;600;700;800&display=swap");
 
 html, body {
   font-family: "Public Sans", system-ui, -apple-system, "Segoe UI", sans-serif !important;
+}
+
+/* Titres éditoriaux (police des revues mathématiques, comme sur le site public) */
+#header-inner h1,
+.lamo-dashboard-title {
+  font-family: "STIX Two Text", Georgia, "Times New Roman", serif !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.01em;
+}
+
+/* ---------------------------------------------------------------- Barre latérale
+   Reprend la marine du site (nav/bannières) au lieu du gris neutre par défaut
+   d'Unfold, en surchargeant localement ses variables de couleur "base" — ce
+   qui recolore automatiquement fonds, textes et bordures de la sidebar sans
+   toucher au reste de l'interface (contenu, formulaires) qui reste clair. */
+/* Fond forcé indépendamment du thème clair/sombre : la bascule "Dark" d'Unfold
+   fait pointer ce même conteneur vers dark:bg-base-900, un jeton que la rampe
+   inversée ci-dessous réutilise pour le TEXTE clair — sans cette règle,
+   activer le mode sombre repeindrait la sidebar en clair. On fixe donc le
+   fond en dur, pour un rendu identique quel que soit le thème choisi. */
+div:has(> #nav-sidebar),
+#nav-sidebar,
+#nav-sidebar-inner {
+  background-color: oklch(15.0% 0.050 260.5) !important;
+}
+
+#nav-sidebar {
+  --color-base-50: oklch(15.0% 0.050 260.5);
+  --color-base-100: oklch(19.0% 0.055 260.5);
+  --color-base-200: oklch(24.0% 0.058 260.5);
+  --color-base-300: oklch(30.0% 0.055 260.5);
+  --color-base-400: oklch(46.0% 0.045 260.5);
+  --color-base-500: oklch(60.0% 0.035 260.5);
+  --color-base-600: oklch(76.0% 0.025 260.5);
+  --color-base-700: oklch(85.0% 0.018 260.5);
+  --color-base-800: oklch(92.0% 0.012 260.5);
+  --color-base-900: oklch(97.0% 0.006 260.5);
+  --color-base-950: oklch(99.0% 0.003 260.5);
+
+  /* Accent or (comme l'état actif du menu sur le site) pour les liens actifs/survolés */
+  --color-primary-500: oklch(78% 0.15 80);
+  --color-primary-600: oklch(72% 0.16 80);
+}
+
+/* La recherche et le sélecteur d'équipe (widgets non "tokenisés" par Unfold,
+   fond blanc en dur) sont assombris explicitement pour rester cohérents. */
+#nav-sidebar #nav-sidebar-inner input,
+#nav-sidebar .bg-white:not(nav[x-show]) {
+  background-color: oklch(19.0% 0.055 260.5) !important;
+  color: oklch(92% 0.012 260.5) !important;
+  border-color: oklch(28% 0.055 260.5) !important;
+}
+#nav-sidebar ::placeholder {
+  color: oklch(60% 0.035 260.5) !important;
+  opacity: 1;
+}
+
+/* Le texte des liens du menu n'hérite pas dynamiquement des jetons de couleur
+   ci-dessus (la couleur par défaut est résolue une fois sur <body>, hors de
+   cette zone) : on la redéclare donc explicitement ici pour rester lisible. */
+#nav-sidebar-inner a,
+#nav-sidebar-inner button {
+  color: oklch(78% 0.02 260.5);
+}
+#nav-sidebar-inner a:hover,
+#nav-sidebar-inner a.active,
+#nav-sidebar-inner button:hover {
+  color: oklch(78% 0.15 80) !important;
+}
+#nav-sidebar-inner h2 {
+  color: oklch(96% 0.008 260.5) !important;
+}
+#nav-sidebar-inner .text-subtle,
+#nav-sidebar-inner .text-font-subtle-light,
+#nav-sidebar-inner .text-font-subtle-dark {
+  color: oklch(58% 0.03 260.5) !important;
+}
+#nav-sidebar-inner .text-important,
+#nav-sidebar-inner .text-font-important-light,
+#nav-sidebar-inner .text-font-important-dark {
+  color: oklch(96% 0.008 260.5) !important;
+}
+#nav-sidebar-inner hr {
+  border-color: oklch(24% 0.058 260.5) !important;
+}
+
+/* La bascule manuelle en mode sombre ne doit pas affecter la sidebar : elle
+   garde en permanence l'identité marine du site, comme sa propre nav. */
+#nav-sidebar-inner .dark\:text-base-100,
+#nav-sidebar-inner .dark\:text-base-200,
+#nav-sidebar-inner .dark\:text-base-300,
+#nav-sidebar-inner .dark\:text-base-400,
+#nav-sidebar-inner .dark\:text-base-500 {
+  color: oklch(78% 0.02 260.5) !important;
+}
+#nav-sidebar-inner .dark\:border-base-700,
+#nav-sidebar-inner .dark\:border-base-800 {
+  border-color: oklch(24% 0.058 260.5) !important;
+}
+
+/* Le menu utilisateur (déconnexion, changer de mot de passe...) reste un
+   popover clair classique — on y annule donc les couleurs sombres ci-dessus. */
+#nav-sidebar-inner nav[x-show] a,
+#nav-sidebar-inner nav[x-show] button {
+  color: oklch(30% 0.03 260.5) !important;
+}
+#nav-sidebar-inner nav[x-show] a:hover {
+  color: oklch(50.2% 0.145 255.3) !important;
+}
+#nav-sidebar-inner nav[x-show] button[type="submit"],
+#nav-sidebar-inner nav[x-show] button[type="submit"] span {
+  color: oklch(53% 0.19 25) !important;
+}
+
+/* Liseré doré animé sous le logo, en écho au contour de la capsule de nav du site */
+#nav-sidebar #nav-sidebar-inner > div:first-child {
+  position: relative;
+}
+#nav-sidebar #nav-sidebar-inner > div:first-child::after {
+  content: "";
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  bottom: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, oklch(78% 0.15 80), transparent);
+  opacity: .8;
+}
+
+/* ---------------------------------------------------------------- Tableau de bord */
+.lamo-kpi-card {
+  position: relative;
+  overflow: hidden;
+  transition: transform .35s cubic-bezier(.22,1,.36,1), box-shadow .35s cubic-bezier(.22,1,.36,1) !important;
+}
+.lamo-kpi-card::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  height: 3px;
+  background: linear-gradient(90deg, oklch(72% 0.16 149), oklch(70% 0.19 220), oklch(58% 0.14 255.3), oklch(75% 0.18 80), oklch(65% 0.2 38));
+  opacity: 0;
+  transition: opacity .35s;
+}
+.lamo-kpi-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px -20px rgba(10, 31, 66, .35) !important;
+}
+.lamo-kpi-card:hover::before {
+  opacity: 1;
 }

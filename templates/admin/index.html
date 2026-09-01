@@ -9,7 +9,7 @@
 
 {% block content %}
 <div class="mb-8">
-    <h1 class="font-semibold text-2xl text-base-900 dark:text-base-100">
+    <h1 class="lamo-dashboard-title font-semibold text-2xl text-base-900 dark:text-base-100">
         {% translate 'Bonjour' %}{% if request.user.first_name %}, {{ request.user.first_name }}{% endif %} 👋
     </h1>
     <p class="text-base-500 text-sm mt-1 dark:text-base-400">
@@ -19,7 +19,7 @@
 
 <div class="grid gap-4 grid-cols-2 lg:grid-cols-4 mb-10">
     {% for stat in dashboard_stats %}
-    {% component "unfold/components/card.html" with href=stat.href icon=stat.icon class="hover:-translate-y-0.5 transition-transform" %}
+    {% component "unfold/components/card.html" with href=stat.href icon=stat.icon class="lamo-kpi-card" %}
         {% component "unfold/components/text.html" %}{{ stat.label }}{% endcomponent %}
         <div class="font-semibold text-3xl text-base-900 mt-1 dark:text-base-100">{{ stat.value }}</div>
     {% endcomponent %}
