@@ -257,7 +257,8 @@ class Command(BaseCommand):
              "modélisation mathématique, l'analyse de sensibilité globale, le contrôle optimal, la "
              "modélisation environnementale, la transition énergétique ainsi que les applications de "
              "l'intelligence artificielle aux systèmes complexes.",
-             "https://share.google/lt1kbvm5vQZoReESa", ""),
+             "https://share.google/lt1kbvm5vQZoReESa",
+             "https://scholar.google.com/citations?user=jnxjCzAAAAAJ&hl=fr"),
             ("Dr. Yahyeh SOULEIMAN", "Maître de conférences en Mathématiques appliquées",
              "Doyen de l'IUT-T", False, team_sto,
              "yahyeh_souleiman@univ.edu.dj", "souleimanyahyeh@gmail.com", "+253 77 86 80 46 | +253 21 32 36 03",
@@ -541,7 +542,8 @@ class Command(BaseCommand):
              "participant à plusieurs travaux de recherche en modélisation mathématique, analyse de "
              "sensibilité globale et modélisation épidémiologique, notamment sur l'analyse de sensibilité "
              "du modèle SIHR appliqué à la COVID-19 et sur la modélisation des systèmes climatiques "
-             "utilisant les développements en chaos polynomial."),
+             "utilisant les développements en chaos polynomial.",
+             "https://scholar.google.com/citations?user=_SSBhREAAAAJ&hl=fr"),
             ("Mme. Raluca EFTIMIE", "Professeure", "Université Marie et Louis Pasteur", "France", "associate_raluca_eftimie.png",
              "Raluca Eftimie est Professeure des universités en mathématiques appliquées à l'Université "
              "Marie et Louis Pasteur (anciennement Université de Franche-Comté), où elle est membre du "
@@ -561,7 +563,8 @@ class Command(BaseCommand):
              "Mathematical Biology de la revue Frontiers in Applied Mathematics and Statistics. Elle "
              "développe des collaborations scientifiques avec le LAMO de l'Université de Djibouti dans "
              "les domaines de la modélisation mathématique des maladies infectieuses, de l'immunologie et "
-             "de la biologie mathématique."),
+             "de la biologie mathématique.",
+             "https://scholar.google.com/citations?user=ET-ATjQAAAAJ&hl=en"),
             ("Mme. Nathalie VERDIÈRE", "Maîtresse de conférences HDR", "Université Le Havre Normandie", "France", "",
              "Nathalie Verdière est Maîtresse de conférences HDR (Habilitée à Diriger des Recherches) en "
              "Mathématiques Appliquées à l'Université Le Havre Normandie. Elle est membre permanent du "
@@ -579,7 +582,8 @@ class Command(BaseCommand):
              "nationaux et internationaux. Dans le cadre de sa collaboration avec le LAMO, elle apporte "
              "son expertise en modélisation mathématique, en théorie du contrôle et en analyse des "
              "systèmes dynamiques, notamment à travers l'encadrement de la thèse du doctorant Gouled "
-             "Souleiman."),
+             "Souleiman.",
+             "https://scholar.google.com/citations?user=rdtVeKIAAAAJ&hl=fr"),
             ("M. Abdisalam HASSAN", "Professeur associé", "Université AMOUD", "Somalie", "associate_abdisalam_hassan.png",
              "Le Dr Abdisalam Hassan Muse est Professeur associé en statistique et mathématiques "
              "appliquées à l'Université d'Amoud (Amoud University), en Somalie (Borama). Il est "
@@ -597,7 +601,8 @@ class Command(BaseCommand):
              "Somalie en sciences mathématiques, avec un h-index de 19 et plus de 1 000 citations. Il "
              "entretient des relations scientifiques avec le LAMO de l'Université de Djibouti, "
              "participant à des conférences internationales, à des projets de recherche collaboratifs et "
-             "au renforcement des partenariats académiques entre les deux institutions."),
+             "au renforcement des partenariats académiques entre les deux institutions.",
+             "https://scholar.google.com/citations?user=zxwKbowAAAAJ&hl=en"),
             ("M. Lemecha LEGESSE", "Professeur", "Adama Science and Technology University", "Éthiopie", "associate_legesse_lemecha.jpeg",
              "Legesse Lemecha Obsu est Professeur en mathématiques appliquées à l'Adama Science and "
              "Technology University (ASTU), en Éthiopie, et Directeur de l'École Doctorale. Il est membre "
@@ -612,7 +617,8 @@ class Command(BaseCommand):
              "co-signature de plusieurs articles scientifiques et le développement de travaux de "
              "recherche conjoints. Il a également participé à l'atelier scientifique organisé par le "
              "laboratoire en 2024 et à une rencontre scientifique à Djibouti en novembre 2024, "
-             "contribuant activement au renforcement des liens académiques entre les deux institutions."),
+             "contribuant activement au renforcement des liens académiques entre les deux institutions.",
+             "https://scholar.google.com/citations?user=Go4xjW0AAAAJ&hl=en"),
             ("M. Abdoulrahim IBRAHIM", "Enseignant-chercheur", "Université Sorbonne Paris Nord", "France", "associate_abdoulrahim_ibrahim.jpg",
              "Abdoulrahim Ibrahim est enseignant-chercheur en mathématiques à l'Université Sorbonne Paris "
              "Nord, où il assure la responsabilité pédagogique et de la formation de la Licence 2 "
@@ -629,9 +635,10 @@ class Command(BaseCommand):
              "travaille à l'extraction de groupes finis à partir de ces groupes de tresses généralisées "
              "issus de la topologie, ouvrant la voie à des applications directes en chiffrement sécurisé "
              "et en cryptographie post-quantique, domaine où l'analyse structurelle et l'optimisation "
-             "algorithmique jouent un rôle central."),
+             "algorithmique jouent un rôle central.",
+             ""),
         ]
-        for order, (full_name, grade, institution, country, photo, bio) in enumerate(rows, start=1):
+        for order, (full_name, grade, institution, country, photo, bio, scholar_link) in enumerate(rows, start=1):
             associate, _ = AssociateResearcher.objects.update_or_create(
                 full_name=full_name,
                 defaults={
@@ -639,6 +646,7 @@ class Command(BaseCommand):
                     "institution": institution,
                     "country": country,
                     "bio": bio,
+                    "scholar_link": scholar_link,
                     "order": order,
                 },
             )
