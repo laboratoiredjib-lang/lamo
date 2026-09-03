@@ -183,13 +183,28 @@
   if (finePointer && !reduceMotion) {
     document.querySelectorAll(
       ".team-card, .theme-card, .info-card, .pub-item, .thesis-card, .hdr-card, " +
-      ".project-card, .axis-item, .news-card, .partner-tile, .course-card, .activity-feed-card"
+      ".project-card, .axis-item, .news-card, .partner-tile, .course-card, .activity-feed-card, " +
+      ".hero-v2-stat"
     ).forEach(function (card) {
       card.addEventListener("mousemove", function (e) {
         var r = card.getBoundingClientRect();
         card.style.setProperty("--mx", ((e.clientX - r.left) / r.width) * 100 + "%");
         card.style.setProperty("--my", ((e.clientY - r.top) / r.height) * 100 + "%");
       });
+    });
+  }
+
+  /* --------------------------- 6bis. Inclinaison 3D des cartes de statistiques */
+  if (finePointer && !reduceMotion) {
+    document.querySelectorAll(".hero-v2-stat").forEach(function (card) {
+      card.addEventListener("mousemove", function (e) {
+        var r = card.getBoundingClientRect();
+        var px = (e.clientX - r.left) / r.width - 0.5;
+        var py = (e.clientY - r.top) / r.height - 0.5;
+        card.style.transform =
+          "perspective(700px) rotateY(" + (px * 10).toFixed(2) + "deg) rotateX(" + (-py * 10).toFixed(2) + "deg) translateY(-8px) scale(1.03)";
+      });
+      card.addEventListener("mouseleave", function () { card.style.transform = ""; });
     });
   }
 

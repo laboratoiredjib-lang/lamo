@@ -587,6 +587,7 @@ h4{font-size:1rem;font-weight:700}
   display:flex;align-items:center;gap:.55rem;margin-bottom:.9rem;
   font-family:var(--ff-mono);font-size:.78rem;letter-spacing:.16em;text-transform:uppercase;color:var(--blue);
 }
+.side-panel h4 svg,.info-box h4 svg{width:18px;height:18px;flex:none}
 .info-panel{position:sticky;top:110px;background:var(--white);border:1px solid var(--line);border-radius:var(--r-lg);box-shadow:var(--shadow-md);overflow:hidden}
 .info-panel::before{content:"";display:block;height:5px;background:var(--grad-wave)}
 .info-panel-section{padding:1.4rem 1.5rem}
@@ -1023,21 +1024,42 @@ h4{font-size:1rem;font-weight:700}
   position:relative;display:flex;align-items:center;gap:.9rem;overflow:hidden;
   background:rgba(255,255,255,.055);border:1px solid rgba(139,196,247,.18);
   border-radius:var(--r-md);padding:1rem 1.1rem;backdrop-filter:blur(8px);
-  transition:transform .35s var(--ease),background .35s,border-color .35s;
+  transition:transform .45s var(--ease),background .35s,border-color .35s,box-shadow .45s;
+  transform-style:preserve-3d;will-change:transform;
 }
 .hero-v2-stat::after{
   content:"";position:absolute;inset:0;transform:translateX(-130%);transition:transform .8s;
   background:linear-gradient(105deg,transparent 30%,rgba(255,255,255,.14) 50%,transparent 70%);
+  z-index:1;pointer-events:none;
 }
-.hero-v2-stat:hover{transform:translateY(-5px);background:rgba(255,255,255,.1);border-color:rgba(94,214,168,.45)}
+/* Anneau arc-en-ciel qui s'allume au survol */
+.hero-v2-stat::before{
+  content:"";position:absolute;inset:0;border-radius:inherit;padding:1.5px;
+  background:var(--grad-full);opacity:0;transition:opacity .4s;
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+  -webkit-mask-composite:xor;mask-composite:exclude;
+  pointer-events:none;z-index:1;
+}
+/* Lueur qui suit le curseur (--mx/--my posés par main.js) */
+.hero-v2-stat-glow{
+  content:"";position:absolute;inset:0;pointer-events:none;z-index:0;
+  background:radial-gradient(220px circle at var(--mx,50%) var(--my,0%),rgba(232,161,58,.22),transparent 70%);
+  opacity:0;transition:opacity .4s;
+}
+.hero-v2-stat:hover{background:rgba(255,255,255,.1);border-color:transparent;box-shadow:0 26px 55px -22px rgba(0,0,0,.55),0 0 34px -12px rgba(94,214,168,.5)}
 .hero-v2-stat:hover::after{transform:translateX(130%)}
+.hero-v2-stat:hover::before{opacity:1}
+.hero-v2-stat:hover .hero-v2-stat-glow{opacity:1}
 .hero-v2-stat-icon{
-  flex:none;width:46px;height:46px;border-radius:12px;display:grid;place-items:center;color:var(--mesh-2);
+  position:relative;z-index:1;flex:none;width:46px;height:46px;border-radius:12px;display:grid;place-items:center;color:var(--mesh-2);
   background:linear-gradient(140deg,rgba(31,181,132,.25),rgba(47,168,220,.25));
+  transition:transform .45s var(--ease),background .4s,color .4s;
 }
 .hero-v2-stat-icon svg{width:24px;height:24px}
-.hero-v2-stat .num{font-family:var(--ff-display);font-size:1.85rem;font-weight:700;color:var(--white);line-height:1}
-.hero-v2-stat .lbl{font-size:.78rem;color:#9FB8D8;margin-top:.15rem}
+.hero-v2-stat:hover .hero-v2-stat-icon{transform:scale(1.15) rotate(-8deg);background:var(--grad-fire);color:#fff}
+.hero-v2-stat .num{position:relative;z-index:1;font-family:var(--ff-display);font-size:1.85rem;font-weight:700;color:var(--white);line-height:1;transition:text-shadow .4s}
+.hero-v2-stat .lbl{position:relative;z-index:1;font-size:.78rem;color:#9FB8D8;margin-top:.15rem}
+.hero-v2-stat:hover .num{text-shadow:0 0 18px rgba(232,161,58,.6)}
 .hero-v3-scroll{
   position:absolute;left:50%;bottom:1.3rem;transform:translateX(-50%);z-index:2;
   display:flex;flex-direction:column;align-items:center;gap:.3rem;
