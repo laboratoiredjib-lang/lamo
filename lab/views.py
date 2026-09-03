@@ -34,6 +34,10 @@ def home(request):
             "permanents": PermanentMember.objects.count(),
             "doctorants": Doctorant.objects.count(),
             "associates": AssociateResearcher.objects.count(),
+            "publications": Publication.objects.count(),
+            "projects": ResearchProject.objects.count(),
+            "partners": Partner.objects.count(),
+            "news": News.objects.filter(is_published=True).count(),
         },
     }
     return render(request, "lab/home.html", context)
