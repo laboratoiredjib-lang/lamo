@@ -303,7 +303,8 @@ class Command(BaseCommand):
              "participé au développement de nouvelles infrastructures de recherche, notamment dans le "
              "domaine des énergies renouvelables, afin de soutenir la transition énergétique et le "
              "développement durable à Djibouti.",
-             "https://share.google/dDdC9IlhopRoniqup", ""),
+             "https://share.google/dDdC9IlhopRoniqup",
+             "https://www.researchgate.net/profile/Souleiman-Omar-Hoch"),
             ("Dr. Doualeh ABDILLAHI", "Maître de conférences en Statistiques appliquées", "Directeur des études", False, team_sto,
              "", "", "", "member_doualeh_abdillahi.png",
              "Dr Doualeh Abdillahi Ali est Maître de conférences en mathématiques appliquées et Directeur "
@@ -320,7 +321,8 @@ class Command(BaseCommand):
              "séminaires de recherche et de projets collaboratifs. Il a ainsi fait partie de la délégation "
              "de l'Université de Djibouti ayant représenté le LAMO lors de la conférence internationale "
              "DATA-SD 2025 organisée par l'Université d'Amoud (Somalie).",
-             "https://share.google/GY2tiwxpPd9ZnralY", ""),
+             "https://share.google/GY2tiwxpPd9ZnralY",
+             "https://www.researchgate.net/profile/Doualeh-Abdillahi-Ali-2"),
         ]
         for order, (full_name, title, role_tag, is_director, team, email, email_secondary, phone, photo, bio, thesis_link, scholar_link) in enumerate(members, start=1):
             member, _ = PermanentMember.objects.update_or_create(
@@ -395,7 +397,7 @@ class Command(BaseCommand):
              "Les recherches visent à développer des outils méthodologiques robustes en statistique "
              "multivariée, intelligence artificielle et apprentissage automatique, avec des applications "
              "à des données réelles issues des sciences appliquées."),
-            ("M. Getachew FETENE", "2025", "Adama Science and Technology University", "Lemecha Legesse", "Yahyeh Souleiman", ""),
+            ("M. Getachew FETENE", "2025", "Adama Science and Technology University", "Legesse Lemecha Obsu", "Yahyeh Souleiman", ""),
             ("M. Hakim AMER", "2026", "Université de Toulon", "Mehmet Ersoy", "Liban Ismail & Mohamed Yacin",
              "Cette thèse porte sur la modélisation hydrodynamique et sédimentaire des processus "
              "d'érosion côtière, avec une application au littoral djiboutien.\n\n"
@@ -522,6 +524,12 @@ class Command(BaseCommand):
                 attach_image(doctorant, "photo", doctorant_photos[full_name])
 
     def seed_associates(self):
+        # Renommage : "full_name" sert de clé de correspondance ci-dessous, donc un
+        # simple changement de texte créerait un doublon au lieu de corriger la fiche
+        # existante — on renomme donc d'abord l'enregistrement déjà en base.
+        AssociateResearcher.objects.filter(full_name="M. Lemecha LEGESSE").update(
+            full_name="M. Legesse LEMECHA OBSU"
+        )
         rows = [
             ("M. Hacène DJELLOUT", "Professeur", "Université Clermont Auvergne (UCA)", "France", "associate_hacene_djellout.jpeg",
              "Hacène Djellout est Professeur des universités en mathématiques appliquées à l'Université "
@@ -603,7 +611,7 @@ class Command(BaseCommand):
              "participant à des conférences internationales, à des projets de recherche collaboratifs et "
              "au renforcement des partenariats académiques entre les deux institutions.",
              "https://scholar.google.com/citations?user=zxwKbowAAAAJ&hl=en"),
-            ("M. Lemecha LEGESSE", "Professeur", "Adama Science and Technology University", "Éthiopie", "associate_legesse_lemecha.jpeg",
+            ("M. Legesse LEMECHA OBSU", "Professeur", "Adama Science and Technology University", "Éthiopie", "associate_legesse_lemecha.jpeg",
              "Legesse Lemecha Obsu est Professeur en mathématiques appliquées à l'Adama Science and "
              "Technology University (ASTU), en Éthiopie, et Directeur de l'École Doctorale. Il est membre "
              "du Département de Mathématiques Appliquées, où il exerce des activités d'enseignement, de "
@@ -636,7 +644,7 @@ class Command(BaseCommand):
              "issus de la topologie, ouvrant la voie à des applications directes en chiffrement sécurisé "
              "et en cryptographie post-quantique, domaine où l'analyse structurelle et l'optimisation "
              "algorithmique jouent un rôle central.",
-             ""),
+             "https://www.researchgate.net/profile/Ibrahim-Abdoulrahim"),
         ]
         for order, (full_name, grade, institution, country, photo, bio, scholar_link) in enumerate(rows, start=1):
             associate, _ = AssociateResearcher.objects.update_or_create(
