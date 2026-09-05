@@ -48,6 +48,11 @@ if not DEBUG:
     SECURE_HSTS_SECONDS = 3600
     SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 
+# Assistant IA du site (widget de chat) — clé API Google Gemini (niveau gratuit).
+# Voir lab/views.py:assistant_chat. Vide en local tant que la variable n'est pas définie
+# (l'assistant répond alors avec un message de secours plutôt que de planter).
+GEMINI_API_KEY = os.environ.get('GEMINI_API_KEY', '')
+
 
 # Application definition
 

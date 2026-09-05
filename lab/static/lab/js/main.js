@@ -11,6 +11,7 @@
    9. Visionneuse plein écran (lightbox)
   10. Surface maillée animée du héros (canvas)
   11. Inclinaison 3D de l'affiche
+  12. Assistant IA
    ========================================================================= */
 (function () {
   "use strict";
@@ -450,5 +451,115 @@
   if (marquee && !marquee.dataset.cloned) {
     marquee.innerHTML += marquee.innerHTML;
     marquee.dataset.cloned = "1";
+  }
+
+  /* --------------------------------------------------- 12. Assistant IA */
+  var assistant = document.getElementById("lamo-assistant");
+  if (assistant) {
+    var aToggle = document.getElementById("lamo-assistant-toggle");
+    var aClose = document.getElementById("lamo-assistant-close");
+    var aMessages = document.getElementById("lamo-assistant-messages");
+    var aSuggestions = document.getElementById("lamo-assistant-suggestions");
+    var aForm = document.getElementById("lamo-assistant-form");
+    var aInput = document.getElementById("lamo-assistant-input");
+    var aHistory = [];
+    var aBusy = false;
+    var aGreeted = false;
+
+    function aSetOpen(isOpen) {
+      assistant.classList.toggle("is-open", isOpen);
+      aToggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
+      aToggle.setAttribute("aria-label", isOpen ? "Fermer l'assistant du LAMO" : "Ouvrir l'assistant du LAMO");
+      if (isOpen) {
+        if (!aGreeted) {
+          aGreeted = true;
+          aAddMessage(
+            "model",
+            "Bonjour 👋 Je suis l'assistant du LAMO. Pose-moi une question sur le " +
+              "laboratoire, ses équipes, ses membres, ses activités ou ses formations."
+          );
+        }
+        window.setTimeout(function () { aInput.focus(); }, 250);
+      }
+    }
+
+    function aAddMessage(role, text) {
+      var row = document.createElement("div");
+      row.className = "lamo-assistant-msg lamo-assistant-msg--" + role;
+      var bubble = document.createElement("div");
+      bubble.className = "lamo-assistant-bubble";
+      bubble.textContent = text;
+      row.appendChild(bubble);
+      aMessages.appendChild(row);
+      aMessages.scrollTop = aMessages.scrollHeight;
+      return row;
+    }
+
+    function aSetBusy(isBusy) {
+      aBusy = isBusy;
+      aForm.classList.toggle("is-busy", isBusy);
+    }
+
+    function aSend(text) {
+      text = (text || "").trim();
+      if (!text || aBusy) return;
+
+      if (aSuggestions) aSuggestions.hidden = true;
+      aAddMessage("user", text);
+      aHistory.push({ role: "user", text: text });
+      aInput.value = "";
+      aSetBusy(true);
+
+      var typingRow = aAddMessage("model", "…");
+      typingRow.classList.add("is-typing");
+
+      var csrfToken = aForm.querySelector('input[name="csrfmiddlewaretoken"]');
+      csrfToken = csrfToken ? csrfToken.value : "";
+
+      fetch(aForm.getAttribute("data-endpoint"), {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "X-CSRFToken": csrfToken,
+        },
+        body: JSON.stringify({ message: text, history: aHistory }),
+      })
+        .then(function (res) { return res.json(); })
+        .then(function (data) {
+          typingRow.remove();
+          var reply = (data && (data.reply || data.error)) ||
+            "Désolé, une erreur est survenue. Merci de réessayer.";
+          aAddMessage("model", reply);
+          aHistory.push({ role: "model", text: reply });
+        })
+        .catch(function () {
+          typingRow.remove();
+          aAddMessage(
+            "model",
+            "Désolé, je n'arrive pas à répondre pour le moment. Vérifie ta connexion ou " +
+              "réessaie dans un instant."
+          );
+        })
+        .finally(function () {
+          aSetBusy(false);
+        });
+    }
+
+    aToggle.addEventListener("click", function () {
+      aSetOpen(!assistant.classList.contains("is-open"));
+    });
+    if (aClose) aClose.addEventListener("click", function () { aSetOpen(false); });
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && assistant.classList.contains("is-open")) aSetOpen(false);
+    });
+    aForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+      aSend(aInput.value);
+    });
+    if (aSuggestions) {
+      aSuggestions.querySelectorAll("button").forEach(function (btn) {
+        btn.addEventListener("click", function () { aSend(btn.textContent); });
+      });
+    }
   }
 })();

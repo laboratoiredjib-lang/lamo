@@ -39,4 +39,5 @@ urlpatterns = [
     path("partenaires/collaborations-internationales/", views.partners_international, name="partners_international"),
     path("actualites/", views.news_list, name="news_list"),
     path("contact/", views.contact, name="contact"),
+    path("api/assistant/", views.assistant_chat, name="assistant_chat"),
 ]
