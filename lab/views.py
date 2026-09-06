@@ -528,7 +528,7 @@ def assistant_chat(request):
             knowledge_base=_build_assistant_knowledge_base()
         )
         response = client.models.generate_content(
-            model="gemini-2.5-flash",
+            model="gemini-3.6-flash",
             contents=contents,
             config=types.GenerateContentConfig(
                 system_instruction=system_prompt,
