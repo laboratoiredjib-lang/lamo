@@ -503,13 +503,14 @@ class Command(BaseCommand):
             "Mme. Saida BALLAH": "member_saida_ballah.jpg",
             "M. Kadir ALI": "member_kadir_ali.jpg",
             "M. Abdourahman Djama GUEDI": "member_abdourahman_djama.jpg",
-            "M. Mohamed Ismael DINI": "member_mohamed_ismael_dini.jpg",
+            "M. Mohamed Ismael DINI": "member_mohamed_ismael_dini.png",
             "M. Hakim AMER": "member_hakim_amer.jpg",
             "M. Ali MOHAMED": "member_ali_mohamed.jpg",
+            "M. Ismail ABDILLAHI": "member_ismail_abdillahi.jpg",
         }
-        # Remplace l'ancienne photo (casual) par le nouveau portrait professionnel :
-        # attach_image() n'écrase jamais un champ déjà rempli, donc on vide d'abord
-        # ce champ pour que la ré-exécution du seed applique bien la nouvelle image.
+        # Correction : la photo de M. Ismail ABDILLAHI avait été attachée par erreur à
+        # M. Mohamed Ismael DINI. attach_image() n'écrase jamais un champ déjà rempli,
+        # donc on vide d'abord ce champ pour que le seed réapplique la bonne photo.
         Doctorant.objects.filter(full_name="M. Mohamed Ismael DINI").update(photo="")
         for order, (full_name, start_year, partner_university, thesis_director, co_supervisor, bio) in enumerate(rows, start=1):
             doctorant, _ = Doctorant.objects.update_or_create(
