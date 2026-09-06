@@ -1,5 +1,7 @@
 import json
 import logging
+import re
+import unicodedata
 
 from django.conf import settings
 from django.core.cache import cache
@@ -462,6 +464,58 @@ def _build_assistant_knowledge_base():
     return "\n".join(lines)
 
 
+ASSISTANT_STOPWORDS = {
+    "les", "des", "une", "sont", "avec", "pour", "dans", "cette", "vos", "vous",
+    "que", "qui", "quel", "quelle", "quels", "quelles", "est", "etes", "sur",
+    "lamo", "laboratoire", "peux", "peut", "parle", "moi", "parlez",
+}
+
+
+def _assistant_normalize(text):
+    """Renvoie l'ensemble des mots significatifs (sans accents, sans pluriel simple)."""
+    text = unicodedata.normalize("NFKD", text).encode("ascii", "ignore").decode("ascii")
+    words = re.findall(r"[a-z]{3,}", text.lower())
+    stemmed = {w[:-1] if w.endswith("s") and len(w) > 4 else w for w in words}
+    return stemmed - ASSISTANT_STOPWORDS
+
+
+def _select_relevant_knowledge(knowledge_base, query_text, max_chars=9000):
+    """Réduit la base de connaissances aux sections pertinentes pour la question posée,
+    pour rester sous la limite de tokens/minute du niveau gratuit de l'API utilisée
+    (une base complète de ~38 000 caractères dépasse cette limite à elle seule).
+    Score par mots distincts (pas par fréquence brute) pour qu'une longue section
+    répétant des mots communs ne l'emporte pas sur une section courte mais ciblée ;
+    les correspondances dans le titre de section comptent triple."""
+    parts = re.split(r"\n(?=--- )", knowledge_base)
+    sections = [p for p in parts if p.strip()]
+    if not sections:
+        return knowledge_base[:max_chars]
+
+    profile_section, other_sections = sections[0], sections[1:]
+    query_words = _assistant_normalize(query_text)
+
+    scored = []
+    for section in other_sections:
+        title, _, body = section.partition("\n")
+        title_words = _assistant_normalize(title)
+        body_words = _assistant_normalize(body)
+        score = 3 * len(query_words & title_words) + len(query_words & body_words)
+        scored.append((score, section))
+    scored.sort(key=lambda item: item[0], reverse=True)
+
+    selected = [profile_section]
+    budget = max_chars - len(profile_section)
+    for score, section in scored:
+        if budget <= 0:
+            break
+        if score == 0 and len(selected) > 4:
+            continue
+        selected.append(section[:budget])
+        budget -= len(section)
+
+    return "\n".join(selected)
+
+
 def _assistant_client_ip(request):
     forwarded = request.META.get("HTTP_X_FORWARDED_FOR")
     if forwarded:
@@ -472,7 +526,7 @@ def _assistant_client_ip(request):
 @require_POST
 def assistant_chat(request):
     """Endpoint JSON appelé par le widget de chat (lab/static/lab/js/main.js)."""
-    if not settings.GEMINI_API_KEY:
+    if not settings.GROQ_API_KEY:
         return JsonResponse(
             {
                 "reply": (
@@ -511,32 +565,42 @@ def assistant_chat(request):
         )
     cache.set(cache_key, count + 1, timeout=3600)
 
-    contents = []
+    conversation = []
     for turn in history:
         role = turn.get("role") if isinstance(turn, dict) else None
         text = (turn.get("text") or "").strip() if isinstance(turn, dict) else ""
         if role in ("user", "model") and text:
-            contents.append({"role": role, "parts": [{"text": text[:ASSISTANT_MAX_MESSAGE_LENGTH]}]})
-    contents.append({"role": "user", "parts": [{"text": message}]})
+            conversation.append({
+                "role": "user" if role == "user" else "assistant",
+                "content": text[:ASSISTANT_MAX_MESSAGE_LENGTH],
+            })
+    conversation.append({"role": "user", "content": message})
+
+    query_text = " ".join(turn["content"] for turn in conversation[-3:])
+    knowledge_base = _select_relevant_knowledge(_build_assistant_knowledge_base(), query_text)
+    system_prompt = ASSISTANT_SYSTEM_PROMPT.format(knowledge_base=knowledge_base)
+    messages = [{"role": "system", "content": system_prompt}] + conversation
 
     try:
-        from google import genai
-        from google.genai import types
+        import requests
 
-        client = genai.Client(api_key=settings.GEMINI_API_KEY)
-        system_prompt = ASSISTANT_SYSTEM_PROMPT.format(
-            knowledge_base=_build_assistant_knowledge_base()
+        api_response = requests.post(
+            "https://api.groq.com/openai/v1/chat/completions",
+            headers={
+                "Authorization": f"Bearer {settings.GROQ_API_KEY}",
+                "Content-Type": "application/json",
+            },
+            json={
+                "model": "openai/gpt-oss-120b",
+                "messages": messages,
+                "temperature": 0.3,
+                "max_tokens": 700,
+                "reasoning_effort": "low",
+            },
+            timeout=20,
         )
-        response = client.models.generate_content(
-            model="gemini-3.6-flash",
-            contents=contents,
-            config=types.GenerateContentConfig(
-                system_instruction=system_prompt,
-                temperature=0.3,
-                max_output_tokens=500,
-            ),
-        )
-        reply = (response.text or "").strip()
+        api_response.raise_for_status()
+        reply = (api_response.json()["choices"][0]["message"]["content"] or "").strip()
         if not reply:
             reply = "Désolé, je n'ai pas pu générer de réponse. Réessaie ou contacte le laboratoire."
     except Exception:
