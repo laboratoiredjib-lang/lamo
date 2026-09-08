@@ -377,11 +377,9 @@ tirets "-" pour les listes si besoin.
 """
 
 
-def _build_assistant_knowledge_base():
+def _assistant_profile_block():
     profile = LabProfile.load()
-    lines = []
-
-    lines.append("--- Profil du laboratoire ---")
+    lines = ["--- Profil du laboratoire ---"]
     lines.append(f"Nom complet : {profile.name} ({profile.acronym})")
     if profile.affiliation:
         lines.append(f"Affiliation : {profile.affiliation}")
@@ -397,14 +395,24 @@ def _build_assistant_knowledge_base():
         lines.append(f"Mission : {profile.mission}")
     if profile.presentation_extra:
         lines.append(profile.presentation_extra)
+    return "\n".join(lines)
 
-    lines.append("\n--- Équipes de recherche et axes ---")
+
+def _assistant_knowledge_items():
+    """Construit la base de connaissances comme une liste d'éléments individuels
+    (une équipe, un membre, une activité, une publication...) plutôt qu'un seul
+    gros bloc de texte par catégorie. C'est ce qui permet à _select_relevant_knowledge
+    de choisir précisément les éléments pertinents pour une question donnée, sans
+    risquer de tronquer une catégorie entière (ex. les activités scientifiques,
+    ~21 000 caractères à elles seules) au milieu de son contenu."""
+    items = []
+
     for team in ResearchTeam.objects.prefetch_related("themes"):
-        lines.append(f"Équipe : {team.name} — {team.short_description or team.description}")
+        body_lines = [f"Équipe : {team.name} — {team.short_description or team.description}"]
         for theme in team.themes.all():
-            lines.append(f"  Axe de recherche : {theme.title}")
+            body_lines.append(f"  Axe de recherche : {theme.title}")
+        items.append(("Équipes de recherche et axes", team.name, "\n".join(body_lines)))
 
-    lines.append("\n--- Membres permanents ---")
     for m in PermanentMember.objects.select_related("team"):
         details = [m.title]
         if m.is_director:
@@ -413,107 +421,130 @@ def _build_assistant_knowledge_base():
             details.append(m.role_tag)
         if m.team:
             details.append(f"Équipe {m.team.name}")
-        lines.append(f"{m.full_name} — {', '.join(details)}")
+        body = f"{m.full_name} — {', '.join(details)}"
         if m.bio:
-            lines.append(f"  {m.bio}")
+            body += f"\n  {m.bio}"
+        items.append(("Membres permanents", m.full_name, body))
 
-    lines.append("\n--- Doctorants ---")
     for d in Doctorant.objects.all():
         extra = f", co-encadrant : {d.co_supervisor}" if d.co_supervisor else ""
-        lines.append(
+        body = (
             f"{d.full_name} — doctorant depuis {d.start_year}, université partenaire : "
             f"{d.partner_university}, directeur de thèse : {d.thesis_director}{extra}"
         )
+        if d.bio:
+            body += f"\n  {d.bio}"
+        items.append(("Doctorants", d.full_name, body))
 
-    lines.append("\n--- Chercheurs associés (partenaires internationaux) ---")
     for a in AssociateResearcher.objects.all():
-        lines.append(f"{a.full_name} — {a.grade}, {a.institution} ({a.country})")
+        body = f"{a.full_name} — {a.grade}, {a.institution} ({a.country})"
+        items.append(("Chercheurs associés (partenaires internationaux)", a.full_name, body))
 
-    lines.append("\n--- Activités scientifiques (conférences, séminaires, olympiades, jurys...) ---")
     for act in Activity.objects.all():
         desc = f" — {act.description}" if act.description else ""
-        lines.append(f"[{act.get_category_display()}] {act.title} ({act.year}){desc}")
+        title = f"{act.get_category_display()} : {act.title}"
+        body = f"[{act.get_category_display()}] {act.title} ({act.year}){desc}"
+        items.append(("Activités scientifiques (conférences, séminaires, olympiades, jurys...)", title, body))
 
-    lines.append("\n--- Formations de Master ---")
     for c in MasterCourse.objects.all():
-        lines.append(f"{c.program} : {c.course_title} (enseignant : {c.instructor})")
+        body = f"{c.program} : {c.course_title} (enseignant : {c.instructor})"
+        items.append(("Formations de Master", c.course_title, body))
 
-    lines.append("\n--- Publications scientifiques ---")
     for p in Publication.objects.all():
         year = p.year or "à paraître"
-        lines.append(f"{p.authors} ({year}). {p.title}. {p.reference}")
+        body = f"{p.authors} ({year}). {p.title}. {p.reference}"
+        items.append(("Publications scientifiques", f"{p.title} {p.authors}", body))
 
-    lines.append("\n--- Projets de recherche ---")
     for p in ResearchProject.objects.all():
-        lines.append(
-            f"{p.title} [{p.get_status_display()}] — financeur : {p.funder}, période : {p.period}"
-        )
+        body = f"{p.title} [{p.get_status_display()}] — financeur : {p.funder}, période : {p.period}"
+        items.append(("Projets de recherche", p.title, body))
 
-    lines.append("\n--- Habilitations à Diriger des Recherches (HDR) ---")
     for h in Habilitation.objects.all():
-        lines.append(f"{h.full_name} — {h.title} (garant : {h.garant})")
+        body = f"{h.full_name} — {h.title} (garant : {h.garant})"
+        items.append(("Habilitations à Diriger des Recherches (HDR)", h.full_name, body))
 
-    lines.append("\n--- Partenaires académiques et institutionnels ---")
     for p in Partner.objects.all():
-        lines.append(f"{p.name} — {p.get_category_display()}, {p.country}")
+        body = f"{p.name} — {p.get_category_display()}, {p.country}"
+        items.append(("Partenaires académiques et institutionnels", p.name, body))
 
-    lines.append("\n--- Actualités récentes ---")
     for n in News.objects.filter(is_published=True)[:10]:
-        lines.append(f"{n.date} : {n.title} — {n.excerpt}")
+        body = f"{n.date} : {n.title} — {n.excerpt}"
+        items.append(("Actualités récentes", n.title, body))
 
-    return "\n".join(lines)
+    return items
 
 
 ASSISTANT_STOPWORDS = {
-    "les", "des", "une", "sont", "avec", "pour", "dans", "cette", "vos", "vous",
+    "les", "des", "une", "sont", "avec", "pour", "dans", "cette", "cet", "ces",
     "que", "qui", "quel", "quelle", "quels", "quelles", "est", "etes", "sur",
-    "lamo", "laboratoire", "peux", "peut", "parle", "moi", "parlez",
+    "lamo", "laboratoire", "peux", "peut", "parle", "moi", "parlez", "vous", "vos",
+    "ont", "ete", "etre", "avoir", "fait", "faite", "faites", "leur", "leurs",
+    "tout", "tous", "toute", "toutes", "plus", "bien", "meme", "aussi", "ainsi",
+    "notamment", "egalement", "depuis", "apres", "avant", "entre", "lors", "afin",
+    "comme", "dont", "elle", "elles", "ses", "son", "sa", "nos", "notre", "and",
 }
 
 
-def _assistant_normalize(text):
-    """Renvoie l'ensemble des mots significatifs (sans accents, sans pluriel simple)."""
-    text = unicodedata.normalize("NFKD", text).encode("ascii", "ignore").decode("ascii")
-    words = re.findall(r"[a-z]{3,}", text.lower())
+def _assistant_normalize(text, include_years=True):
+    """Renvoie l'ensemble des mots (et années si demandé) significatifs, sans accents
+    ni pluriel simple. Les années sont exclues du titre par défaut lors du scoring :
+    beaucoup d'activités portent leur année dans leur nom (« ONM 2026 »...), ce qui
+    fausserait le bonus de titre pour toute question mentionnant juste une année."""
+    ascii_text = unicodedata.normalize("NFKD", text).encode("ascii", "ignore").decode("ascii")
+    words = re.findall(r"[a-z]{3,}", ascii_text.lower())
     stemmed = {w[:-1] if w.endswith("s") and len(w) > 4 else w for w in words}
-    return stemmed - ASSISTANT_STOPWORDS
+    result = stemmed - ASSISTANT_STOPWORDS
+    if include_years:
+        result |= set(re.findall(r"\b(?:19|20)\d{2}\b", text))
+    return result
 
 
-def _select_relevant_knowledge(knowledge_base, query_text, max_chars=9000):
-    """Réduit la base de connaissances aux sections pertinentes pour la question posée,
-    pour rester sous la limite de tokens/minute du niveau gratuit de l'API utilisée
-    (une base complète de ~38 000 caractères dépasse cette limite à elle seule).
-    Score par mots distincts (pas par fréquence brute) pour qu'une longue section
-    répétant des mots communs ne l'emporte pas sur une section courte mais ciblée ;
-    les correspondances dans le titre de section comptent triple."""
-    parts = re.split(r"\n(?=--- )", knowledge_base)
-    sections = [p for p in parts if p.strip()]
-    if not sections:
-        return knowledge_base[:max_chars]
-
-    profile_section, other_sections = sections[0], sections[1:]
+def _select_relevant_knowledge(query_text, max_chars=15000):
+    """Sélectionne les éléments de la base de connaissances les plus pertinents pour
+    la question posée, pour rester sous la limite de tokens/minute du niveau gratuit
+    de l'API utilisée (la base complète, ~38 000 caractères, dépasse cette limite à
+    elle seule). Score par mots distincts (pas par fréquence brute) pour qu'un élément
+    répétant des mots communs ne l'emporte pas sur un élément court mais ciblé ; les
+    correspondances dans le titre de l'élément (nom, sujet...) comptent triple.
+    Un élément qui ne tient pas entièrement dans le budget restant est ignoré plutôt
+    que tronqué, pour ne jamais couper une fiche au milieu."""
     query_words = _assistant_normalize(query_text)
 
     scored = []
-    for section in other_sections:
-        title, _, body = section.partition("\n")
-        title_words = _assistant_normalize(title)
-        body_words = _assistant_normalize(body)
-        score = 3 * len(query_words & title_words) + len(query_words & body_words)
-        scored.append((score, section))
-    scored.sort(key=lambda item: item[0], reverse=True)
+    for category, title, body in _assistant_knowledge_items():
+        title_words = _assistant_normalize(title, include_years=False)
+        score = 3 * len(query_words & title_words) + len(query_words & _assistant_normalize(body))
+        scored.append((score, category, body))
+    # Les équipes de recherche donnent un socle utile même pour les questions génériques.
+    # À score égal, privilégie les éléments les plus courts : ça laisse de la place
+    # pour plus d'éléments distincts au lieu de gaspiller le budget sur un seul gros
+    # bloc (ex. une longue biographie de doctorant) qui a été pioché en premier par hasard.
+    def _sort_key(item):
+        score, category, body = item
+        priority = 1000 if category == "Équipes de recherche et axes" else score
+        return (-priority, len(body))
 
-    selected = [profile_section]
-    budget = max_chars - len(profile_section)
-    for score, section in scored:
-        if budget <= 0:
-            break
-        if score == 0 and len(selected) > 4:
+    scored.sort(key=_sort_key)
+
+    grouped = {}
+    order = []
+    budget = max_chars - len(_assistant_profile_block())
+    for score, category, body in scored:
+        cost = len(body) + len(category) + 6
+        if cost > budget:
             continue
-        selected.append(section[:budget])
-        budget -= len(section)
+        if category not in grouped:
+            grouped[category] = []
+            order.append(category)
+        grouped[category].append(body)
+        budget -= cost
 
-    return "\n".join(selected)
+    parts = [_assistant_profile_block()]
+    for category in order:
+        parts.append(f"\n--- {category} ---")
+        parts.extend(grouped[category])
+
+    return "\n".join(parts)
 
 
 def _assistant_client_ip(request):
@@ -577,7 +608,7 @@ def assistant_chat(request):
     conversation.append({"role": "user", "content": message})
 
     query_text = " ".join(turn["content"] for turn in conversation[-3:])
-    knowledge_base = _select_relevant_knowledge(_build_assistant_knowledge_base(), query_text)
+    knowledge_base = _select_relevant_knowledge(query_text)
     system_prompt = ASSISTANT_SYSTEM_PROMPT.format(knowledge_base=knowledge_base)
     messages = [{"role": "system", "content": system_prompt}] + conversation
 
