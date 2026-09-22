@@ -1472,7 +1472,7 @@ class Command(BaseCommand):
              "Modeling Earth Systems and Environment, 2026 — à paraître", True, "https://hal.science/", "HAL", 2026),
             ("Said Ismail, Benjamin Ambrosio, Moulay Ahmed Aziz-Alaoui, and Yahyeh Souleiman",
              "A Dynamical System Approach to Modeling Neural Network Activity in Drosophila Orientation",
-             "À paraître", True, "", "", 2026),
+             "À paraître", True, "https://www.aimsciences.org/article/doi/10.3934/dcdss.2026239", "DOI", 2026),
             ("Gouled Souleiman, Nathalie Verdière, Alexandre Berred, and Yahyeh Souleiman",
              "A Mathematical Model to Investigate the Impact of Climate Change on Forest Ecosystems and a Strategy for Its Regeneration",
              "À paraître", True, "", "", 2026),
