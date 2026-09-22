@@ -716,6 +716,7 @@ class Command(BaseCommand):
             },
         )
         attach_image(conference, "image", "activity_m2isda_2027_poster.jpg")
+        attach_image(conference, "video", "activity_m2isda_2027_video.mp4")
         # Document pas encore prêt : on retire celui précédemment attaché, le badge "bientôt disponible" prend le relais.
         if conference.document:
             conference.document.delete(save=False)
