@@ -1688,6 +1688,30 @@ class Command(BaseCommand):
                 ),
                 "image": "news_idm_2027_olympiades.png",
             },
+            {
+                "title": "Félicitations à Gouled Souleiman pour son invitation comme conférencier à MOME3 à Amiens !",
+                "date": date(2026, 9, 22),
+                "excerpt": (
+                    "Le doctorant Gouled Souleiman est invité comme conférencier plénier à MOME3, les "
+                    "Journées de modélisation mathématique pour l'écologie, à Amiens (France), les 12 et "
+                    "13 octobre 2026."
+                ),
+                "content": (
+                    "Toute l'équipe du LAMO adresse ses félicitations à Gouled Souleiman, doctorant du "
+                    "laboratoire, invité comme conférencier à MOME3 — les Journées de modélisation "
+                    "mathématique pour l'écologie, organisées à Amiens (France) les 12 et 13 octobre 2026 "
+                    "par l'Université de Picardie Jules Verne, en partenariat avec l'Université de "
+                    "Djibouti et avec le soutien de l'ANR.\n\n"
+                    "Il y présentera, le mardi 13 octobre de 9h30 à 10h30, une conférence intitulée "
+                    "« Optimal Control and Calibration Modeling of Forest Regeneration Under Anthropogenic "
+                    "Pressures: the Day Forest Ecosystem (Djibouti) », dans le cadre de la session "
+                    "Modélisation & Gestion des Écosystèmes Forestiers.\n\n"
+                    "Cette invitation reflète la qualité des travaux de recherche menés au LAMO sur la "
+                    "modélisation et la régénération des écosystèmes forestiers, et renforce les "
+                    "collaborations scientifiques internationales du laboratoire."
+                ),
+                "image": "news_mome3_gouled_souleiman.jpg",
+            },
         ]
         for row in rows:
             image = row.pop("image", None)
