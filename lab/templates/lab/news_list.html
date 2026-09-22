@@ -33,6 +33,9 @@
           <span class="news-date-pill">{{ item.date|date:"d M Y" }}</span>
           <h3>{{ item.title }}</h3>
           <p>{{ item.excerpt }}</p>
+          {% if item.document %}
+          <a href="{{ item.document.url }}" download class="pub-link pub-link--download">{{ item.document_label }} ↓</a>
+          {% endif %}
         </div>
       </div>
       {% endfor %}

@@ -358,6 +358,14 @@ class News(models.Model):
     excerpt = models.CharField(max_length=400, blank=True)
     content = models.TextField(blank=True)
     image = models.ImageField(upload_to="news/", blank=True, null=True, help_text="Affiche ou visuel associé à l'actualité.")
+    document = models.FileField(
+        upload_to="news/documents/", blank=True, null=True,
+        help_text="Document à télécharger (programme, livret...).",
+    )
+    document_label = models.CharField(
+        max_length=100, blank=True, default="Télécharger le programme",
+        help_text="Texte du bouton de téléchargement.",
+    )
     is_published = models.BooleanField(default=True)
 
     class Meta:

@@ -1711,13 +1711,18 @@ class Command(BaseCommand):
                     "collaborations scientifiques internationales du laboratoire."
                 ),
                 "image": "news_mome3_gouled_souleiman.jpg",
+                "document": "news_mome3_programme.jpg",
+                "document_label": "Télécharger le programme",
             },
         ]
         for row in rows:
             image = row.pop("image", None)
+            document = row.pop("document", None)
             news, _ = News.objects.update_or_create(
                 title=row["title"],
                 defaults=row,
             )
             if image:
                 attach_image(news, "image", image)
+            if document:
+                attach_image(news, "document", document)
