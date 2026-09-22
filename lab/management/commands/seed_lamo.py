@@ -1176,6 +1176,31 @@ class Command(BaseCommand):
                     "image": "activity_participation_lyon2026_affiche.jpeg",
                 },
             },
+            {
+                "category": Activity.Category.PARTICIPATION,
+                "title": "Cérémonie de signature des Accords Artemis — Djibouti, 72e pays signataire",
+                "defaults": {
+                    "year": "17 septembre 2026", "location": "Ambassade des États-Unis, Djibouti",
+                    "people": "Dr Yahyeh SOULEIMAN, Dr Liban ISMAIL et Dr Souleiman OMAR",
+                    "sort_date": date(2026, 9, 17), "order": 8,
+                    "description": (
+                        "Le LAMO a eu l'honneur de participer à la cérémonie de signature des Accords "
+                        "Artemis, faisant de Djibouti le 72e pays signataire. Le laboratoire était "
+                        "représenté par le Dr Yahyeh SOULEIMAN, le Dr Liban ISMAIL et le Dr Souleiman "
+                        "OMAR.\n\n"
+                        "Au-delà du symbole, cette signature ouvre une nouvelle opportunité pour le LAMO "
+                        "de mettre son expertise en modélisation et en analyse de données spatiales au "
+                        "service de la recherche et du développement, et de contribuer à l'avenir spatial "
+                        "de Djibouti."
+                    ),
+                    "image": "activity_participation_artemis2026_groupe.jpg",
+                    "gallery": [
+                        "activity_participation_artemis2026_signature.jpg",
+                        "activity_participation_artemis2026_visio.jpg",
+                        "activity_participation_artemis2026_audience.jpg",
+                    ],
+                },
+            },
         ]
         self._seed_activity_rows(participations)
 
@@ -1713,6 +1738,26 @@ class Command(BaseCommand):
                 "image": "news_mome3_gouled_souleiman.jpg",
                 "document": "news_mome3_programme.jpg",
                 "document_label": "Télécharger le programme",
+            },
+            {
+                "title": "Djibouti, 72e pays signataire des Accords Artemis : le LAMO présent",
+                "date": date(2026, 9, 17),
+                "excerpt": (
+                    "Le LAMO a eu l'honneur de participer à la cérémonie de signature des Accords "
+                    "Artemis, faisant de Djibouti le 72e pays signataire. Le laboratoire était "
+                    "représenté par le Dr Yahyeh, le Dr Liban et le Dr Souleiman."
+                ),
+                "content": (
+                    "Le LAMO a eu l'honneur de participer à la cérémonie de signature des Accords "
+                    "Artemis, faisant de Djibouti le 72e pays signataire.\n\n"
+                    "Notre laboratoire était représenté par le Dr Yahyeh SOULEIMAN, le Dr Liban ISMAIL "
+                    "et le Dr Souleiman OMAR.\n\n"
+                    "Au-delà du symbole, c'est une nouvelle opportunité pour le LAMO de mettre son "
+                    "expertise en modélisation et en analyse de données spatiales au service de la "
+                    "recherche et du développement.\n\n"
+                    "Fiers de contribuer à l'avenir spatial de Djibouti."
+                ),
+                "image": "news_artemis_accords_2026.jpg",
             },
         ]
         for row in rows:
