@@ -578,7 +578,8 @@ class Command(BaseCommand):
              "les domaines de la modélisation mathématique des maladies infectieuses, de l'immunologie et "
              "de la biologie mathématique.",
              "https://scholar.google.com/citations?user=ET-ATjQAAAAJ&hl=en"),
-            ("Mme. Nathalie VERDIÈRE", "Maîtresse de conférences HDR", "Université Le Havre Normandie", "France", "",
+            ("Mme. Nathalie VERDIÈRE", "Maîtresse de conférences HDR", "Université Le Havre Normandie", "France",
+             "associate_nathalie_verdiere.jpg",
              "Nathalie Verdière est Maîtresse de conférences HDR (Habilitée à Diriger des Recherches) en "
              "Mathématiques Appliquées à l'Université Le Havre Normandie. Elle est membre permanent du "
              "Laboratoire de Mathématiques Appliquées du Havre (LMAH) et enseigne principalement au "
