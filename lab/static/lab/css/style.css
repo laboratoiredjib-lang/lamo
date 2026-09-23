@@ -59,7 +59,10 @@
 }
 
 /* ------------------------------------------------------------- 2. Reset */
-*{margin:0;padding:0;box-sizing:border-box}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+/* Sans ça, les navigateurs mobiles (surtout Android/Chrome) affichent un flash bleu
+   translucide par défaut sur tout lien/bouton touché — très visible sur la barre de
+   menu (fond sombre) au moindre appui, alors que le survol desktop est inchangé. */
 /* L'attribut [hidden] doit toujours l'emporter : une règle d'auteur (ex. display:flex)
    de même spécificité prime sinon sur le display:none par défaut du user-agent
    (déjà utilisé par le JS pour .lightbox-nav et .lamo-assistant-suggestions). */
