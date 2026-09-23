@@ -9,6 +9,15 @@
 
 /* ---------------------------------------------------------------- 1. Tokens */
 :root{
+  /* Sans ça, certains navigateurs mobiles (Chrome Android « Assombrir les pages
+     web ») appliquent leur propre correction de contraste heuristique sur des
+     éléments déjà stylés en sombre (ex. le panneau de menu mobile) et peuvent
+     y assombrir le texte au point de le rendre quasi illisible — surtout après
+     un nouveau repaint (changement de scroll, ouverture du panneau...). Ce site
+     gère lui-même son thème : on demande donc explicitement au navigateur de
+     ne pas y toucher. */
+  color-scheme: light;
+
   /* couleurs de marque */
   --ink:#0A1F42;
   --ink-2:#12315F;
